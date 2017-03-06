@@ -1,0 +1,162 @@
+<div class="page-sidebar navbar-collapse collapse">
+    <!-- BEGIN SIDEBAR MENU -->
+    <!-- DOC: Apply "page-sidebar-menu-light" class right after "page-sidebar-menu" to enable light sidebar menu style(without borders) -->
+    <!-- DOC: Apply "page-sidebar-menu-hover-submenu" class right after "page-sidebar-menu" to enable hoverable(hover vs accordion) sub menu mode -->
+    <!-- DOC: Apply "page-sidebar-menu-closed" class right after "page-sidebar-menu" to collapse("page-sidebar-closed" class must be applied to the body element) the sidebar sub menu mode -->
+    <!-- DOC: Set data-auto-scroll="false" to disable the sidebar from auto scrolling/focusing -->
+    <!-- DOC: Set data-keep-expand="true" to keep the submenues expanded -->
+    <!-- DOC: Set data-auto-speed="200" to adjust the sub menu slide up/down speed -->
+    <ul class="page-sidebar-menu" data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200" ng-class="{'page-sidebar-menu-closed': settings.layout.pageSidebarClosed}">
+        <li class="start nav-item">
+            <a href="#/category.html"><i class="icon-briefcase"></i> Category</a>
+        </li>
+        <!-- <li class="start nav-item">
+            <a href="#/provider.html">
+                <i class="icon-pointer"></i>
+                <span class="title">Provider</span>
+            </a>
+        </li>
+        <li class="start nav-item">
+            <a href="#/banner.html">
+                <i class="icon-home"></i>
+                <span class="title">Banner</span>
+            </a>
+        </li>
+        <li class="start nav-item">
+            <a href="#/news.html">
+                <i class="fa fa-newspaper-o"></i>
+                <span class="title">News</span>
+            </a>
+        </li>
+        <li class="start nav-item">
+            <a href="#/comment.html">
+                <i class="icon-bubbles"></i>
+                <span class="title">Comment</span>
+            </a>
+        </li>
+        <li class="start nav-item">
+            <a href="#/location.html">
+                <i class="icon-pointer"></i>
+                <span class="title">Location</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="javascript:;" class="nav-link nav-toggle">
+                <i class="icon-wrench"></i>
+                <span class="title">Ticket Management</span>
+                <span class="arrow "></span>
+            </a>
+            <ul class="sub-menu">
+                <li class="start nav-item">
+                    <a href="#/category-ticket.html"><i class="icon-briefcase"></i> Category Ticket</a>
+                </li>
+                <li class="start nav-item">
+                    <a href="#/entrance-ticket.html"><i class="fa fa-ticket"></i> Entrance Ticket</a>
+                </li>
+                <li class="start nav-item">
+                    <a href="#/ticket-bill.html"><i class="fa fa-ticket"></i> Ticket Bill</a>
+                </li>
+            </ul>
+        </li>
+        <li class="nav-item">
+            <a href="javascript:;" class="nav-link nav-toggle">
+                <i class="icon-plane"></i>
+                <span class="title">Airline Management</span>
+                <span class="arrow "></span>
+            </a>
+            <ul class="sub-menu">
+                <li class="start nav-item">
+                    <a href="#/booking.html"><i class="icon-calendar"></i> Booking</a>
+                </li>
+                <li class="start nav-item">
+                    <a href="#/baggagetype.html"><i class="fa icon-briefcase"></i> Baggage Type</a>
+                </li>
+            </ul>
+        </li> -->
+        <!-- 
+        <li class="nav-item">
+            <a href="javascript:;" class="nav-link nav-toggle">
+                <i class="icon-settings"></i>
+                <span class="title">AngularJS Features</span>
+                <span class="arrow"></span>
+            </a>
+            <ul class="sub-menu">
+                <li>
+                    <a href="#/ui_bootstrap.html">
+                        <i class="icon-puzzle"></i> UI Bootstrap</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#/file_upload.html">
+                        <i class="icon-paper-clip"></i> File Upload</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#/ui_select.html">
+                        <i class="icon-check"></i> UI Select</span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <li class="nav-item">
+            <a href="javascript:;" class="nav-link nav-toggle">
+                <i class="icon-wrench"></i>
+                <span class="title">jQuery Plugins</span>
+                <span class="arrow "></span>
+            </a>
+            <ul class="sub-menu">
+                <li>
+                    <a href="#/form-tools">
+                        <i class="icon-puzzle"></i> Form Tools </a>
+                </li>
+                <li>
+                    <a href="#/pickers">
+                        <i class="icon-calendar"></i> Date & Time Pickers </a>
+                </li>
+                <li>
+                    <a href="#/dropdowns">
+                        <i class="icon-refresh"></i> Custom Dropdowns </a>
+                </li>
+                <li>
+                    <a href="#/tree">
+                        <i class="icon-share"></i> Tree View </a>
+                </li>
+                <li class="nav-item">
+                    <a href="javascript:;" class="nav-link nav-toggle">
+                        <i class="icon-briefcase"></i> Datatables
+                        <span class="arrow "></span>
+                    </a>
+                    <ul class="sub-menu">
+                        <li>
+                            <a href="#/datatables/managed.html">
+                                <i class="icon-tag"></i> Managed Datatables </a>
+                        </li>
+                        <li>
+                            <a href="#/datatables/ajax.html">
+                                <i class="icon-refresh"></i> Ajax Datatables </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+        <li class="nav-item">
+            <a href="#/profile/dashboard" id="sidebar_menu_link_profile">
+                <i class="icon-user"></i>
+                <span class="title">User Profile</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="#/todo">
+                <i class="icon-check"></i>
+                <span class="title">Task & Todo</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="#/blank">
+                <i class="icon-refresh"></i>
+                <span class="title">Blank Page</span>
+            </a>
+        </li> -->
+    </ul>
+    <!-- END SIDEBAR MENU -->
+</div>

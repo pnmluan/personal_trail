@@ -29,16 +29,16 @@ USE `personal_trail`;
 --
 
 CREATE TABLE `articles` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `title` varchar(255) DEFAULT NULL,
   `content` text,
   `author_id` int(11) NOT NULL,
   `category_id` int(11) NOT NULL,
   `publish_date` datetime DEFAULT NULL,
   `status` varchar(45) DEFAULT 'active',
-  `created_date` datetime DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
   `created_user_id` int(11) DEFAULT NULL,
-  `updated_date` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
   `updated_user_id` int(11) DEFAULT NULL,
   `deleted_date` datetime DEFAULT NULL,
   `deleted_user_id` int(11) DEFAULT NULL
@@ -51,13 +51,13 @@ CREATE TABLE `articles` (
 --
 
 CREATE TABLE `categories` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
   `description` text,
   `status` varchar(45) DEFAULT 'active',
-  `created_date` datetime DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
   `created_user_id` int(11) DEFAULT NULL,
-  `updated_date` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
   `updated_user_id` int(11) DEFAULT NULL,
   `deleted_date` datetime DEFAULT NULL,
   `deleted_user_id` int(11) DEFAULT NULL
@@ -70,14 +70,14 @@ CREATE TABLE `categories` (
 --
 
 CREATE TABLE `pictures` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `filename` varchar(255) NOT NULL,
   `filepath` varchar(255) NOT NULL,
   `article_id` int(11) NOT NULL,
   `status` varchar(45) DEFAULT 'active',
-  `created_date` datetime DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
   `created_user_id` int(11) DEFAULT NULL,
-  `updated_date` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
   `updated_user_id` int(11) DEFAULT NULL,
   `deleted_date` datetime DEFAULT NULL,
   `deleted_user_id` int(11) DEFAULT NULL
@@ -93,7 +93,7 @@ DROP TABLE IF EXISTS `slides`;
 /*!40101 SET @saved_cs_client = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `slides` (
-`id` int(11) NOT NULL AUTO_INCREMENT,
+`id` int(11) NOT NULL AUTO_INCREMENT AUTO_INCREMENT,
 `name` varchar(255) DEFAULT NULL,
 `title` varchar(255) NOT NULL,
 `description` text,
@@ -101,9 +101,9 @@ CREATE TABLE `slides` (
 `enable_start_date` date DEFAULT NULL,
 `enable_end_date` date DEFAULT NULL,
 `status` varchar(45) DEFAULT 'active',
-`created_date` datetime DEFAULT NULL,
+`created_at` datetime DEFAULT NULL,
 `created_user_id` int(11) DEFAULT NULL,
-`updated_date` datetime DEFAULT NULL,
+`updated_at` datetime DEFAULT NULL,
 `updated_user_id` int(11) DEFAULT NULL,
 `deleted_date` datetime DEFAULT NULL,
 `deleted_user_id` int(11) DEFAULT NULL,
@@ -117,7 +117,7 @@ PRIMARY KEY (`id`)
 --
 
 CREATE TABLE `users` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `username` varchar(80) NOT NULL,
   `password` varchar(255) NOT NULL,
   `firstname` varchar(80) NOT NULL,
@@ -125,9 +125,9 @@ CREATE TABLE `users` (
   `birthday` date DEFAULT NULL,
   `register_date` date DEFAULT NULL,
   `status` varchar(10) DEFAULT 'active',
-  `created_date` datetime DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
   `created_user_id` int(11) DEFAULT NULL,
-  `updated_date` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
   `updated_user_id` int(11) DEFAULT NULL,
   `deleted_date` datetime DEFAULT NULL,
   `deleted_user_id` int(11) DEFAULT NULL
@@ -175,27 +175,27 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `articles`
 --
 ALTER TABLE `articles`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `pictures`
 --
 ALTER TABLE `pictures`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `slides`
 --
 ALTER TABLE `slides`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT AUTO_INCREMENT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

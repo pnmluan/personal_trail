@@ -10,7 +10,12 @@
 | and give it the Closure to call when that URI is requested.
 |
 */
+$api = app('Dingo\Api\Routing\Router');
 
-$app->get('/', function () use ($app) {
-    return $app->version();
+$api->version('v1', function ($api) {
+	// return $api->version();
+	$api->get('/', function () use ($app) {
+	    return $app->version();
+	});
+
 });
