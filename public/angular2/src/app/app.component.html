@@ -1,0 +1,125 @@
+<div class="content-wrapper">
+	<div class="navbar navbar-default default" role="navigation">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<div class="header-left">
+					<ul class="social">
+						<li> <a href="#"><i class="ion-social-facebook"></i></a> </li>
+						<li> <a href="#"><i class="ion-social-twitter"></i></a> </li>
+						<li> <a href="#"><i class="ion-social-instagram"></i></a> </li>
+						<li> <a href="#"><i class="ion-social-vimeo"></i></a> </li>
+					</ul>
+				</div>
+				<!-- /.header-left -->
+				<div class="header-right">
+					<div class="search-form">
+						<form action="#">
+							<fieldset>
+								<input id="search" placeholder="Search" />
+							</fieldset>
+						</form>
+					</div>
+				</div>
+				<!-- /.header-right -->
+				<div class="nav-bars-wrapper">
+					<div class="nav-bars-inner">
+						<div class="nav-bars" data-toggle="collapse" data-target=".navbar-collapse"><span></span></div>
+					</div>
+				<!-- /.nav-bars-inner --> 
+				</div>
+				<!-- /.nav-bars-wrapper -->
+			</div>
+			<!-- /.navbar-header -->
+
+			<div class="nav-wrapper">
+				<div class="navbar-collapse collapse">
+					<ul class="nav navbar-nav">
+						<li class="current"><a href="#!">Blog <span class="caret"></span></a>
+              				<ul class="dropdown-menu">
+              					<li *ngFor="let item of categories">
+              						<a [routerLink]="['/category', item.id]">{{ item.name }}</a>
+              					</li>
+              				</ul>
+              			</li>
+						<li><a [routerLink]="['/about']">About</a></li>
+						<li><a [routerLink]="['/contact']">Contact</a></li>
+					</ul>
+				</div>
+			</div>
+			<!--/.nav-wrapper --> 
+		</div>
+		<!--/.container-fluid --> 
+	</div>
+	<!-- /.navbar -->
+	<div class="logo text-center">
+		<a [routerLink]="['/home']"><img src="#" srcset="assets/images/logo.png 1x, assets/images/logo@2x.png 2x" alt="" /></a><span>everything across the world</span>
+	</div>
+
+	<router-outlet></router-outlet>
+</div>
+<!-- /.content-wrapper -->
+<footer class="inverse-wrapper">
+	<div class="container inner">
+		<div class="row">
+			<div class="col-sm-3">
+				<div class="widget">
+					<h3 class="widget-title section-title">Popular Posts</h3>
+				</div>
+				<!-- /.widget -->
+			</div>
+			<!-- /column -->
+			<div class="col-sm-3">
+				<div class="widget">
+					<h3 class="widget-title section-title">Recent Tags</h3>
+				</div>
+				<!-- /.widget -->
+				<div class="widget">
+					<h3 class="widget-title section-title">Top Categories</h3>
+				</div>
+				<!-- /.widget -->
+			</div>
+			<!-- /column -->
+			<div class="col-sm-3">
+				<div class="widget">
+					<h3 class="widget-title section-title">Get in Touch</h3>
+					<address>
+						<strong>Juno, Inc.</strong><br>
+						Moon Street Light Avenue, 14/05 <br>
+						Jupiter, JP 80630<br>
+						<abbr title="Phone">P:</abbr> (123) 456-7890 <br>
+						<abbr title="Email">E:</abbr> <a href="mailto:#">first.last@example.com</a>
+					</address>
+				</div>
+				<div class="widget">
+					<h3 class="widget-title section-title">Elsewhere</h3>
+					<ul class="social">
+						<li> <a href="#"><i class="ion-social-rss"></i></a> </li>
+						<li> <a href="#"><i class="ion-social-facebook"></i></a> </li>
+						<li> <a href="#"><i class="ion-social-twitter"></i></a> </li>
+						<li> <a href="#"><i class="ion-social-instagram"></i></a> </li>
+						<li> <a href="#"><i class="ion-social-vimeo"></i></a> </li>
+						<li> <a href="#"><i class="ion-social-whatsapp"></i></a> </li>
+					</ul>
+				</div>
+			</div>
+			<!-- /column -->
+			<div class="col-sm-3">
+				<div class="widget">
+					<h3 class="widget-title section-title">About Me</h3>
+					<figure> <img src="assets/images/art/about.jpg" alt="" /> </figure>
+					<div class="divide10"></div>
+					<p>Duis mollis, est non commodo luctus, nisi erat porttitor ligula lacinia.</p>
+				</div>
+			</div>
+			<!-- /column -->
+		</div>
+	</div>
+	<div class="sub-footer">
+		<div class="container inner">
+			<p class="text-center">© 2016 Juno. All rights reserved. Theme by <a href="http://elemisfreebies.com">elemis</a></p>
+		</div>
+		<!-- .container --> 
+		</div>
+		<!-- .sub-footer --> 	
+</footer>
+
