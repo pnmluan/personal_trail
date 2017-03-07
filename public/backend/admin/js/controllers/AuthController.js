@@ -1,4 +1,4 @@
-angular.module('MetronicApp').controller('LoginController', function($rootScope, $scope, $http, $base64, $timeout, $location, $q, AuthService, ngDialog, toastr) {
+angular.module('MetronicApp').controller('AuthController', function($rootScope, $scope, $window, $state, $http, $base64, $timeout, $location, $q, AuthService, ngDialog, toastr) {
     $scope.$on('$viewContentLoaded', function() {
         // initialize core components
         App.initAjax();
@@ -17,13 +17,27 @@ angular.module('MetronicApp').controller('LoginController', function($rootScope,
         }
     };
 
+    $scope.onLogin = function() {
+        AuthService.login($scope.mItem).then(function(res) {
+            console.log(res)
+            if(res.status == 200) {
+                $rootScope.settings.token = res.data.data.token;
+                localStorage.setItem('token', res.data.data.token);
+                $window.location.href = $rootScope.settings.baseUrl + 'category.html';
+                $window.location.reload();
+            }
+        });
+    }
+
     // set sidebar closed and body solid layout mode
     $rootScope.settings.layout.pageContentWhite = false;
-    $rootScope.settings.layout.pageBodySolid = false;
-    $rootScope.settings.layout.pageSidebarClosed = false;
+    $rootScope.settings.layout.pageBodySolid = true;
+    $rootScope.settings.layout.pageSidebarClosed = true;
+    $rootScope.settings.state = $state.current.name;
 
     function initialize() {
-        
+        $scope.mItem = {};
+
     }
 
     function loadListItem() {

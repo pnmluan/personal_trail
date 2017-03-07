@@ -34,9 +34,25 @@ $api->version('v1', function ($api) {
             'uses' => 'App\Http\Controllers\Auth\AuthController@patchRefresh',
             'as' => 'api.auth.refresh'
         ]);
-        $api->delete('/auth/invalidate', [
+        $api->delete('/auth/logout', [
             'uses' => 'App\Http\Controllers\Auth\AuthController@deleteInvalidate',
-            'as' => 'api.auth.invalidate'
+            'as' => 'api.auth.logout'
+        ]);
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Category
+        |--------------------------------------------------------------------------
+        */
+        $api->post('/category/save', [
+            'as' => 'api.category.create',
+            'uses' => 'App\Http\Controllers\System\CategoryController@save',
+        ]);
+
+        $api->post('/category/save/{id}', [
+            'as' => 'api.category.update',
+            'uses' => 'App\Http\Controllers\System\CategoryController@save',
         ]);
     });
 
@@ -50,13 +66,5 @@ $api->version('v1', function ($api) {
         'uses' => 'App\Http\Controllers\System\CategoryController@index',
     ]);
 
-    $api->post('/category/save', [
-        'as' => 'api.category.create',
-        'uses' => 'App\Http\Controllers\System\CategoryController@save',
-    ]);
-
-    $api->post('/category/save/{id}', [
-        'as' => 'api.category.update',
-        'uses' => 'App\Http\Controllers\System\CategoryController@save',
-    ]);
+    
 });

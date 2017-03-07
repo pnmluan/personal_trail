@@ -12,6 +12,10 @@ angular.module('MetronicApp')
         return $http.post(urlBase + '/login', cust);
     };
 
+    AuthService.logout = function (cust) {
+        return $http.delete(urlBase + '/logout', cust);
+    };
+
 
     return AuthService;
 }]);

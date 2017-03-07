@@ -17,8 +17,11 @@ var MetronicApp = angular.module("MetronicApp", [
 
 /* Configure API */
 MetronicApp.config(['$httpProvider', '$base64', 'toastrConfig', function($httpProvider, $base64, toastrConfig) {
-    var auth = $base64.encode("datvesieure:balobooking");
-    $httpProvider.defaults.headers.common['Authorization'] = 'Basic ' + auth;
+    let token = localStorage.getItem('token');
+    if(token) {
+        $httpProvider.defaults.headers.common['Authorization'] = 'Bearer ' + token;
+    }
+    
 
     angular.extend(toastrConfig, {
         autoDismiss: false,
@@ -69,6 +72,7 @@ MetronicApp.factory('settings', ['$rootScope', function($rootScope) {
         globalPath: '../assets/global',
         layoutPath: '../assets/layouts/layout',
         apiPath: '/personal_trail/public/api/',
+        baseUrl: '/personal_trail/public/backend/admin/#/',
         imgPath: '../assets/apps/img/',
         btnUpdate: `<button class="btn btn-sm green btn-outline filter-submit margin-bottom clickToUpdate"><i class="fa fa-edit"></i> Edit</button>`,
         btnDelete: `<button class="btn btn-sm red btn-outline filter-cancel clickToDelete"><i class="fa fa-trash"></i> Delete</button>`,
@@ -84,11 +88,45 @@ MetronicApp.factory('settings', ['$rootScope', function($rootScope) {
 }]);
 
 /* Setup App Main Controller */
-MetronicApp.controller('AppController', ['$scope', '$rootScope', function($scope, $rootScope) {
+MetronicApp.controller('AppController', ['$scope', '$rootScope', '$http', '$window', function($scope, $rootScope, $http, $window) {
     $scope.$on('$viewContentLoaded', function() {
+        console.log($rootScope.settings.state)
+        if($rootScope.settings.state != 'login') {
+            var urlBase = $rootScope.settings.apiPath + 'auth';
+            $http.get(urlBase + '/user').then(function(res) {
+                console.log(res);
+                if(res.status == 200) {
+                    // localStorage.removeItem('token');
+                    
+                    // $window.location.reload();
+                }
+
+            }, function(res) {
+                if(res.status == 401) {
+                    $window.location.href = $rootScope.settings.baseUrl + 'login.html';
+                }
+            });
+        }
         //App.initComponents(); // init core components
         //Layout.init(); //  Init entire layout(header, footer, sidebar, etc) on page load if the partials included in server side instead of loading with ng-include directive 
     });
+
+    
+    
+
+    /* Logout system */
+    $scope.onLogout = function() {
+        var urlBase = $rootScope.settings.apiPath + 'auth';
+        $http.delete(urlBase + '/logout').then(function(res) {
+
+            if(res.status == 200) {
+                localStorage.removeItem('token');
+                $window.location.href = $rootScope.settings.baseUrl + 'login.html';
+                // $window.location.reload();
+            }
+
+        });
+    }
 }]);
 
 /* Format Number Input */
@@ -159,7 +197,7 @@ initialization can be disabled and Layout.init() should be called on page load c
 /* Setup Layout Part - Header */
 MetronicApp.controller('HeaderController', ['$scope', function($scope) {
     $scope.$on('$includeContentLoaded', function() {
-        Layout.initHeader(); // init header
+        // Layout.initHeader(); // init header
     });
 }]);
 
@@ -180,7 +218,7 @@ MetronicApp.controller('QuickSidebarController', ['$scope', function($scope) {
 }]);
 
 /* Setup Layout Part - Theme Panel */
-MetronicApp.controller('ThemePanelController', ['$scope', function($scope) {    
+MetronicApp.controller('ThemePanelController', ['$scope', function($scope, $state) {    
     $scope.$on('$includeContentLoaded', function() {
         Demo.init(); // init theme panel
     });
@@ -205,7 +243,7 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
             url: "/login.html",
             templateUrl: "views/login/main.html",            
             data: {pageTitle: 'Admin Category Template'},
-            controller: "LoginController",
+            controller: "AuthController",
             resolve: {
                 deps: ['$ocLazyLoad', function($ocLazyLoad) {
                     return $ocLazyLoad.load({
@@ -213,7 +251,7 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
                         insertBefore: '#ng_load_plugins_before', // load the above css files before a LINK element with this ID. Dynamic CSS files must be loaded between core and theme css files
                         files: [
                             '../assets/global/plugins/dropzone/dropzone.min.js',
-                            'js/controllers/LoginController.js',
+                            'js/controllers/AuthController.js',
                             'js/services/auth.service.js'
                         ] 
                     });
@@ -626,4 +664,6 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
 MetronicApp.run(["$rootScope", "settings", "$state", function($rootScope, settings, $state) {
     $rootScope.$state = $state; // state to be accessed from view
     $rootScope.$settings = settings; // state to be accessed from view
+
+    console.log('abc');
 }]);
