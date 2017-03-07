@@ -54,6 +54,11 @@ $api->version('v1', function ($api) {
             'as' => 'api.category.update',
             'uses' => 'App\Http\Controllers\System\CategoryController@save',
         ]);
+
+        $api->delete('/category/delete/{id}', [
+            'as' => 'api.category.delete',
+            'uses' => 'App\Http\Controllers\System\CategoryController@delete',
+        ]);
     });
 
     /*

@@ -38,13 +38,11 @@ class CategoryController extends Controller
 
         if (!empty($categoryTicket)) {
             return new JsonResponse([
-                'status' => 'error',
                 'message' => 'no_data',
             ]);
         }
 
         return new JsonResponse([
-            'status' => 'success',
             'message' => 'get_detail',
             'data' => $categoryTicket
         ]);
@@ -62,7 +60,6 @@ class CategoryController extends Controller
 
             if (!$model) {
                 return new JsonResponse([
-                    'status' => 'error',
                     'message' => 'no_data',
                 ]);
             }
@@ -76,7 +73,6 @@ class CategoryController extends Controller
 
         if (!$model->isValid()) {
             return new JsonResponse([
-                'status' => 'error',
                 'message' => 'invalid',
                 'error' => $model->getValidationErrors()
             ]);
@@ -85,13 +81,11 @@ class CategoryController extends Controller
             $model->save();
         } catch (\Exception $ex) {
             return new JsonResponse([
-                'status' => 'error',
                 'message' => 'exception',
                 'error' => $ex->getMessage()
             ]);
         }
         return new JsonResponse([
-            'status' => 'success',
             'message' => 'created',
             'data' => $model
         ]);
@@ -107,27 +101,23 @@ class CategoryController extends Controller
         $model  = Category::find($id);
         if (!$model) {
             return new JsonResponse([
-                'status' => 'error',
                 'message' => 'no_data',
             ]);
         }
         try {
             if (!$model->delete()) {
                 return new JsonResponse([
-                    'status' => 'error',
                     'message' => 'exception',
                     'error' => 'can not delete'
                 ]);
             }
         } catch (\Exception $ex) {
             return new JsonResponse([
-                'status' => 'error',
                 'message' => 'exception',
                 'error' => $ex->getMessage()
             ]);
         }
         return new JsonResponse([
-            'status' => 'success',
             'message' => 'created',
             'rercord_id' => $id
         ]);
