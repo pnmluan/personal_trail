@@ -71,5 +71,74 @@ $api->version('v1', function ($api) {
         'uses' => 'App\Http\Controllers\System\CategoryController@index',
     ]);
 
+    $api->get('/category/show/{id}', [
+        'as' => 'api.category.show',
+        'uses' => 'App\Http\Controllers\System\CategoryController@show',
+    ]);
+
+    $api->get('/category/list', [
+        'as' => 'api.category.list',
+        'uses' => 'App\Http\Controllers\System\CategoryController@list',
+    ]);
+
+    /*
+    |--------------------------------------------------------------------------
+    | Article
+    |--------------------------------------------------------------------------
+    */
+    $api->get('/article/index', [
+        'as' => 'api.article.index',
+        'uses' => 'App\Http\Controllers\System\ArticleController@index',
+    ]);
+
+    $api->get('/article/show/{id}', [
+        'as' => 'api.article.show',
+        'uses' => 'App\Http\Controllers\System\ArticleController@show',
+    ]);
+
+    /*
+    |--------------------------------------------------------------------------
+    | Picture
+    |--------------------------------------------------------------------------
+    */
+    $api->get('/picture/index', [
+        'as' => 'api.picture.index',
+        'uses' => 'App\Http\Controllers\System\PictureController@index',
+    ]);
+
+    $api->get('/picture/show/{id}', [
+        'as' => 'api.picture.show',
+        'uses' => 'App\Http\Controllers\System\PictureController@show',
+    ]);
+
+    /*
+    |--------------------------------------------------------------------------
+    | Slide
+    |--------------------------------------------------------------------------
+    */
+    $api->get('/slide/index', [
+        'as' => 'api.slide.index',
+        'uses' => 'App\Http\Controllers\System\SlideController@index',
+    ]);
+
+    $api->get('/slide/show/{id}', [
+        'as' => 'api.slide.show',
+        'uses' => 'App\Http\Controllers\System\SlideController@show',
+    ]);
+
+    /*
+    |--------------------------------------------------------------------------
+    | User
+    |--------------------------------------------------------------------------
+    */
+    $api->get('/user/index', [
+        'as' => 'api.user.index',
+        'uses' => 'App\Http\Controllers\System\UserController@index',
+    ]);
+
+    $api->get('/user/show/{id}', [
+        'as' => 'api.user.show',
+        'uses' => 'App\Http\Controllers\System\UserController@show',
+    ]);
     
 });

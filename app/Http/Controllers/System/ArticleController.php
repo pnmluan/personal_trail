@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\System;
 
 use App\Http\Controllers\Controller;
-use App\Models\Category;
+use App\Models\Article;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Http\JsonResponse;
@@ -11,28 +11,25 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Illuminate\Http\Exception\HttpResponseException;
 
-class CategoryController extends Controller
+class ArticleController extends Controller
 {
-
     /**
-     * Get info users for datatables
+     * Get info users base on params
      *
      * @param \Illuminate\Http\Request $request
      *
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request){
-
         if(isset($request['has_data_table']) && $request['has_data_table']) {
-            $data = Category::listItems($request->all());
-            return $data;
+            $data = Article::listItems($request->all());
+        return $data;
         } else {
             return new JsonResponse([
                 'message' => 'list_data',
-                'data' => Category::all()
+                'data' => Article::all()
             ]);
         }
-        
 
     }
 
@@ -43,7 +40,7 @@ class CategoryController extends Controller
      */
     public function show($id) {
 
-        $model  = Category::find($id);
+        $model  = Article::find($id);
 
         if (!empty($model)) {
             return new JsonResponse([
@@ -65,7 +62,7 @@ class CategoryController extends Controller
      */
     public function save(Request $request, $id = null){
         if(!empty($id)) {
-            $model = Category::find($id);
+            $model = Article::find($id);
 
             if (!$model) {
                 return new JsonResponse([
@@ -73,7 +70,7 @@ class CategoryController extends Controller
                 ]);
             }
         } else {
-            $model = new Category();
+            $model = new Article();
         }
         
         $data = $request->all();
@@ -107,7 +104,7 @@ class CategoryController extends Controller
      */
     public function delete($id){
 
-        $model  = Category::find($id);
+        $model  = Article::find($id);
         if (!$model) {
             return new JsonResponse([
                 'message' => 'no_data',

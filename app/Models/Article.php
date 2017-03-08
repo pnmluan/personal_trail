@@ -4,10 +4,10 @@ namespace App\Models;
 use App\Models\BaseModel;
 use Illuminate\Database\Eloquent\Model;
   
-class EntranceTicket extends BaseModel
+class Article extends BaseModel
 {
-    protected $table = 'entrance_ticket'; 
-    protected $fillable = ['name', 'category_ticket_id', 'adult_fare', 'children_fare', 'description', 'content', 'include', 'not_include', 'notice', 'support', 'longitude', 'latitude', 'created_at'];
+    protected $table = 'articles'; 
+    protected $fillable = ['title', 'content', 'author_id', 'categories_id', 'publish_date', 'status','created_at', 'updated_at'];
 
     public function getModelValidations()
     {
@@ -18,14 +18,14 @@ class EntranceTicket extends BaseModel
 
     public static function listItems(array $param = null){
 
-        $aColumns = ['entrance_ticket.name', 'category_ticket_id', 'category_ticket.name', 'entrance_ticket.adult_fare', 'entrance_ticket.children_fare', 'entrance_ticket.description', 'entrance_ticket.created_at'];
+        $aColumns = ['articles.title', 'category_id', 'categories.name', 'articles.content', 'articles.author_id', 'articles.publish_date'];
 
-        $query = \DB::table('entrance_ticket')
-            ->select(\DB::raw('SQL_CALC_FOUND_ROWS entrance_ticket.id'),\DB::raw('entrance_ticket.id AS DT_RowId'),'entrance_ticket.*', \DB::raw('category_ticket.name AS category_ticket_name')
-            	// , 'album_ticket.name', 'album_ticket.url', 'album_ticket.email', 'album_ticket.requirement'
+        $query = \DB::table('articles')
+            ->select(\DB::raw('SQL_CALC_FOUND_ROWS articles.id'),\DB::raw('articles.id AS DT_RowId'),'articles.*', \DB::raw('categories.name AS categories_name')
+            	// , 'pictures.name', 'pictures.url', 'pictures.email', 'pictures.requirement'
             	)
-            ->leftJoin('category_ticket', 'entrance_ticket.category_ticket_id', '=', 'category_ticket.id');
-            // ->leftJoin('album_ticket', 'entrance_ticket.id', '=', 'album_ticket.entrance_ticket_id');
+            ->leftJoin('categories', 'articles.category_id', '=', 'categories.id');
+            // ->leftJoin('pictures', 'articles.id', '=', 'pictures.article_id');
 
         // Filter search condition
         foreach ($aColumns as $key => $value) {
@@ -33,7 +33,7 @@ class EntranceTicket extends BaseModel
         }
 
         if(isset($param['except_id'])) {
-            $query->where('entrance_ticket.id','!=', $param['except_id']);
+            $query->where('articles.id','!=', $param['except_id']);
         }
 
         //======================= SEARCH =================
@@ -89,9 +89,9 @@ class EntranceTicket extends BaseModel
 
         $data = $query->get();
 
-        // Add album_ticket 
+        // Add pictures 
         foreach ($data as $key => $value) {
-            $album = \DB::table('album_ticket')->where('entrance_ticket_id', $value->id)->get();
+            $album = \DB::table('pictures')->where('article_id', $value->id)->get();
             $data[$key]->album = $album;
         }
 

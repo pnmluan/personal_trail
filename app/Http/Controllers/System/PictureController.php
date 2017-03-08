@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\System;
 
 use App\Http\Controllers\Controller;
-use App\Models\Category;
+use App\Models\Picture;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Http\JsonResponse;
@@ -11,28 +11,26 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Illuminate\Http\Exception\HttpResponseException;
 
-class CategoryController extends Controller
+class PictureController extends Controller
 {
-
+    private $path = 'backend/assets/apps/img/pictures';
     /**
-     * Get info users for datatables
+     * Get info users base on params
      *
      * @param \Illuminate\Http\Request $request
      *
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request){
-
         if(isset($request['has_data_table']) && $request['has_data_table']) {
-            $data = Category::listItems($request->all());
-            return $data;
+            $data = Picture::listItems($request->all());
+        return $data;
         } else {
             return new JsonResponse([
                 'message' => 'list_data',
-                'data' => Category::all()
+                'data' => Picture::all()
             ]);
         }
-        
 
     }
 
@@ -43,7 +41,7 @@ class CategoryController extends Controller
      */
     public function show($id) {
 
-        $model  = Category::find($id);
+        $model  = Picture::find($id);
 
         if (!empty($model)) {
             return new JsonResponse([
@@ -58,25 +56,54 @@ class CategoryController extends Controller
 
     }
 
+    protected function uploadImage($image) {
+        if($image) {
+            $filename  = time() . '.' . $image->getClientOriginalExtension();
+
+            $destinationPath = $this->path; // upload path
+
+            $image->move($destinationPath, $filename); // uploading file to given path
+
+            return $filename;
+        }
+        return null;
+
+    }
+
     /**
      * Create/Update record into DB.
      *
      * @return JsonResponse
      */
     public function save(Request $request, $id = null){
-        if(!empty($id)) {
-            $model = Category::find($id);
+        $data = $request->all();
+        $filepath = $this->uploadImage($request->file('filepath'));
 
+        if(!empty($id)) {
+
+            $model = Picture::find($id);
             if (!$model) {
                 return new JsonResponse([
                     'message' => 'no_data',
                 ]);
             }
+            if($filepath) {
+                $filename = $this->path . '/' . $banner->filepath;
+                if(file_exists($filename)) {
+                    unlink($filename);
+                }
+                $data['filepath'] = $filepath;
+            }
+
+            
         } else {
-            $model = new Category();
+            $model = new Picture();
+            
+            if($filepath) {
+                $data['filepath'] = $filepath;
+            }
         }
         
-        $data = $request->all();
 
         $model->fill($data);
 
@@ -107,7 +134,7 @@ class CategoryController extends Controller
      */
     public function delete($id){
 
-        $model  = Category::find($id);
+        $model  = Picture::find($id);
         if (!$model) {
             return new JsonResponse([
                 'message' => 'no_data',

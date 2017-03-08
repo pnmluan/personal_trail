@@ -90,7 +90,6 @@ class AuthController extends Controller
     protected function onJwtGenerationError()
     {
         return new JsonResponse([
-            'status'=> 'error',
             'message' => 'could_not_create_token'
         ], Response::HTTP_INTERNAL_SERVER_ERROR);
     }
@@ -103,7 +102,6 @@ class AuthController extends Controller
     protected function onAuthorized($token)
     {
         return new JsonResponse([
-            'status'=> 'success',
             'message' => 'token_generated',
             'data' => [
                 'token' => $token,
