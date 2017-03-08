@@ -102,7 +102,7 @@ class ArticleController extends Controller
 
         $model  = Article::find($id);
 
-        if (!empty($model)) {
+        if (empty($model)) {
             return new JsonResponse([
                 'message' => 'no_data',
             ]);

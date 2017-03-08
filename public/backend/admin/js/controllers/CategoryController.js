@@ -19,7 +19,7 @@ angular.module('MetronicApp').controller('CategoryController', function($rootSco
 
     // Click to Add New
     $scope.clickToAddNew = function() {
-console.log('test')
+
         ngDialog.openConfirm({
             template: 'views/category/model_form_category.html',
             className: 'ngdialog-theme-default',
@@ -196,7 +196,7 @@ console.log('test')
                     xhr.setRequestHeader('Authorization',"Basic " + $base64.encode('datvesieure' + ":" + 'balobooking'));
                 },
                 data: params,
-                url: $rootScope.settings.apiPath + table + '/index',
+                url: $rootScope.settings.apiPath + table + '/index?has_data_table=1',
                 type: 'GET',
         }).withDataProp('data')
             .withOption('processing',true)
