@@ -104,7 +104,7 @@ class SlideController extends Controller
 
         $model  = Slide::find($id);
 
-        if (!empty($model)) {
+        if (empty($model)) {
             return new JsonResponse([
                 'message' => 'no_data',
             ]);
