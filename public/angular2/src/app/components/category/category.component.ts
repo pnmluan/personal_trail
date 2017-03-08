@@ -17,6 +17,7 @@ export class CategoryComponent implements OnInit {
 	private subscriptionParam: Subscription;
 	curRouting?: string;
 	_params = {};
+	articles: Array<any> = [];
 
 	constructor(
 		private _ArticleDataService: ArticleDataService,
@@ -44,11 +45,19 @@ export class CategoryComponent implements OnInit {
 	ngOnInit(){
 		let params: URLSearchParams = new URLSearchParams();
 		this._CategoryDataService.getAll(params).subscribe(res => {
-			
+
 		})
 	}
 
 	initData(){
+		/*this._CategoryDataService.getByID(this._params['id']).subscribe(res => {
+			this._Router.navigate(['category', res.data.name]);
+		})*/
 
+		var params: URLSearchParams = new URLSearchParams();
+		params.set('category_id',this._params['id']);
+		this._ArticleDataService.getAll(params).subscribe(res => {
+			this.articles = res.data;
+		})
 	}
 }

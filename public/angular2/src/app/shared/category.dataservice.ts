@@ -27,6 +27,16 @@ export class CategoryDataService {
 		.catch(this.handleError);
 	}
 
+	public getByID(id: number) {
+		let headers = new Headers();
+		this.createAuthorizationHeader(headers);
+			return this._Http.get(this.actionUrl + 'show/' + id, {
+			headers: headers,
+		})
+		.map(res => res.json())
+		.catch(this.handleError);
+	}
+
 	private handleError(error: Response) {
 		return Observable.throw(error.json().error || 'Server error');
 	}
