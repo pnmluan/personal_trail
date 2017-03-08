@@ -73,7 +73,7 @@ import { ContactComponent } from './components/contact';
 	providers: [
 		Configuration,
 		HttpClient,
-		...HTTP_INTERCEPTOR_PROVIDER,
+		HTTP_INTERCEPTOR_PROVIDER,
 		LoadingAnimateService,
 		// LocalStorageService,
 		// {
