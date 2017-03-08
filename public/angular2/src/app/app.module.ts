@@ -38,6 +38,8 @@ import { routing } from './app.routing';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home';
 import { AboutComponent } from './components/about';
+import { ArticleComponent } from './components/article';
+import { CategoryComponent } from './components/category';
 import { ContactComponent } from './components/contact';
 
 
@@ -46,6 +48,8 @@ import { ContactComponent } from './components/contact';
 		AppComponent,
 		HomeComponent,
 		AboutComponent,
+		ArticleComponent,
+		CategoryComponent,
 		ContactComponent
 	],
 	imports: [
@@ -73,7 +77,7 @@ import { ContactComponent } from './components/contact';
 	providers: [
 		Configuration,
 		HttpClient,
-		...HTTP_INTERCEPTOR_PROVIDER,
+		HTTP_INTERCEPTOR_PROVIDER,
 		LoadingAnimateService,
 		// LocalStorageService,
 		// {
