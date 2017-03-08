@@ -186,7 +186,7 @@ class CategoryController extends Controller
         }
         return new JsonResponse([
             'message' => 'created',
-            'rercord_id' => $id
+            'record_id' => $id
         ]);
     }
 
