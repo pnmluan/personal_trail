@@ -23,8 +23,13 @@ angular.module('MetronicApp').controller('AuthController', function($rootScope, 
             if(res.status == 200) {
                 $rootScope.settings.token = res.data.data.token;
                 localStorage.setItem('token', res.data.data.token);
+                $scope.has_error = false;
                 $window.location.href = $rootScope.settings.baseUrl + 'category.html';
                 $window.location.reload();
+            }
+        }, function(res) {
+            if(res.status != 200) {
+                $scope.has_error = true;
             }
         });
     }
@@ -37,6 +42,7 @@ angular.module('MetronicApp').controller('AuthController', function($rootScope, 
 
     function initialize() {
         $scope.mItem = {};
+        $scope.has_error = false;
 
     }
 

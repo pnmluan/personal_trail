@@ -59,6 +59,26 @@ $api->version('v1', function ($api) {
             'as' => 'api.category.delete',
             'uses' => 'App\Http\Controllers\System\CategoryController@delete',
         ]);
+
+        /*
+        |--------------------------------------------------------------------------
+        | Slide
+        |--------------------------------------------------------------------------
+        */
+        $api->post('/slide/save', [
+            'as' => 'api.slide.create',
+            'uses' => 'App\Http\Controllers\System\SlideController@save',
+        ]);
+
+        $api->post('/slide/save/{id}', [
+            'as' => 'api.slide.update',
+            'uses' => 'App\Http\Controllers\System\SlideController@save',
+        ]);
+
+        $api->delete('/slide/delete/{id}', [
+            'as' => 'api.slide.delete',
+            'uses' => 'App\Http\Controllers\System\SlideController@delete',
+        ]);
     });
 
     /*

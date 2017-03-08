@@ -305,12 +305,12 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
         })
 
 
-        // Banner
-        .state('banner', {
-            url: "/banner.html",
-            templateUrl: "views/banner/main.html",            
-            data: {pageTitle: 'Admin Banner Template'},
-            controller: "BannerController",
+        // Slide
+        .state('slide', {
+            url: "/slide.html",
+            templateUrl: "views/slide/main.html",            
+            data: {pageTitle: 'Admin Slide Template'},
+            controller: "SlideController",
             resolve: {
                 deps: ['$ocLazyLoad', function($ocLazyLoad) {
                     return $ocLazyLoad.load({
@@ -318,8 +318,8 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
                         insertBefore: '#ng_load_plugins_before', // load the above css files before a LINK element with this ID. Dynamic CSS files must be loaded between core and theme css files
                         files: [
                             '../assets/global/plugins/dropzone/dropzone.min.js',
-                            'js/controllers/BannerController.js',
-                            'js/services/banner.service.js'
+                            'js/controllers/SlideController.js',
+                            'js/services/slide.service.js'
                         ] 
                     });
                 }]

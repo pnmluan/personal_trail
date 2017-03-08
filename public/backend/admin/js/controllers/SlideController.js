@@ -1,5 +1,6 @@
-angular.module('MetronicApp').controller('BannerController', function($rootScope, $scope, $http, $base64, $timeout, $location, $q, BannerService, ngDialog, toastr, DTOptionsBuilder, DTColumnBuilder, Upload) {
+angular.module('MetronicApp').controller('SlideController', function($rootScope, $scope, $http, $base64, $timeout, $location, $q, SlideService, ngDialog, toastr, DTOptionsBuilder, DTColumnBuilder, Upload) {
     $scope.$on('$viewContentLoaded', function() {
+
         // initialize core components
         App.initAjax();
         // toastr.info('We are open today from 10 to 22', 'Information');
@@ -21,7 +22,7 @@ angular.module('MetronicApp').controller('BannerController', function($rootScope
     $scope.clickToAddNew = function() {
 
         ngDialog.openConfirm({
-            template: 'views/banner/model_add_banner.html',
+            template: 'views/slide/model_form_slide.html',
             className: 'ngdialog-theme-default',
             scope: $scope,
             controller: ['$scope', 'data', function($scope, data){
@@ -35,9 +36,9 @@ angular.module('MetronicApp').controller('BannerController', function($rootScope
                 $scope.save = function() {
 
                     $scope.mItem.status = $scope.optionStatus.selected.id;
-                    BannerService.create($scope.img, $scope.mItem).then(function(res) {
+                    SlideService.save($scope.img, $scope.mItem).then(function(res) {
 
-                        if(res.data.status == 'success') {
+                        if(res.status == 200) {
                             data.dtInstance.reloadData();
                             $scope.mItem = {};
                             toastr.success('Added an item', 'Success');
@@ -71,7 +72,7 @@ angular.module('MetronicApp').controller('BannerController', function($rootScope
     function getItemByID(id) {
         var deferred = $q.defer();
         var item = {};
-        BannerService.getBanners().then(function(res) {
+        SlideService.getAll().then(function(res) {
 
             if(res.statusText == 'OK') {
 
@@ -89,7 +90,7 @@ angular.module('MetronicApp').controller('BannerController', function($rootScope
     // Click to Update
     $scope.clickToUpdate = function(item) {
         ngDialog.openConfirm({
-            template: 'views/banner/model_update_banner.html',
+            template: 'views/slide/model_form_slide.html',
             className: 'ngdialog-theme-default',
             scope: $scope,
             controller: ['$scope', '$filter', 'data', function($scope, $filter, data){
@@ -105,14 +106,14 @@ angular.module('MetronicApp').controller('BannerController', function($rootScope
                 });
 
                 //Load Image
-                $scope.img = $scope.settings.imgPath + 'banner/' + item.img; 
+                $scope.img = $scope.settings.imgPath + 'slide/' + item.filepath; 
 
                 // Create Banner
                 $scope.save = function() {
                     $scope.mItem.status = $scope.optionStatus.selected.id;
-                    BannerService.update($scope.img, $scope.mItem).then(function(res) {
+                    SlideService.save($scope.img, $scope.mItem, $scope.mItem.id).then(function(res) {
 
-                        if(res.data.status == 'success') {
+                        if(res.status == 200) {
                             data.dtInstance.reloadData();
                             ngDialog.close();
                             toastr.success('Updated an item', 'Success');
@@ -160,7 +161,7 @@ angular.module('MetronicApp').controller('BannerController', function($rootScope
           buttonsStyling: false
         }).then(function() {
 
-            BannerService.delete(id).then(function(res) {
+            SlideService.delete(id).then(function(res) {
                 if(res.data.status == 'success') {
                     toastr.success('Deleted an item', 'Success');
                     $scope.dtInstance.reloadData();
@@ -184,7 +185,7 @@ angular.module('MetronicApp').controller('BannerController', function($rootScope
         $scope.listItem = [];
         $scope.dtInstance = {};
 
-        var table = 'banner'
+        var table = 'slide'
         var params = $location.search();
         var imgUrl = $rootScope.settings.imgPath + table + '/';
 
@@ -194,7 +195,7 @@ angular.module('MetronicApp').controller('BannerController', function($rootScope
                     xhr.setRequestHeader('Authorization',"Basic " + $base64.encode('datvesieure' + ":" + 'balobooking'));
                 },
                 data: params,
-                url: $rootScope.settings.apiPath + table + '/index',
+                url: $rootScope.settings.apiPath + table + '/index?has_data_table=1',
                 type: 'GET',
         }).withDataProp('data')
             .withOption('processing',true)
@@ -214,13 +215,12 @@ angular.module('MetronicApp').controller('BannerController', function($rootScope
 
         $scope.dtColumns = [
             DTColumnBuilder.newColumn('id').notVisible(),
-            DTColumnBuilder.newColumn('img').withTitle('Image').withOption('createdCell',function(td, cellData, rowData, row, col){
-               var string_html = `<img class="medium-thumb-icon" src="` + imgUrl + rowData.img   + `">`;
+            DTColumnBuilder.newColumn('filepath').withTitle('Image').withOption('createdCell',function(td, cellData, rowData, row, col){
+               var string_html = `<img class="medium-thumb-icon" src="` + imgUrl + rowData.filepath   + `">`;
                 $(td).html(string_html);
             }).withOption('width','60px'),
             DTColumnBuilder.newColumn('title').withTitle('Title'),
             DTColumnBuilder.newColumn('description').withTitle('Description'),
-            DTColumnBuilder.newColumn('url').withTitle('Url'),
             DTColumnBuilder.newColumn('status').withTitle('Status'),
             DTColumnBuilder.newColumn(null).withTitle('Action').withOption('createdCell',function(td,cellData,rowData,row,col){
                 
@@ -232,7 +232,7 @@ angular.module('MetronicApp').controller('BannerController', function($rootScope
     }
 
     function loadListItem() {
-        BannerService.getBanners().then(function(res) {
+        SlideService.getAll().then(function(res) {
 
             if(res.statusText == 'OK') {
                 $scope.listItem = res.data.data;

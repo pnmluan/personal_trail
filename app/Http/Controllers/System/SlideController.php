@@ -13,7 +13,7 @@ use Illuminate\Http\Exception\HttpResponseException;
 
 class SlideController extends Controller
 {
-    private $path = 'backend/assets/apps/img/slides';
+    private $path = 'backend/assets/apps/img/slide';
     /**
      * Create a new controller instance.
      *
@@ -36,7 +36,7 @@ class SlideController extends Controller
     public function index(Request $request){
         $params = $request->all();
         if(isset($request['has_data_table']) && $request['has_data_table']) {
-            $data = Category::listItems($params);
+            $data = Slide::listItems($params);
             return $data;
         } else {
 
@@ -137,7 +137,7 @@ class SlideController extends Controller
      * @return JsonResponse
      */
     public function save(Request $request, $id = null){
-        $data = $request->all();
+        $data = $request['data'];
         $filepath = $this->uploadImage($request->file('filepath'));
 
         if(!empty($id)) {
