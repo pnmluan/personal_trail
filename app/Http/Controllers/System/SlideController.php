@@ -15,20 +15,81 @@ class SlideController extends Controller
 {
     private $path = 'backend/assets/apps/img/slides';
     /**
-     * Get info users base on params
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->table = 'slides';
+        $this->columns = \DB::getSchemaBuilder()->getColumnListing($this->table);
+    }
+
+
+    /**
+     * Get info users for datatables
      *
      * @param \Illuminate\Http\Request $request
      *
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request){
+        $params = $request->all();
         if(isset($request['has_data_table']) && $request['has_data_table']) {
-            $data = Slide::listItems($request->all());
-        return $data;
+            $data = Category::listItems($params);
+            return $data;
         } else {
+
+            $columns  = $this->columns;
+
+            $limit          = 5000;
+            $offset         = 0;
+
+            $alias = 'MT';
+            $alias_dot = $alias . '.';
+            $select         = $alias_dot . '*';
+            $query = \DB::table($this->table . ' AS ' . $alias)
+                        ->select($select);
+            /*==================================================
+             * Filter Data
+             *==================================================*/
+            foreach ($columns as $field) {
+                if(isset($params[$field]) || !empty($params[$field])){
+                    if(is_array($params[$field])){
+                        $query->where($alias_dot . $field, 'IN', $params[$field]);
+                    }else{
+                        switch ($field) {
+                            case 'status':
+                                $query->where($alias_dot . $field, '=', $params[$field]);
+                                break;
+                            default:
+                                $query->where($alias_dot . $field, 'LIKE', '%' . $params[$field] . '%');
+                                break;
+                        }
+                    }
+                }
+            }
+
+            /*==================================================
+             * Limit & Offset
+             *==================================================*/
+            $limit = (isset($params['limit']) || !empty($params['limit']))?$params['limit']:$limit;
+            $offset = (isset($params['offset']) || !empty($params['offset']))?$params['offset']:$offset;
+
+
+            /*==================================================
+             * Process Query
+             *==================================================*/
+            $query->limit($limit)->offset($offset);
+            $data = $query->get()->toArray();
+            $total_data = count($data);
+            /*==================================================
+             * Response Data
+             *==================================================*/
             return new JsonResponse([
                 'message' => 'list_data',
-                'data' => Slide::all()
+                'total' => $total_data,
+                'data' => $data
             ]);
         }
 
