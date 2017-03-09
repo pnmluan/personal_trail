@@ -6,9 +6,9 @@ use Laravel\Lumen\Routing\Controller as BaseController;
 
 class Controller extends BaseController
 {
-    setlocale(LC_ALL, 'en_US.UTF8');
-
+    
 	public function toAscii($str, $replace=array(), $delimiter='-') {
+		setlocale(LC_ALL, 'en_US.UTF8');
 		if( !empty($replace) ) {
 			foreach($replace as $key=>$value) {
 	    	    $str = str_replace($key, $value, $str);

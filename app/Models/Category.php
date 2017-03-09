@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 class Category extends BaseModel
 {
     protected $table = 'categories';
-    protected $fillable = [ 'name', 'description',  'status'];
+    protected $fillable = [ 'name', 'clean_url', 'description',  'status'];
 
     public function getModelValidations()
     {
@@ -16,7 +16,7 @@ class Category extends BaseModel
     }
 
     public static function listItems(array $param = null){
-        $aColumns = ['name', 'description', 'status'];
+        $aColumns = ['name', 'description', 'clean_url', 'status'];
         $aNotLike = ['status'];
 
         $query = \DB::table('categories')

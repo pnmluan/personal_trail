@@ -134,7 +134,7 @@ class ArticleController extends Controller
         }
         
         $data = $request->all();
-
+        $data['clean_url'] = $this->toAscii($data['title']);
         $model->fill($data);
 
         if (!$model->isValid()) {

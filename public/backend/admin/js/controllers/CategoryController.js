@@ -114,7 +114,7 @@ angular.module('MetronicApp').controller('CategoryController', function($rootSco
                     $scope.mItem.status = $scope.optionStatus.selected.id;
                     CategoryService.save($scope.mItem, $scope.mItem.id).then(function(res) {
 
-                        if(res.data.status == 'success') {
+                        if(res.status == 200) {
                             data.dtInstance.reloadData();
                             ngDialog.close();
                             toastr.success('Updated an item', 'Success');

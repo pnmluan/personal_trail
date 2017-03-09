@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Article extends BaseModel
 {
     protected $table = 'articles'; 
-    protected $fillable = ['title', 'content', 'author_id', 'categories_id', 'publish_date', 'status','created_at', 'updated_at'];
+    protected $fillable = ['title', 'content', 'author_id', 'categories_id', 'publish_date', 'status', 'clean_url' ,'created_at', 'updated_at'];
 
     public function getModelValidations()
     {
@@ -18,7 +18,7 @@ class Article extends BaseModel
 
     public static function listItems(array $param = null){
 
-        $aColumns = ['articles.title', 'category_id', 'categories.name', 'articles.content', 'articles.author_id', 'articles.publish_date'];
+        $aColumns = ['articles.title', 'category_id', 'categories.name', 'articles.content', 'articles.author_id', 'articles.publish_date', 'articles.clean_url'];
 
         $query = \DB::table('articles')
             ->select(\DB::raw('SQL_CALC_FOUND_ROWS articles.id'),\DB::raw('articles.id AS DT_RowId'),'articles.*', \DB::raw('categories.name AS categories_name')

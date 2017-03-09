@@ -135,7 +135,7 @@ class CategoryController extends Controller
         }
         
         $data = $request->all();
-
+        $data['clean_url'] = $this->toAscii($data['name']);
         $model->fill($data);
 
         if (!$model->isValid()) {
