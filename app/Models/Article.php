@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Article extends BaseModel
 {
     protected $table = 'articles'; 
-    protected $fillable = ['title', 'content', 'author_id', 'categories_id', 'publish_date', 'status', 'clean_url' ,'created_at', 'updated_at'];
+    protected $fillable = ['title', 'description', 'content', 'author_id', 'category_id', 'publish_date', 'status', 'clean_url' ,'created_at', 'updated_at'];
 
     public function getModelValidations()
     {
@@ -18,10 +18,10 @@ class Article extends BaseModel
 
     public static function listItems(array $param = null){
 
-        $aColumns = ['articles.title', 'category_id', 'categories.name', 'articles.content', 'articles.author_id', 'articles.publish_date', 'articles.clean_url'];
+        $aColumns = ['articles.title', 'articles.description', 'category_id', 'category_name', 'articles.content', 'articles.author_id', 'articles.publish_date', 'articles.clean_url'];
 
         $query = \DB::table('articles')
-            ->select(\DB::raw('SQL_CALC_FOUND_ROWS articles.id'),\DB::raw('articles.id AS DT_RowId'),'articles.*', \DB::raw('categories.name AS categories_name')
+            ->select(\DB::raw('SQL_CALC_FOUND_ROWS articles.id'),\DB::raw('articles.id AS DT_RowId'),'articles.*', \DB::raw('categories.name AS category_name')
             	// , 'pictures.name', 'pictures.url', 'pictures.email', 'pictures.requirement'
             	)
             ->leftJoin('categories', 'articles.category_id', '=', 'categories.id');
@@ -91,8 +91,8 @@ class Article extends BaseModel
 
         // Add pictures 
         foreach ($data as $key => $value) {
-            $album = \DB::table('pictures')->where('article_id', $value->id)->get();
-            $data[$key]->album = $album;
+            $pictures = \DB::table('pictures')->where('article_id', $value->id)->get();
+            $data[$key]->pictures = $pictures;
         }
 
         \DB::setFetchMode(\PDO::FETCH_ASSOC);

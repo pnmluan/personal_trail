@@ -38,7 +38,7 @@ angular.module('MetronicApp').controller('CategoryController', function($rootSco
                     $scope.mItem.status = $scope.optionStatus.selected.id;
                     CategoryService.save($scope.mItem).then(function(res) {
 
-                        if(res.data.status == 'success') {
+                        if(res.status == 200) {
                             data.dtInstance.reloadData();
                             $scope.mItem = {};
                             toastr.success('Added an item', 'Success');
@@ -163,7 +163,7 @@ angular.module('MetronicApp').controller('CategoryController', function($rootSco
         }).then(function() {
 
             CategoryService.delete(id).then(function(res) {
-                if(res.data.status == 'success') {
+                if(res.status == 200) {
                     toastr.success('Deleted an item', 'Success');
                     $scope.dtInstance.reloadData();
                 }

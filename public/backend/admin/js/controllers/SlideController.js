@@ -162,7 +162,7 @@ angular.module('MetronicApp').controller('SlideController', function($rootScope,
         }).then(function() {
 
             SlideService.delete(id).then(function(res) {
-                if(res.data.status == 'success') {
+                if(res.status == 200) {
                     toastr.success('Deleted an item', 'Success');
                     $scope.dtInstance.reloadData();
                 }

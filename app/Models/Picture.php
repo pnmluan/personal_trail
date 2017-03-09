@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 class Picture extends BaseModel
 {
      protected $table = 'pictures';
-     protected $fillable = ['title', 'filepath', 'description', 'status', 'created_at', 'updated_at'];
+     protected $fillable = ['title', 'filepath', 'article_id', 'description', 'status', 'created_at', 'updated_at'];
 
      public function getModelValidations()
 	{
@@ -18,7 +18,7 @@ class Picture extends BaseModel
 
      public static function listItems(array $param = null){
 
-		$aColumns = ['title', 'filepath', 'description', 'status'];
+		$aColumns = ['title', 'filepath', 'article_id','description', 'status'];
 		
 		$query = \DB::table('pictures')
 					->select(\DB::raw('SQL_CALC_FOUND_ROWS id'),\DB::raw('id AS DT_RowId'),'pictures.*');

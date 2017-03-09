@@ -13,7 +13,7 @@ use Illuminate\Http\Exception\HttpResponseException;
 
 class PictureController extends Controller
 {
-    private $path = 'backend/assets/apps/img/pictures';
+    private $path = 'backend/assets/apps/img/picture';
     /**
      * Create a new controller instance.
      *
@@ -117,15 +117,21 @@ class PictureController extends Controller
 
     }
 
-    protected function uploadImage($image) {
-        if($image) {
-            $filename  = time() . '.' . $image->getClientOriginalExtension();
+    protected function uploadImage($images) {
+        if($images) {
+            $filenames = [];
+            foreach ($images as $key => $image) {
+               $filename  = time(). $key . '.' . $image->getClientOriginalExtension();
 
-            $destinationPath = $this->path; // upload path
+                $destinationPath = $this->path; // upload path
 
-            $image->move($destinationPath, $filename); // uploading file to given path
+                $image->move($destinationPath, $filename); // uploading file to given path
 
-            return $filename;
+                $filenames[] = $filename;
+            }
+            
+
+            return $filenames;
         }
         return null;
 
@@ -137,55 +143,42 @@ class PictureController extends Controller
      * @return JsonResponse
      */
     public function save(Request $request, $id = null){
-        $data = $request->all();
-        $filepath = $this->uploadImage($request->file('filepath'));
 
-        if(!empty($id)) {
-
-            $model = Picture::find($id);
-            if (!$model) {
-                return new JsonResponse([
-                    'message' => 'no_data',
-                ]);
-            }
-            if($filepath) {
-                $filename = $this->path . '/' . $banner->filepath;
-                if(file_exists($filename)) {
-                    unlink($filename);
-                }
-                $data['filepath'] = $filepath;
-            }
-
-            
-        } else {
-            $model = new Picture();
-            
-            if($filepath) {
-                $data['filepath'] = $filepath;
-            }
-        }
+        $data = $request['data'];
         
+        $pictures = [];
+        $imgs = $this->uploadImage($request->file('filepaths'));
+        if($imgs) {
 
-        $model->fill($data);
+            foreach ($imgs as $key => $img) {
+                $model = new Picture();
+                $data['filepath'] = $img;
+                $model->fill($data);
 
-        if (!$model->isValid()) {
-            return new JsonResponse([
-                'message' => 'invalid',
-                'error' => $model->getValidationErrors()
-            ]);
+                try {
+                    $model->save();
+                    $pictures[] = $model;
+                } catch (\Exception $ex) {
+                    return new JsonResponse([
+                        'message' => 'exception',
+                        'error' => $ex->getMessage()
+                    ]);
+                }
+            }
+            
         }
-        try {
-            $model->save();
-        } catch (\Exception $ex) {
-            return new JsonResponse([
-                'message' => 'exception',
-                'error' => $ex->getMessage()
-            ]);
+
+        if(isset($data['removed_imgs'])) {
+            // Delete an array of files
+            foreach ($data['removed_imgs'] as $key => $value) {
+
+                $removedModel  = Picture::where(['filepath' => $value, 'article_id' => $data['article_id']]);
+                $removedModel->delete();
+                unlink($this->path . '/' . $value);
+            }
+
+            
         }
-        return new JsonResponse([
-            'message' => 'created',
-            'data' => $model
-        ]);
     }
 
     /**

@@ -100,7 +100,7 @@ class ArticleController extends Controller
      */
     public function show($id) {
 
-        $model  = Article::where('clean_url', '=', $id)->firstOrFail();
+        $model  = Category::where('clean_url', '=', $id)->firstOrFail();
 
         if (empty($model)) {
             return new JsonResponse([
@@ -121,6 +121,7 @@ class ArticleController extends Controller
      * @return JsonResponse
      */
     public function save(Request $request, $id = null){
+        $data = $request->all();
         if(!empty($id)) {
             $model = Article::find($id);
 
@@ -131,9 +132,10 @@ class ArticleController extends Controller
             }
         } else {
             $model = new Article();
+            $data['publish_date'] = date('Y-m-d');
         }
         
-        $data = $request->all();
+        
         $data['clean_url'] = $this->toAscii($data['title']);
         $model->fill($data);
 

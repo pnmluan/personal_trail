@@ -1,4 +1,4 @@
-angular.module('MetronicApp').controller('EntranceTicketController', function($rootScope, $scope, $http, $base64, $timeout, $location, $q, EntranceTicketService, CategoryTicketService, AlbumTicketService, ngDialog, toastr, DTOptionsBuilder, DTColumnBuilder, Upload) {
+angular.module('MetronicApp').controller('ArticleController', function($rootScope, $scope, $http, $base64, $timeout, $location, $q, ArticleService, CategoryService, PictureService, ngDialog, toastr, DTOptionsBuilder, DTColumnBuilder, Upload) {
     $scope.$on('$viewContentLoaded', function() {
         // initialize core components
         App.initAjax();
@@ -20,17 +20,17 @@ angular.module('MetronicApp').controller('EntranceTicketController', function($r
     // Click to Add New
     $scope.clickToAddNew = function() {
 
-        if ($scope.optionCategoryTicket.length) {
+        if ($scope.optionCategory.length) {
             ngDialog.openConfirm({
-                template: 'views/entranceticket/model_add_entrance_ticket.html',
+                template: 'views/article/model_form_article.html',
                 className: 'ngdialog-theme-large',
                 scope: $scope,
                 controller: ['$scope', 'data', function($scope, data) {
                     $scope.mItem = {};
                     $scope.errorMsg = [];
 
-                    $scope.optionCategoryTicket = data.optionCategoryTicket;
-                    $scope.optionCategoryTicket.selected = data.optionCategoryTicket[0];
+                    $scope.optionCategory = data.optionCategory;
+                    $scope.optionCategory.selected = data.optionCategory[0];
 
                     $scope.optionStatus = data.optionStatus;
                     $scope.optionStatus.selected = data.optionStatus[0];
@@ -41,36 +41,41 @@ angular.module('MetronicApp').controller('EntranceTicketController', function($r
                         $scope.imgs.splice(index, 1);
                     }
 
-                    // Create EntranceTicket
+                    // Create article
                     $scope.save = function() {
-                        $scope.mItem.category_ticket_id = $scope.optionCategoryTicket.selected.id;
+                        $scope.mItem.category_id = $scope.optionCategory.selected.id;
                         $scope.mItem.status = $scope.optionStatus.selected.id;
 
-                        EntranceTicketService.create($scope.mItem).then(function(res) {
+                        ArticleService.save($scope.mItem).then(function(res) {
 
-                            if (res.data.status == 'success') {
+                            if (res.status == 200) {
 
                                 var params = {
-                                    entrance_ticket_id: res.data.data.id
+                                    article_id: res.data.data.id
                                 };
-                                AlbumTicketService.create($scope.imgs, params).then(function(res) {
-
-
+                                PictureService.save($scope.imgs, params).then(function(res) {
+                                    if(res.status == 200) {
+                                        data.dtInstance.reloadData();
+                                        $scope.mItem = {};
+                                        toastr.success('Added an item', 'Success');
+                                        $scope.errorMsg = [];
+                                    }
                                 });
-
-                                data.dtInstance.reloadData();
-                                $scope.mItem = {};
-                                toastr.success('Added an item', 'Success');
-                                $scope.errorMsg = [];
+                                
                             } else {
                                 $scope.errorMsg = res.data.error;
 
                             }
 
+                        }, function(res) {
+                            console.log(res)
+                            if(res.status != 200) {
+                                toastr.success('Added an item', 'Success');
+                            }
                         });
                     }
 
-                    // Close popup entrance_ticket
+                    // Close popup article
                     $scope.close = function() {
                         ngDialog.close();
                     }
@@ -80,7 +85,7 @@ angular.module('MetronicApp').controller('EntranceTicketController', function($r
                         var data = {
                             optionStatus: $scope.optionStatus,
                             dtInstance: $scope.dtInstance,
-                            optionCategoryTicket: $scope.optionCategoryTicket
+                            optionCategory: $scope.optionCategory
                         }
                         return data;
                     }
@@ -98,7 +103,7 @@ angular.module('MetronicApp').controller('EntranceTicketController', function($r
             }).then(function() {
 
                 setTimeout(function() {
-                    $location.path('/category_ticket');
+                    $location.path('/category');
                 }, 1000)
 
             });
@@ -111,7 +116,7 @@ angular.module('MetronicApp').controller('EntranceTicketController', function($r
     function getItemByID(id) {
         var deferred = $q.defer();
         var item = {};
-        EntranceTicketService.getEntranceTickets().then(function(res) {
+        ArticleService.getAll().then(function(res) {
 
             if (res.statusText == 'OK') {
 
@@ -129,17 +134,18 @@ angular.module('MetronicApp').controller('EntranceTicketController', function($r
     // Click to Update
     $scope.clickToUpdate = function(item) {
         ngDialog.openConfirm({
-            template: 'views/entranceticket/model_update_entrance_ticket.html',
+            template: 'views/article/model_form_article.html',
             className: 'ngdialog-theme-large',
             scope: $scope,
             controller: ['$scope', '$filter', 'data', function($scope, $filter, data) {
                 $scope.mItem = item;
+                console.log(item);
                 $scope.errorMsg = [];
 
-                $scope.optionCategoryTicket = data.optionCategoryTicket;
-                angular.forEach($scope.optionCategoryTicket, function(value, key) {
-                    if (value.id == item.category_ticket_id) {
-                        $scope.optionCategoryTicket.selected = value;
+                $scope.optionCategory = data.optionCategory;
+                angular.forEach($scope.optionCategory, function(value, key) {
+                    if (value.id == item.category_id) {
+                        $scope.optionCategory.selected = value;
                         return;
                     }
                 });
@@ -153,46 +159,41 @@ angular.module('MetronicApp').controller('EntranceTicketController', function($r
                 });
 
                 var query = {
-                    entrance_ticket_id: item.id
+                    article_id: item.article_id
                 };
-                let imgs = [];
+                let temp_imgs = [];
                 let arr_removed_img = [];
                 let arr_img = [];
                 //Load Images
-                AlbumTicketService.getAll($.param(query)).then(function(res) {
-                    if (res.data.data.length) {
-
-                        angular.forEach(res.data.data, function(value, key) {
-                            imgs.push($scope.settings.imgPath + 'album_ticket/' + value.img);
-                            arr_img.push(value.img);
-                        });
-
-                        $scope.imgs = JSON.parse(JSON.stringify(imgs));
-
-                    }
-
-                });
+                
+                if(item.pictures.length) {
+                    angular.forEach(item.pictures, function(value, key) {
+                        temp_imgs.push($scope.settings.imgPath + 'picture/' + value.filepath);
+                        arr_img.push(value.filepath);
+                    });
+                    $scope.imgs = JSON.parse(JSON.stringify(temp_imgs));
+                }
+                
 
                 // Remove img in list
                 $scope.removeImg = function($event, img, index) {
                     $event.stopPropagation();
                     angular.forEach(arr_img, function(value, key) {
-                        if ($scope.settings.imgPath + 'album_ticket/' + value == img) {
+                        if ($scope.settings.imgPath + 'picture/' + value == img) {
                             arr_removed_img.push(value);
                             return;
                         }
 
                     });
-
                     $scope.imgs.splice(index, 1);
-                    console.log($scope.imgs);
+                    
                 }
 
 
-                // Create entrance_ticket
+                // Create article
                 $scope.save = function() {
-
-                    $scope.mItem.category_ticket_id = $scope.optionCategoryTicket.selected.id;
+                    console.log($scope.imgs);
+                    $scope.mItem.category_id = $scope.optionCategory.selected.id;
                     if($scope.optionStatus.selected) {
                         $scope.mItem.status = $scope.optionStatus.selected.id;
                     } else {
@@ -200,9 +201,9 @@ angular.module('MetronicApp').controller('EntranceTicketController', function($r
                     }
                     
                     
-                    EntranceTicketService.update($scope.mItem).then(function(res) {
+                    ArticleService.save($scope.mItem, $scope.mItem.id).then(function(res) {
 
-                        if (res.data.status == 'success') {
+                        if (res.status == 200) {
                             var imgs = [];
                             angular.forEach($scope.imgs, function(value, key) {
                                 if (typeof value === 'object') {
@@ -210,17 +211,19 @@ angular.module('MetronicApp').controller('EntranceTicketController', function($r
                                 }
                             });
                             var params = {
-                                entrance_ticket_id: res.data.data.id,
+                                article_id: res.data.data.id,
                                 removed_imgs: arr_removed_img
                             };
-                            AlbumTicketService.create(imgs, params).then(function(res) {
-
-
+                            
+                            PictureService.save(imgs, params).then(function(res) {
+                                if(res.status == 200) {
+                                    data.dtInstance.reloadData();
+                                    ngDialog.close();
+                                    toastr.success('Updated an item', 'Success');
+                                }
                             });
 
-                            data.dtInstance.reloadData();
-                            ngDialog.close();
-                            toastr.success('Updated an item', 'Success');
+                            
                         } else {
                             $scope.errorMsg = res.data.error;
 
@@ -229,7 +232,7 @@ angular.module('MetronicApp').controller('EntranceTicketController', function($r
                     });
                 }
 
-                // Close popup EntranceTicket
+                // Close popup article
                 $scope.close = function() {
                     ngDialog.close();
                 }
@@ -240,7 +243,7 @@ angular.module('MetronicApp').controller('EntranceTicketController', function($r
                     var data = {
                         optionStatus: $scope.optionStatus,
                         dtInstance: $scope.dtInstance,
-                        optionCategoryTicket: $scope.optionCategoryTicket
+                        optionCategory: $scope.optionCategory
                     }
                     return data;
                 }
@@ -266,8 +269,8 @@ angular.module('MetronicApp').controller('EntranceTicketController', function($r
             buttonsStyling: false
         }).then(function() {
 
-            EntranceTicketService.delete(id).then(function(res) {
-                if (res.data.status == 'success') {
+            ArticleService.delete(id).then(function(res) {
+                if (res.status == 200) {
                     toastr.success('Deleted an item', 'Success');
                     $scope.dtInstance.reloadData();
                 }
@@ -290,10 +293,10 @@ angular.module('MetronicApp').controller('EntranceTicketController', function($r
         let query = {
             status: 'active'
         };
-        $scope.optionCategoryTicket = [];
-        CategoryTicketService.getAll($.param(query)).then(function(res) {
+        $scope.optionCategory = [];
+        CategoryService.getAll($.param(query)).then(function(res) {
             if (res.data.data) {
-                $scope.optionCategoryTicket = res.data.data;
+                $scope.optionCategory = res.data.data;
 
             }
 
@@ -302,7 +305,7 @@ angular.module('MetronicApp').controller('EntranceTicketController', function($r
         $scope.listItem = [];
         $scope.dtInstance = {};
 
-        var table = 'entrance_ticket'
+        var table = 'article'
         var params = $location.search();
         var imgUrl = $rootScope.settings.imgPath + table + '/';
 
@@ -312,7 +315,7 @@ angular.module('MetronicApp').controller('EntranceTicketController', function($r
                     xhr.setRequestHeader('Authorization', "Basic " + $base64.encode('datvesieure' + ":" + 'balobooking'));
                 },
                 data: params,
-                url: $rootScope.settings.apiPath + table + '/index',
+                url: $rootScope.settings.apiPath + table + '/index?has_data_table=1',
                 type: 'GET',
             }).withDataProp('data')
             .withOption('processing', true)
@@ -332,18 +335,12 @@ angular.module('MetronicApp').controller('EntranceTicketController', function($r
 
         $scope.dtColumns = [
             DTColumnBuilder.newColumn('id').notVisible(),
-
-            DTColumnBuilder.newColumn('name').withTitle('Title').withOption('width', '200px'),
-            DTColumnBuilder.newColumn('category_ticket_name').withTitle('Category'),
-            DTColumnBuilder.newColumn('adult_fare').withTitle('Adult Fare').withOption('createdCell', function(td, cellData, rowData, row, col) {
-
-                $(td).html(cellData.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
-            }).withOption('width', 'auto'),
-            DTColumnBuilder.newColumn('children_fare').withTitle('Children Fare').withOption('createdCell', function(td, cellData, rowData, row, col) {
-
-                $(td).html(cellData.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
-            }).withOption('width', 'auto'),
+            DTColumnBuilder.newColumn('title').withTitle('Title').withOption('width', '200px'),
+            DTColumnBuilder.newColumn('category_name').withTitle('Category'),
             DTColumnBuilder.newColumn('description').withTitle('Description'),
+            DTColumnBuilder.newColumn('author_id').withTitle('Author'),
+            DTColumnBuilder.newColumn('publish_date').withTitle('Publish Date'),
+            DTColumnBuilder.newColumn('status').withTitle('Status'),
             // DTColumnBuilder.newColumn('created_at').withTitle('Created Date'),
             DTColumnBuilder.newColumn(null).withTitle('Action').withOption('createdCell', function(td, cellData, rowData, row, col) {
 
@@ -355,7 +352,7 @@ angular.module('MetronicApp').controller('EntranceTicketController', function($r
     }
 
     function loadListItem() {
-        EntranceTicketService.getEntranceTickets().then(function(res) {
+        ArticleService.getAll().then(function(res) {
 
             if (res.statusText == 'OK') {
                 $scope.listItem = res.data.data;

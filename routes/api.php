@@ -79,6 +79,46 @@ $api->version('v1', function ($api) {
             'as' => 'api.slide.delete',
             'uses' => 'App\Http\Controllers\System\SlideController@delete',
         ]);
+
+        /*
+        |--------------------------------------------------------------------------
+        | Article
+        |--------------------------------------------------------------------------
+        */
+        $api->post('/article/save', [
+            'as' => 'api.article.create',
+            'uses' => 'App\Http\Controllers\System\ArticleController@save',
+        ]);
+
+        $api->post('/article/save/{id}', [
+            'as' => 'api.article.update',
+            'uses' => 'App\Http\Controllers\System\ArticleController@save',
+        ]);
+
+        $api->delete('/article/delete/{id}', [
+            'as' => 'api.article.delete',
+            'uses' => 'App\Http\Controllers\System\ArticleController@delete',
+        ]);
+
+        /*
+        |--------------------------------------------------------------------------
+        | Picture
+        |--------------------------------------------------------------------------
+        */
+        $api->post('/picture/save', [
+            'as' => 'api.picture.create',
+            'uses' => 'App\Http\Controllers\System\PictureController@save',
+        ]);
+
+        $api->post('/picture/save/{id}', [
+            'as' => 'api.picture.update',
+            'uses' => 'App\Http\Controllers\System\PictureController@save',
+        ]);
+
+        $api->delete('/picture/delete/{id}', [
+            'as' => 'api.picture.delete',
+            'uses' => 'App\Http\Controllers\System\PictureController@delete',
+        ]);
     });
 
     /*
