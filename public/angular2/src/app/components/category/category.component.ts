@@ -50,14 +50,24 @@ export class CategoryComponent implements OnInit {
 	}
 
 	initData(){
-		/*this._CategoryDataService.getByID(this._params['id']).subscribe(res => {
-			this._Router.navigate(['category', res.data.name]);
-		})*/
+		let params: URLSearchParams = new URLSearchParams();
+		params.set('clean_url', this._params['clean_url']);
+		params.set('limit','1');
+		this._CategoryDataService.getAll(params).subscribe(res => {
+			if(res.data){
+				let categories = res.data;
+				let category = categories.shift();
+				let params: URLSearchParams = new URLSearchParams();
+				params.set('category_id',category.id);
+				params.set('status','active');
+				this._ArticleDataService.getAll(params).subscribe(res => {
+					this.articles = res.data;
+				});
+			}else{
+				this._Router.navigate(['/']);
+			}
+		});
 
-		var params: URLSearchParams = new URLSearchParams();
-		params.set('category_id',this._params['id']);
-		this._ArticleDataService.getAll(params).subscribe(res => {
-			this.articles = res.data;
-		})
+		
 	}
 }

@@ -9,8 +9,8 @@ const APP_ROUTES: Routes = [
 	{ path: '', redirectTo: 'home', pathMatch: 'full' },
 	{ path: 'home', component: HomeComponent },
 	{ path: 'about', component: AboutComponent },
-	{ path: 'article/:id', component: ArticleComponent },
-	{ path: 'category/:id',component: CategoryComponent },
+	{ path: 'article/:clean_url', component: ArticleComponent },
+	{ path: 'category/:clean_url',component: CategoryComponent },
 	{ path: 'contact', component: ContactComponent },
 	//{ path: '**', component: PageNotFoundComponent },
 ];
