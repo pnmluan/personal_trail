@@ -34,10 +34,10 @@
 			<div class="nav-wrapper">
 				<div class="navbar-collapse collapse">
 					<ul class="nav navbar-nav">
-						<li class="current"><a href="#!">Blog <span class="caret"></span></a>
+						<li class="current"><a href="#">Blog <span class="caret"></span></a>
               				<ul class="dropdown-menu">
               					<li *ngFor="let item of categories">
-              						<a [routerLink]="['/category', item.id]">{{ item.name }}</a>
+              						<a [routerLink]="['/category', item.clean_url]">{{ item.name }}</a>
               					</li>
               				</ul>
               			</li>

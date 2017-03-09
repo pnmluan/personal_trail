@@ -45,5 +45,9 @@ export class ArticleComponent implements OnInit {
 
 	initData(){
 		let params: URLSearchParams = new URLSearchParams();
+		params.set('clean_url', this._params['clean_url']);
+		this._ArticleDataService.getAll().subscribe(res => {
+
+		});
 	}
 }
