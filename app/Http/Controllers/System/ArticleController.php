@@ -100,7 +100,7 @@ class ArticleController extends Controller
      */
     public function show($id) {
 
-        $model  = Article::find($id);
+        $model  = Article::where('clean_url', '=', $id)->firstOrFail();
 
         if (empty($model)) {
             return new JsonResponse([

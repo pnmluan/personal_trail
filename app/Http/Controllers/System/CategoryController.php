@@ -101,7 +101,7 @@ class CategoryController extends Controller
      */
     public function show($id) {
 
-        $model  = Category::find($id);
+        $model  = Category::where('clean_url', '=', $id)->firstOrFail();
 
         if (empty($model)) {
             return new JsonResponse([
