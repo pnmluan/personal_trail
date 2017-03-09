@@ -80,6 +80,15 @@ class ArticleController extends Controller
              *==================================================*/
             $query->limit($limit)->offset($offset);
             $data = $query->get()->toArray();
+
+            // Add pictures 
+            if(!empty($data)) {
+                foreach ($data as $key => $value) {
+                    $pictures = \DB::table('pictures')->where('article_id', $value->id)->get();
+                    $data[$key]->pictures = $pictures;
+                }
+            }
+            
             $total_data = count($data);
             /*==================================================
              * Response Data

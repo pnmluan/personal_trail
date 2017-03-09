@@ -58,7 +58,7 @@ class CORSMiddleware
     protected function addCorsHeaders($request, $response)
     {
         foreach ([
-            'Access-Control-Allow-Origin' => '*',
+            // 'Access-Control-Allow-Origin' => '*',
             'Access-Control-Max-Age' => (60 * 60 * 24),
             'Access-Control-Allow-Headers' => $request->header('Access-Control-Request-Headers'),
             'Access-Control-Allow-Methods' => $request->header('Access-Control-Request-Methods')
