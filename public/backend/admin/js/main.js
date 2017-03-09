@@ -90,11 +90,10 @@ MetronicApp.factory('settings', ['$rootScope', function($rootScope) {
 /* Setup App Main Controller */
 MetronicApp.controller('AppController', ['$scope', '$rootScope', '$http', '$window', function($scope, $rootScope, $http, $window) {
     $scope.$on('$viewContentLoaded', function() {
-        console.log($rootScope.settings.state)
+
         if($rootScope.settings.state != 'login') {
             var urlBase = $rootScope.settings.apiPath + 'auth';
             $http.get(urlBase + '/user').then(function(res) {
-                console.log(res);
                 if(res.status == 200) {
                     // localStorage.removeItem('token');
                     
@@ -238,7 +237,7 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
 
     $stateProvider
 
-         // Login
+        // Login
         .state('login', {
             url: "/login.html",
             templateUrl: "views/login/main.html",            
@@ -382,5 +381,4 @@ MetronicApp.run(["$rootScope", "settings", "$state", function($rootScope, settin
     $rootScope.$state = $state; // state to be accessed from view
     $rootScope.$settings = settings; // state to be accessed from view
 
-    console.log('abc');
 }]);
