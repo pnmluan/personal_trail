@@ -17,6 +17,11 @@ export class ArticleComponent implements OnInit {
 	private subscriptionParam: Subscription;
 	curRouting?: string;
 	_params = {};
+	articles: Array<any> = [];
+	article = {};
+	prev_article = {};
+	next_article = {};
+
 
 	constructor(
 		private _ArticleDataService: ArticleDataService,
@@ -46,8 +51,49 @@ export class ArticleComponent implements OnInit {
 	initData(){
 		let params: URLSearchParams = new URLSearchParams();
 		params.set('clean_url', this._params['clean_url']);
-		this._ArticleDataService.getAll().subscribe(res => {
+		params.set('limit','1');
+		this._ArticleDataService.getAll(params).subscribe(res => {
+			if(res.data){
+				let articles = res.data;
+				this.article = articles.shift();
+				this.loadRelatedPosts(this.article['category_id'], this.article['id']);
+			}else{
+				this._Router.navigate(['/']);
+			}
+		});
+	}
 
+	loadRelatedPosts(category_id: number, except_id: number){
+		let key: number;
+		let prev_key: number;
+		let next_key: number;
+		let params: URLSearchParams = new URLSearchParams();
+		params.set('category_id', String(category_id));
+		params.set('status', 'active');
+		this._ArticleDataService.getAll(params).subscribe(res => {
+			if(res.data){
+				let posts = res.data;
+				for(let k in posts){
+					if(posts[k].id == except_id){
+						key = +k;
+						if(posts[key - 1]){
+							prev_key = key - 1;
+							this.prev_article = posts[prev_key];
+						}
+						if(posts[key + 1]){
+							next_key = key + 1;
+							this.prev_article = posts[next_key];
+						}
+
+					}
+				}
+
+				if(key) posts.splice(key,1);
+				if(prev_key) posts.splice(prev_key,1);
+				if(next_key) posts.splice(next_key,1);
+
+				this.articles = posts;
+			}
 		});
 	}
 }
