@@ -6,9 +6,11 @@ import { Configuration } from '../shared/app.configuration';
 @Injectable()
 export class SlideDataService {
 	private actionUrl: string;
+	public imgPath: string;
 
 	constructor(private _Http: Http, private _Configuration: Configuration) {
 		this.actionUrl = _Configuration.apiUrl + 'slide/';
+		this.imgPath = _Configuration.imgPath + 'slide/';
 	}
 
 	createAuthorizationHeader(headers: Headers) {

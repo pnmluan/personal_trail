@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
+import { AgmCoreModule } from 'angular2-google-maps/core';
 import { Configuration } from '../../shared/app.configuration';
 
 @Component({
@@ -8,6 +9,9 @@ import { Configuration } from '../../shared/app.configuration';
 })
 
 export class ContactComponent implements OnInit {
+	lat: number = 51.211215;
+	lng: number = 3.226287;
+
 	constructor(){ }
 
 	ngOnInit(){ }

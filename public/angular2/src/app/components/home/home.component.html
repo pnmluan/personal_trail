@@ -3,7 +3,7 @@
 		<div class="swiper-container image-blog-wide blog-carousel">
 			<div class="swiper-wrapper">
 				<!-- loop here -->
-				<div class="swiper-slide">
+				<div class="swiper-slide" *ngFor="let slide of slides">
 					<figure>
 						<div class="caption">
 							<div class="info">
@@ -11,33 +11,14 @@
 									<div class="text-center">
 										<span class="category"><em class="blue"><a href="#">Conceptual</a></em></span>
 									</div>
-									<h2 class="post-title text-center"><a href="blog-post.html">Ligula Tristique Malesuada Venenatis</a></h2>
+									<h2 class="post-title text-center"><a href="blog-post.html">{{ slide.title }}</a></h2>
 									<div class="meta text-center">
 										<span class="date">12 Nov 2014</span><span class="author">By <a href="#">Juno</a></span><span class="comments"><a href="#">3 Comments</a></span>
 									</div>
 								</div>
 							</div>
 						</div>
-						<img src="assets/images/art/cb1.jpg" alt="" />
-					</figure>
-				</div>
-
-				<div class="swiper-slide">
-					<figure>
-						<div class="caption">
-							<div class="info">
-								<div class="text">
-									<div class="text-center">
-										<span class="category"><em class="orange"><a href="#">Still Life</a></em></span>
-									</div>
-									<h2 class="post-title text-center"><a href="blog-post.html">Tellus Adipiscing Nibh Mattis Malesuada</a></h2>
-									<div class="meta text-center">
-										<span class="date">12 Nov 2014</span><span class="author">By <a href="#">Juno</a></span><span class="comments"><a href="#">7 Comments</a></span>
-									</div>
-								</div>
-							</div>
-						</div>
-						<img src="assets/images/art/cb2.jpg" alt="" />
+						<img src="{{ imgPath + slide.filepath }}" alt="" />
 					</figure>
 				</div>
 			</div>
@@ -52,15 +33,27 @@
 			<div class="col-sm-8">
 				<div class="blog-content classic-view">
 					<div class="blog-posts">
-						<!-- loop here -->
-						<div class="post">
-							<div class="post-content">
-
+						<template ngFor let-article [ngForOf]="articles" let-i="index">
+							<!-- loop here -->
+							<div class="post">
+								<div class="post-content">
+									<h2 class="post-title text-center"><a [routerLink]="['/article', article.clean_url]">{{ article.title }}</a></h2>
+                  					<div class="meta text-center">
+                  						<span class="date">{{ article.publish_date | date }}</span>
+                  						<span class="author">By <a href="#">Juno</a></span>
+                  						<span class="comments"><a href="#">7 Comments</a></span>
+                  					</div>
+                  					<div class="text-center">
+                  						<a [routerLink]="['/article', article.clean_url]" class="more">Continue Reading</a>
+                  					</div>
+								</div>
+								<!-- /.post-content --> 
 							</div>
-							<!-- /.post-content --> 
-						</div>
-						<!-- /.post -->
+							<!-- /.post -->
+							<hr />
+						</template>
 					</div>
+
 				</div>
 			</div>
 			<!-- /.blog-content -->
