@@ -22,9 +22,7 @@ export class HomeComponent implements OnInit {
 		private _ArticleDataService: ArticleDataService,
 		private _CategoryDataService: CategoryDataService,
 		private _SlideDataService: SlideDataService,
-	){
-		
-	}
+	){ }
 
 	ngOnInit(){
 		var params: URLSearchParams = new URLSearchParams();
@@ -35,15 +33,15 @@ export class HomeComponent implements OnInit {
 			this.articles = res.data;
 		});
 
-		/*this._CategoryDataService.getAll(params).subscribe(res => {
-			this.categories = res.data;
-		});*/
-
 		this._SlideDataService.getAll(params).subscribe(res => {
 			console.log(res);
 			this.slides = res.data;
 		});
 
+		params.set('is_count_category','true');
+		this._CategoryDataService.getAll(params).subscribe(res => {
+			this.categories = res.data;
+		});
 
 		setTimeout(() => {
 			/*-----------------------------------------------------------------------------------*/
