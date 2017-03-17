@@ -36,6 +36,7 @@ import { routing } from './app.routing';
 
 // App is our top level component
 import { AppComponent } from './app.component';
+import { HeaderComponent } from './components/header';
 import { HomeComponent } from './components/home';
 import { AboutComponent } from './components/about';
 import { ArticleComponent } from './components/article';
@@ -46,6 +47,7 @@ import { ContactComponent } from './components/contact';
 @NgModule({
 	declarations: [
 		AppComponent,
+		HeaderComponent,
 		HomeComponent,
 		AboutComponent,
 		ArticleComponent,
@@ -77,7 +79,7 @@ import { ContactComponent } from './components/contact';
 	providers: [
 		Configuration,
 		HttpClient,
-		HTTP_INTERCEPTOR_PROVIDER,
+		...HTTP_INTERCEPTOR_PROVIDER,
 		LoadingAnimateService,
 		// LocalStorageService,
 		// {

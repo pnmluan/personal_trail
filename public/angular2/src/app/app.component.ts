@@ -8,9 +8,6 @@ import { LoadingAnimateService } from 'ng2-loading-animate';
 import { ModalComponent } from 'ng2-bs3-modal/ng2-bs3-modal';
 import { LocalStorageService } from 'angular-2-local-storage';
 import { Configuration } from './shared/app.configuration';
-
-import { CategoryDataService } from './shared';
-
 import { Http } from '@angular/http';
 
 declare var jQuery: any;
@@ -19,7 +16,6 @@ declare var jQuery: any;
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
-  providers: [ CategoryDataService ]
 })
 
 export class AppComponent {
@@ -38,13 +34,11 @@ export class AppComponent {
 	first_time = true;
 
 	private _opened: boolean = false;
-	categories: Array<any> = [];
 	
 	constructor(
 		private _Http: Http,
 		private _Router: Router,
 		private _Configuration: Configuration,
-		private _CategoryDataService: CategoryDataService,
 		private _HttpInterceptorService: HttpInterceptorService,
 		private _LoadingAnimateService: LoadingAnimateService,
 		private _LocalStorageService: LocalStorageService,
@@ -79,12 +73,6 @@ export class AppComponent {
 		setInterval(() => {
 			this.checkUserSession();
 		}, 3000);
-
-		var params: URLSearchParams = new URLSearchParams();
-		params.set('status', 'active');
-		this._CategoryDataService.getAll(params).subscribe(res => {
-			this.categories = res.data;
-		});
 	}
 
 	ngAfterContentChecked() {
