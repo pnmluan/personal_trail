@@ -52,6 +52,7 @@ export class CategoryComponent implements OnInit {
 	initData(){
 		let params: URLSearchParams = new URLSearchParams();
 		params.set('clean_url', this._params['clean_url']);
+		params.set('is_count_category', String(true));
 		params.set('limit','1');
 		this._CategoryDataService.getAll(params).subscribe(res => {
 			if(res.data){

@@ -2,13 +2,13 @@ angular.module('MetronicApp')
     .factory('UserService', ['$http', '$rootScope', function($http, $rootScope) {
 
     var urlBase = $rootScope.settings.apiPath + 'user';
-    var UserService = {};
+    var service = {};
 
-    UserService.getAll = function (params = null) {
+    service.getAll = function (params = null) {
         return $http.get(urlBase + '/index?'+ params);
     };
 
-    UserService.save = function (cust, id = null) {
+    service.save = function (cust, id = null) {
         if(id) {
             return $http.post(urlBase + '/save/' + cust.id, cust)
         } else {
@@ -17,9 +17,9 @@ angular.module('MetronicApp')
         
     };
 
-    UserService.delete = function (id) {
+    service.delete = function (id) {
         return $http.delete(urlBase + '/delete/' + id);
     };
 
-    return UserService;
+    return service;
 }]);
