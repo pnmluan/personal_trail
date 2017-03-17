@@ -6,6 +6,7 @@
 					<div class="blog-posts">
 						<div class="post">
 							<div class="post-content">
+								<figure *ngIf="pictures[0]?.filepath"><img src="{{ imgPath + pictures[0]?.filepath }}" alt="" /></figure>
 								<h1 class="post-title text-center">{{ article.title }}</h1>
 								<div class="meta text-center">
 									<span class="date">{{ article.publish_date | date }}</span>
@@ -35,13 +36,13 @@
 								<!-- /.footer-meta -->
 								<hr />
 								<div class="post-nav-wrapper">
-									<div class="post-nav prev">
+									<div class="post-nav prev" *ngIf="prev_article">
 										<div class="meta"><i class="ion-android-arrow-back"></i> Previous Article</div>
-										<h3 class="post-title"><a href="#">{{ prev_article.title }}</a></h3>
+										<h3 class="post-title"><a [routerLink]="['/article', prev_article.clean_url]">{{ prev_article.title }}</a></h3>
 									</div>
-									<div class="post-nav next">
+									<div class="post-nav next" *ngIf="next_article">
 										<div class="meta">Next Article <i class="ion-android-arrow-forward"></i></div>
-										<h3 class="post-title"><a href="#">{{ next_article.title }}</a></h3>
+										<h3 class="post-title"><a [routerLink]="['/article', next_article.clean_url]">{{ next_article.title }}</a></h3>
 									</div>
 								</div>
 								<!-- /.post-nav -->
@@ -63,9 +64,23 @@
 								<hr />
 								<h2 class="section-title">Related Posts</h2>
 								<div class="blog list-view row">
-									<div class="col-sm-6">
-
+									<div class="col-sm-6" *ngFor="let item of articles">
+										<div class="post row">
+											<div class="col-md-5">
+												<figure class="overlay small"><a [routerLink]="['/article', item.clean_url]"> <img src="{{ imgPath + item.pictures[0]?.filepath }}" alt="" /></a></figure>
+											</div>
+											<!-- /column -->
+											<div class="col-md-7">
+												<div class="post-content">
+													<h4 class="post-title"><a [routerLink]="['/article', item.clean_url]">{{ item.title }}</a></h4>
+												</div>
+												<!-- /.post-content -->
+											</div>
+											<!-- /column -->
+										</div>
+										<!-- /.post -->
 									</div>
+									<!-- /column -->
 								</div>
 								<!-- /.row -->
 							</div>

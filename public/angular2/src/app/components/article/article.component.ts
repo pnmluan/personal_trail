@@ -18,10 +18,11 @@ export class ArticleComponent implements OnInit {
 	curRouting?: string;
 	_params = {};
 	articles: Array<any> = [];
+	pictures: Array<any> = [];
 	article = {};
 	prev_article = {};
 	next_article = {};
-
+	imgPath: string = this._ArticleDataService.imgPath;
 
 	constructor(
 		private _ArticleDataService: ArticleDataService,
@@ -49,6 +50,10 @@ export class ArticleComponent implements OnInit {
 	ngOnInit(){ }
 
 	initData(){
+		//reset previous, next article
+		this.prev_article = {};
+		this.next_article = {}
+		//init data
 		let params: URLSearchParams = new URLSearchParams();
 		params.set('clean_url', this._params['clean_url']);
 		params.set('limit','1');
@@ -56,6 +61,7 @@ export class ArticleComponent implements OnInit {
 			if(res.data){
 				let articles = res.data;
 				this.article = articles.shift();
+				this.pictures = this.article['pictures'];
 				this.loadRelatedPosts(this.article['category_id'], this.article['id']);
 			}else{
 				this._Router.navigate(['/']);
@@ -82,15 +88,15 @@ export class ArticleComponent implements OnInit {
 						}
 						if(posts[key + 1]){
 							next_key = key + 1;
-							this.prev_article = posts[next_key];
+							this.next_article = posts[next_key];
 						}
 
 					}
 				}
 
-				if(key) posts.splice(key,1);
-				if(prev_key) posts.splice(prev_key,1);
-				if(next_key) posts.splice(next_key,1);
+				if(key > -1) posts.splice(key,1);
+				if(prev_key > -1) posts.splice(prev_key,1);
+				if(next_key > -1) posts.splice(next_key,1);
 
 				this.articles = posts;
 			}
