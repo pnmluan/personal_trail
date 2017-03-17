@@ -149,7 +149,7 @@ class SlideController extends Controller
                 ]);
             }
             if($filepath) {
-                $filename = $this->path . '/' . $banner->filepath;
+                $filename = $this->path . '/' . $model->filepath;
                 if(file_exists($filename)) {
                     unlink($filename);
                 }

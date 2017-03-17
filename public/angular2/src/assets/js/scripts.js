@@ -41,51 +41,7 @@ $(document).ready(function() {
     if (navigator.userAgent.match(/Android/i) || navigator.userAgent.match(/webOS/i) || navigator.userAgent.match(/iPhone/i) || navigator.userAgent.match(/iPad/i) || navigator.userAgent.match(/iPod/i) || navigator.userAgent.match(/BlackBerry/i)) {
         $('.parallax').addClass('mobile');
     }
-    /*-----------------------------------------------------------------------------------*/
-    /*	SWIPER
-    /*-----------------------------------------------------------------------------------*/
-    $('.swiper-container.image-blog-wide').each(function() {
-        $(this).swiper({
-            pagination: '.image-blog-wide-wrapper .swiper-pagination',
-            nextButton: '.image-blog-wide-wrapper .swiper-button-next',
-            prevButton: '.image-blog-wide-wrapper .swiper-button-prev',
-            slidesPerView: 3,
-            breakpoints: {
-                991: {
-                    slidesPerView: 1
-                },
-                1681: {
-                    slidesPerView: 2
-                }
-            },
-            centeredSlides: false,
-            paginationClickable: true,
-            spaceBetween: 10,
-            grabCursor: true
-        });
-        var $swipers = $(this);
-    });
-    $('.swiper-container.image-blog').each(function() {
-        $(this).swiper({
-            pagination: '.image-blog-wrapper .swiper-pagination',
-            nextButton: '.image-blog-wrapper .swiper-button-next',
-            prevButton: '.image-blog-wrapper .swiper-button-prev',
-            slidesPerView: 2,
-            breakpoints: {
-                991: {
-                    slidesPerView: 1
-                },
-                1681: {
-                    slidesPerView: 2
-                }
-            },
-            centeredSlides: false,
-            paginationClickable: true,
-            spaceBetween: 10,
-            grabCursor: true
-        });
-        var $swipers = $(this);
-    });
+    
     /*-----------------------------------------------------------------------------------*/
     /*	LIGHTGALLERY
 	/*-----------------------------------------------------------------------------------*/

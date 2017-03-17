@@ -4,6 +4,7 @@ namespace App\Http\Controllers\System;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Models\Article;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Http\JsonResponse;
@@ -82,6 +83,17 @@ class CategoryController extends Controller
             $query->limit($limit)->offset($offset);
             $data = $query->get()->toArray();
             $total_data = count($data);
+
+            /*==================================================
+             * Count Number Category
+             *==================================================*/
+            if(isset($request['is_count_category']) && !empty($request['is_count_category'])) {
+                foreach ($data as $key => $value) {
+                    $number_category = Article::where('category_id', '=', $value->id)->count();
+                    $data[$key]['number'] = $number_category;
+                }
+            }
+            
             /*==================================================
              * Response Data
              *==================================================*/
