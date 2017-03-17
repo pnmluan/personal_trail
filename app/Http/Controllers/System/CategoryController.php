@@ -90,7 +90,7 @@ class CategoryController extends Controller
             if(isset($request['is_count_category']) && !empty($request['is_count_category'])) {
                 foreach ($data as $key => $value) {
                     $number_category = Article::where('category_id', '=', $value->id)->count();
-                    $data[$key]['number'] = $number_category;
+                    $data[$key]->number = $number_category;
                 }
             }
             
