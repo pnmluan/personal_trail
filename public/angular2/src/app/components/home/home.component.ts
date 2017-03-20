@@ -29,12 +29,10 @@ export class HomeComponent implements OnInit {
 		params.set('status', 'active');
 
 		this._ArticleDataService.getAll(params).subscribe(res => {
-			console.log(res)
 			this.articles = res.data;
 		});
 
 		this._SlideDataService.getAll(params).subscribe(res => {
-			console.log(res);
 			this.slides = res.data;
 		});
 
@@ -89,7 +87,7 @@ export class HomeComponent implements OnInit {
 				});
 				var $swipers = $(this);
 			});
-		}, 500);
+		}, 1000);
 	}
 
 
