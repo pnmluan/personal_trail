@@ -66,6 +66,7 @@ export class HomeComponent implements OnInit {
 				});
 				var $swipers = $(this);
 			});
+
 			$('.swiper-container.image-blog').each(function() {
 				$(this).swiper({
 					pagination: '.image-blog-wrapper .swiper-pagination',
