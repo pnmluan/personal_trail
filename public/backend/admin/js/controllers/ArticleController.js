@@ -1,4 +1,4 @@
-angular.module('MetronicApp').controller('ArticleController', function($rootScope, $scope, $http, $base64, $timeout, $location, $q, ArticleService, CategoryService, PictureService, ngDialog, toastr, DTOptionsBuilder, DTColumnBuilder, Upload) {
+angular.module('MetronicApp').controller('ArticleController', function($rootScope, $scope, $http, $base64, $timeout, $location, $q, ArticleService, CategoryService, PictureService, TagService, ngDialog, toastr, DTOptionsBuilder, DTColumnBuilder, Upload) {
     $scope.$on('$viewContentLoaded', function() {
         // initialize core components
         App.initAjax();
@@ -29,6 +29,7 @@ angular.module('MetronicApp').controller('ArticleController', function($rootScop
                     $scope.mItem = {};
                     $scope.errorMsg = [];
 
+                    $scope.optionTag = data.optionTag;
                     $scope.optionCategory = data.optionCategory;
                     $scope.optionCategory.selected = data.optionCategory[0];
 
@@ -85,7 +86,8 @@ angular.module('MetronicApp').controller('ArticleController', function($rootScop
                         var data = {
                             optionStatus: $scope.optionStatus,
                             dtInstance: $scope.dtInstance,
-                            optionCategory: $scope.optionCategory
+                            optionCategory: $scope.optionCategory,
+                            optionTag: $scope.optionTag
                         }
                         return data;
                     }
@@ -143,6 +145,7 @@ angular.module('MetronicApp').controller('ArticleController', function($rootScop
                 $scope.errorMsg = [];
 
                 $scope.optionCategory = data.optionCategory;
+                $scope.optionTag = data.optionTag;
                 angular.forEach($scope.optionCategory, function(value, key) {
                     if (value.id == item.category_id) {
                         $scope.optionCategory.selected = value;
@@ -243,7 +246,8 @@ angular.module('MetronicApp').controller('ArticleController', function($rootScop
                     var data = {
                         optionStatus: $scope.optionStatus,
                         dtInstance: $scope.dtInstance,
-                        optionCategory: $scope.optionCategory
+                        optionCategory: $scope.optionCategory,
+                        optionTag: $scope.optionTag
                     }
                     return data;
                 }
@@ -285,6 +289,8 @@ angular.module('MetronicApp').controller('ArticleController', function($rootScop
     $rootScope.settings.layout.pageSidebarClosed = false;
 
     function initialize() {
+        
+
         $scope.optionStatus = [
             { id: 'active', name: 'Active' },
             { id: 'inactive', name: 'Inactive' },
@@ -293,6 +299,17 @@ angular.module('MetronicApp').controller('ArticleController', function($rootScop
         let query = {
             status: 'active'
         };
+        // Load list tag
+        $scope.optionTag = [];
+        TagService.getAll().then(function(res) {
+
+            if(res.data.data) {
+                $scope.optionTag = res.data.data;
+            }
+            
+        });
+
+        // Load list category
         $scope.optionCategory = [];
         CategoryService.getAll($.param(query)).then(function(res) {
             if (res.data.data) {
@@ -349,17 +366,5 @@ angular.module('MetronicApp').controller('ArticleController', function($rootScop
                 $(td).html(string_html);
             }).withOption('width', 'auto'),
         ];
-    }
-
-    function loadListItem() {
-        ArticleService.getAll().then(function(res) {
-
-            if (res.statusText == 'OK') {
-                $scope.listItem = res.data.data;
-                return $scope.listItem;
-            }
-            return;
-
-        });
     }
 });

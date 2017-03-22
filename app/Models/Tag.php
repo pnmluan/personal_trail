@@ -1,51 +1,46 @@
 <?php 
 namespace App\Models;
   
-use App\Models\BaseModel;
 use Illuminate\Database\Eloquent\Model;
-  
-class Article extends BaseModel
+
+class Tag extends BaseModel
 {
-    protected $table = 'articles'; 
-    protected $fillable = ['title', 'description', 'content', 'author_id', 'category_id', 'publish_date', 'status', 'clean_url' ,'created_at', 'updated_at'];
+    protected $table = 'tags';
+    protected $fillable = [ 'name', 'clean_url', 'description',  'status'];
 
     public function getModelValidations()
     {
         return [
-            // 'full_name' => 'required|string|' //. $this->getUniqueValidatorForField('full_name')
+            //'full_name' => 'required|string|' //. $this->getUniqueValidatorForField('full_name')
         ];
     }
 
     public static function listItems(array $param = null){
+        $aColumns = ['name', 'description', 'clean_url', 'status'];
+        $aNotLike = ['status'];
 
-        $aColumns = ['articles.title', 'articles.description', 'category_id', 'category_name', 'articles.content', 'articles.author_id', 'articles.publish_date', 'articles.clean_url'];
-
-        $query = \DB::table('articles')
-            ->select(\DB::raw('SQL_CALC_FOUND_ROWS articles.id'),\DB::raw('articles.id AS DT_RowId'),'articles.*', \DB::raw('categories.name AS category_name')
-            	// , 'pictures.name', 'pictures.url', 'pictures.email', 'pictures.requirement'
-            	)
-            ->leftJoin('categories', 'articles.category_id', '=', 'categories.id');
-            // ->leftJoin('pictures', 'articles.id', '=', 'pictures.article_id');
+        $query = \DB::table('tags')
+            ->select(\DB::raw('SQL_CALC_FOUND_ROWS id'),\DB::raw('id AS DT_RowId'), 'tags.*');
 
         // Filter search condition
         foreach ($aColumns as $key => $value) {
-            (isset($param[$value]) && $param[$value]) && $query->where($value,'like','%'.$param[$value].'%');
-        }
-
-        if(isset($param['except_id'])) {
-            $query->where('articles.id','!=', $param['except_id']);
+            if(in_array($value, $aNotLike)) {
+                (isset($param[$value]) && $param[$value]) && $query->where($value,'=', $param[$value]);
+            } else {
+                (isset($param[$value]) && $param[$value]) && $query->where($value,'like','%'.$param[$value].'%');
+            }
+            
         }
 
         //======================= SEARCH =================
         if(isset($param['columns'])) {
             $sWhere = "";
-            $count = count($aColumns);
+            $count = count($param['columns']);
             if(isset($param['search']) && $param['search']['value']){
                 $keyword = '%'. $param['search']['value'] .'%';
                 for($i=0; $i<$count; $i++){
                     $requestColumn = $param['columns'][$i];
                     if($requestColumn['searchable']=='true'){
-                        
                         $sWhere .= $aColumns[$i].' LIKE "'.$keyword.'" OR ';
                     }
                 }
@@ -60,6 +55,7 @@ class Article extends BaseModel
                     }else{
                         $sWhere .= " AND ";
                     }
+
                     $sWhere .= $aColumns[$i]." LIKE '%".mysql_real_escape_string($requestColumn['search']['value'])."%' ";
                 }
             }
@@ -88,23 +84,6 @@ class Article extends BaseModel
         // $query = preg_replace('# null#', '', $query);
 
         $data = $query->get();
-
-        // Add pictures & tags
-        foreach ($data as $key => $value) {
-            $pictures = \DB::table('pictures')->where('article_id', $value->id)->get();
-            $data[$key]->pictures = $pictures;
-
-            $tags = \DB::table('tags')
-                    ->leftJoin('article_tags', 'article_tags.tag_id', '=', 'tags.id')
-                    ->where('article_tags.article_id', $value->id)->get();
-            $data[$key]->tags = $tags;
-        }
-
-        // Add tags 
-        foreach ($data as $key => $value) {
-            
-            $data[$key]->pictures = $pictures;
-        }
 
         \DB::setFetchMode(\PDO::FETCH_ASSOC);
         $total = \DB::select('SELECT FOUND_ROWS() as rows');

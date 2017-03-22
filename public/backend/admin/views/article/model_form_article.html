@@ -36,6 +36,19 @@
                     <label for="form_control_1">Content</label>
                 </div>
 
+                <div class="form-group form-md-checkboxes">
+                    <label>Tag</label>
+                    <div class="md-checkbox-inline">
+                        <div class="md-checkbox" ng-repeat="tag in optionTag track by $index">
+                            <input type="checkbox" id="checkbox{{$index}}" class="md-check" ng-checked="tag.selected">
+                            <label for="checkbox{{$index}}">
+                                <span></span>
+                                <span class="check"></span>
+                                <span class="box"></span> {{ tag.name }} </label>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="form-group form-md-line-input form-md-floating-label">
                     <select class="form-control edited" ng-model="optionStatus.selected" ng-options="option.name for option in optionStatus track by option.id"></select>
                     <label for="form_control_1">Status</label>

@@ -62,6 +62,46 @@ $api->version('v1', function ($api) {
 
         /*
         |--------------------------------------------------------------------------
+        | Tag
+        |--------------------------------------------------------------------------
+        */
+        $api->post('/tag/save', [
+            'as' => 'api.tag.create',
+            'uses' => 'App\Http\Controllers\System\TagController@save',
+        ]);
+
+        $api->post('/tag/save/{id}', [
+            'as' => 'api.tag.update',
+            'uses' => 'App\Http\Controllers\System\TagController@save',
+        ]);
+
+        $api->delete('/tag/delete/{id}', [
+            'as' => 'api.tag.delete',
+            'uses' => 'App\Http\Controllers\System\TagController@delete',
+        ]);
+
+        /*
+        |--------------------------------------------------------------------------
+        | Article Tag
+        |--------------------------------------------------------------------------
+        */
+        $api->post('/article_tag/save', [
+            'as' => 'api.article_tag.create',
+            'uses' => 'App\Http\Controllers\System\ArticleTagController@save',
+        ]);
+
+        $api->post('/article_tag/save/{id}', [
+            'as' => 'api.article_tag.update',
+            'uses' => 'App\Http\Controllers\System\ArticleTagController@save',
+        ]);
+
+        $api->delete('/article_tag/delete/{id}', [
+            'as' => 'api.article_tag.delete',
+            'uses' => 'App\Http\Controllers\System\ArticleTagController@delete',
+        ]);
+
+        /*
+        |--------------------------------------------------------------------------
         | Slide
         |--------------------------------------------------------------------------
         */
@@ -136,9 +176,34 @@ $api->version('v1', function ($api) {
         'uses' => 'App\Http\Controllers\System\CategoryController@show',
     ]);
 
-    $api->get('/category/list', [
-        'as' => 'api.category.list',
-        'uses' => 'App\Http\Controllers\System\CategoryController@list',
+    /*
+    |--------------------------------------------------------------------------
+    | Tag
+    |--------------------------------------------------------------------------
+    */
+    $api->get('/tag/index', [
+        'as' => 'api.tag.index',
+        'uses' => 'App\Http\Controllers\System\TagController@index',
+    ]);
+
+    $api->get('/tag/show/{id}', [
+        'as' => 'api.tag.show',
+        'uses' => 'App\Http\Controllers\System\TagController@show',
+    ]);
+
+    /*
+    |--------------------------------------------------------------------------
+    | Article Tag
+    |--------------------------------------------------------------------------
+    */
+    $api->get('/article_tag/index', [
+        'as' => 'api.article_tag.index',
+        'uses' => 'App\Http\Controllers\System\ArticleTagController@index',
+    ]);
+
+    $api->get('/article_tag/show/{id}', [
+        'as' => 'api.article_tag.show',
+        'uses' => 'App\Http\Controllers\System\ArticleTagController@show',
     ]);
 
     /*

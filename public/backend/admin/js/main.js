@@ -258,7 +258,7 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
             }
         })
 
-         // categoryticket
+        // category
         .state('category', {
             url: "/category.html",
             templateUrl: "views/category/main.html",            
@@ -273,6 +273,27 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
                             '../assets/global/plugins/dropzone/dropzone.min.js',
                             'js/controllers/CategoryController.js',
                             'js/services/category.service.js'
+                        ] 
+                    });
+                }]
+            }
+        })
+
+        // tag
+        .state('tag', {
+            url: "/tag.html",
+            templateUrl: "views/tag/main.html",            
+            data: {pageTitle: 'Admin Tag Template'},
+            controller: "TagController",
+            resolve: {
+                deps: ['$ocLazyLoad', function($ocLazyLoad) {
+                    return $ocLazyLoad.load({
+                        name: 'MetronicApp',
+                        insertBefore: '#ng_load_plugins_before', // load the above css files before a LINK element with this ID. Dynamic CSS files must be loaded between core and theme css files
+                        files: [
+                            '../assets/global/plugins/dropzone/dropzone.min.js',
+                            'js/controllers/TagController.js',
+                            'js/services/tag.service.js'
                         ] 
                     });
                 }]
@@ -296,7 +317,8 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
                             'js/controllers/ArticleController.js',
                             'js/services/article.service.js',
                             'js/services/category.service.js',
-                            'js/services/picture.service.js'
+                            'js/services/picture.service.js',
+                            'js/services/tag.service.js'
                         ] 
                     });
                 }]
