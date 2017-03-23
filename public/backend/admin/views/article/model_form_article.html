@@ -1,5 +1,5 @@
 <div class="modal-header">
-    <h4 class="modal-title">Update Article</h4>
+    <h4 class="modal-title">{{ action | capitalize }} Article</h4>
 </div>
 <div class="modal-body">
     <div class="portlet-body form">
@@ -40,7 +40,7 @@
                     <label>Tag</label>
                     <div class="md-checkbox-inline">
                         <div class="md-checkbox" ng-repeat="tag in optionTag track by $index">
-                            <input type="checkbox" id="checkbox{{$index}}" class="md-check" ng-checked="tag.selected">
+                            <input type="checkbox" id="checkbox{{$index}}" ng-model="tag.selected" class="md-check" ng-checked="tag.selected">
                             <label for="checkbox{{$index}}">
                                 <span></span>
                                 <span class="check"></span>

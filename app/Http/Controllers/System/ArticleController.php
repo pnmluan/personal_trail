@@ -4,6 +4,8 @@ namespace App\Http\Controllers\System;
 
 use App\Http\Controllers\Controller;
 use App\Models\Article;
+use App\Models\Tag;
+use App\Models\ArticleTag;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Http\JsonResponse;
@@ -81,12 +83,17 @@ class ArticleController extends Controller
             $query->limit($limit)->offset($offset);
             $data = $query->get()->toArray();
 
-            // Add pictures 
+            // Add pictures & tags
             if(!empty($data)) {
                 foreach ($data as $key => $value) {
                     $pictures = \DB::table('pictures')->where('article_id', $value->id)->get();
                     $data[$key]->pictures = $pictures;
                 }
+
+                $tags = \DB::table('tags')
+                    ->leftJoin('article_tags', 'article_tags.tag_id', '=', 'tags.id')
+                    ->where('article_tags.article_id', $value->id)->get();
+                $data[$key]->tags = $tags;
             }
             
             $total_data = count($data);
@@ -134,6 +141,19 @@ class ArticleController extends Controller
         if(!empty($id)) {
             $model = Article::find($id);
 
+            
+            if(isset($data['article_tags']) && !empty($data['article_tags'])) {
+                // Remove all tags with article_id
+                ArticleTag::where('article_id', '=', $id)->delete();
+
+                // Add new article_tags
+                foreach ($data['article_tags'] as $tag) {
+                    if(!empty($tag)) {
+                        ArticleTag::create(['article_id' => $id, 'tag_id' => $tag]);
+                    }
+                }
+            }
+
             if (!$model) {
                 return new JsonResponse([
                     'message' => 'no_data',
@@ -143,7 +163,6 @@ class ArticleController extends Controller
             $model = new Article();
             $data['publish_date'] = date('Y-m-d');
         }
-        
         
         $data['clean_url'] = $this->toAscii($data['title']);
         $model->fill($data);
@@ -156,6 +175,15 @@ class ArticleController extends Controller
         }
         try {
             $model->save();
+            if(empty($id)) {
+                // Add new article_tags
+                foreach ($data['article_tags'] as $tag) {
+                    if(!empty($tag)) {
+                        ArticleTag::create(['article_id' => $model->id, 'tag_id' => $tag]);
+                    }
+                }
+
+            }
         } catch (\Exception $ex) {
             return new JsonResponse([
                 'message' => 'exception',

@@ -5,7 +5,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class ArticleTag extends BaseModel
 {
-    protected $table = 'article_tag';
+    protected $table = 'article_tags';
     protected $fillable = [ 'name', 'article_id', 'tag_id'];
 
     public function getModelValidations()

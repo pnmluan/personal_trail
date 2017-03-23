@@ -19,7 +19,7 @@ angular.module('MetronicApp').controller('ArticleController', function($rootScop
 
     // Click to Add New
     $scope.clickToAddNew = function() {
-
+        let tags = [];
         if ($scope.optionCategory.length) {
             ngDialog.openConfirm({
                 template: 'views/article/model_form_article.html',
@@ -27,6 +27,7 @@ angular.module('MetronicApp').controller('ArticleController', function($rootScop
                 scope: $scope,
                 controller: ['$scope', 'data', function($scope, data) {
                     $scope.mItem = {};
+                    $scope.action = 'create';
                     $scope.errorMsg = [];
 
                     $scope.optionTag = data.optionTag;
@@ -46,6 +47,7 @@ angular.module('MetronicApp').controller('ArticleController', function($rootScop
                     $scope.save = function() {
                         $scope.mItem.category_id = $scope.optionCategory.selected.id;
                         $scope.mItem.status = $scope.optionStatus.selected.id;
+                        $scope.mItem.article_tags = convertObjectArticleTags($scope.optionTag);
 
                         ArticleService.save($scope.mItem).then(function(res) {
 
@@ -135,17 +137,36 @@ angular.module('MetronicApp').controller('ArticleController', function($rootScop
 
     // Click to Update
     $scope.clickToUpdate = function(item) {
+        // list tag selected
+        let tags = [];
+        if(item.tags) {
+            angular.forEach(item.tags, function(value, key){
+                tags.push(value.tag_id);
+            });
+        }
+
         ngDialog.openConfirm({
             template: 'views/article/model_form_article.html',
             className: 'ngdialog-theme-large',
             scope: $scope,
             controller: ['$scope', '$filter', 'data', function($scope, $filter, data) {
+
                 $scope.mItem = item;
-                console.log(item);
+                $scope.action = 'update';
                 $scope.errorMsg = [];
 
                 $scope.optionCategory = data.optionCategory;
-                $scope.optionTag = data.optionTag;
+
+                // Mapping default tag selected
+                let optionTag = JSON.parse(JSON.stringify(data.optionTag));
+                angular.forEach(optionTag, function(value, key){
+                    var selected = false; 
+                    if(tags.indexOf(value.id) > -1) {
+                        selected = true;
+                    }
+                    value.selected = selected;
+                });
+                $scope.optionTag = optionTag;
                 angular.forEach($scope.optionCategory, function(value, key) {
                     if (value.id == item.category_id) {
                         $scope.optionCategory.selected = value;
@@ -192,18 +213,16 @@ angular.module('MetronicApp').controller('ArticleController', function($rootScop
                     
                 }
 
-
                 // Create article
                 $scope.save = function() {
-                    console.log($scope.imgs);
                     $scope.mItem.category_id = $scope.optionCategory.selected.id;
                     if($scope.optionStatus.selected) {
                         $scope.mItem.status = $scope.optionStatus.selected.id;
                     } else {
                         $scope.mItem.status = 'active';
                     }
-                    
-                    
+
+                    $scope.mItem.article_tags = convertObjectArticleTags($scope.optionTag);
                     ArticleService.save($scope.mItem, $scope.mItem.id).then(function(res) {
 
                         if (res.status == 200) {
@@ -287,6 +306,17 @@ angular.module('MetronicApp').controller('ArticleController', function($rootScop
     $rootScope.settings.layout.pageContentWhite = true;
     $rootScope.settings.layout.pageBodySolid = false;
     $rootScope.settings.layout.pageSidebarClosed = false;
+
+    function convertObjectArticleTags(listTag) {
+        
+        let tags = [];
+        angular.forEach(listTag, function(value, key){
+            if(value.selected) {
+                tags.push(value.id);
+            }
+        });
+        return tags;
+    }
 
     function initialize() {
         
