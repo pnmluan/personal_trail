@@ -385,7 +385,7 @@ angular.module('MetronicApp').controller('ArticleController', function($rootScop
             DTColumnBuilder.newColumn('title').withTitle('Title').withOption('width', '200px'),
             DTColumnBuilder.newColumn('category_name').withTitle('Category'),
             DTColumnBuilder.newColumn('description').withTitle('Description'),
-            DTColumnBuilder.newColumn('author_id').withTitle('Author'),
+            DTColumnBuilder.newColumn('author_name').withTitle('Author'),
             DTColumnBuilder.newColumn('publish_date').withTitle('Publish Date'),
             DTColumnBuilder.newColumn('status').withTitle('Status'),
             // DTColumnBuilder.newColumn('created_at').withTitle('Created Date'),

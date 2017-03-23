@@ -49,7 +49,8 @@ class ArticleController extends Controller
             $alias_dot = $alias . '.';
             $select         = $alias_dot . '*';
             $query = \DB::table($this->table . ' AS ' . $alias)
-                        ->select($select);
+                        ->select($select, \DB::raw('users.name as author_name'))
+                        ->leftJoin('users', 'users.id', '=', $alias_dot . 'author_id');
             /*==================================================
              * Filter Data
              *==================================================*/
@@ -138,9 +139,10 @@ class ArticleController extends Controller
      */
     public function save(Request $request, $id = null){
         $data = $request->all();
+        $author = JWTAuth::parseToken()->authenticate();
         if(!empty($id)) {
             $model = Article::find($id);
-
+            $data['updated_user_id'] = $author->id;
             
             if(isset($data['article_tags']) && !empty($data['article_tags'])) {
                 // Remove all tags with article_id
@@ -162,9 +164,11 @@ class ArticleController extends Controller
         } else {
             $model = new Article();
             $data['publish_date'] = date('Y-m-d');
+            $data['author_id'] = $author->id;
         }
         
         $data['clean_url'] = $this->toAscii($data['title']);
+        
         $model->fill($data);
 
         if (!$model->isValid()) {

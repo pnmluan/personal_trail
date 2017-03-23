@@ -21,11 +21,10 @@ class Article extends BaseModel
         $aColumns = ['articles.title', 'articles.description', 'category_id', 'category_name', 'articles.content', 'articles.author_id', 'articles.publish_date', 'articles.clean_url'];
 
         $query = \DB::table('articles')
-            ->select(\DB::raw('SQL_CALC_FOUND_ROWS articles.id'),\DB::raw('articles.id AS DT_RowId'),'articles.*', \DB::raw('categories.name AS category_name')
-            	// , 'pictures.name', 'pictures.url', 'pictures.email', 'pictures.requirement'
+            ->select(\DB::raw('SQL_CALC_FOUND_ROWS articles.id'),\DB::raw('articles.id AS DT_RowId'),'articles.*', \DB::raw('categories.name AS category_name'), \DB::raw('users.name AS author_name')
             	)
-            ->leftJoin('categories', 'articles.category_id', '=', 'categories.id');
-            // ->leftJoin('pictures', 'articles.id', '=', 'pictures.article_id');
+            ->leftJoin('categories', 'articles.category_id', '=', 'categories.id')
+            ->leftJoin('users', 'articles.author_id', '=', 'users.id');
 
         // Filter search condition
         foreach ($aColumns as $key => $value) {
