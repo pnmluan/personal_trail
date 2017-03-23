@@ -98,6 +98,15 @@ class ArticleController extends Controller
             }
             
             $total_data = count($data);
+
+            /*==================================================
+             * Update number of viewers
+             *==================================================*/
+            if(isset($params['is_count_viewers']) && !empty($params['is_count_viewers']) && 
+                isset($params['clean_url']) && !empty($params['clean_url'])) {
+                Article::where('clean_url', '=', $params['clean_url'])->increment('views');
+            }
+
             /*==================================================
              * Response Data
              *==================================================*/
@@ -111,13 +120,35 @@ class ArticleController extends Controller
     }
 
     /**
+     * Get most popular posts.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getPopularPosts() {
+
+        $data  = Article::orderBy('views', 'DESC')->limit(3)->get();
+
+        if (empty($data)) {
+            return new JsonResponse([
+                'message' => 'no_data',
+            ]);
+        }
+
+        return new JsonResponse([
+            'message' => 'get_popular_posts',
+            'data' => $data
+        ]);
+
+    }
+
+    /**
      * Get authenticated user.
      *
      * @return \Illuminate\Http\Response
      */
     public function show($id) {
 
-        $model  = Category::where('clean_url', '=', $id)->firstOrFail();
+        $model  = Article::where('clean_url', '=', $id)->firstOrFail();
 
         if (empty($model)) {
             return new JsonResponse([

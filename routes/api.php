@@ -221,6 +221,11 @@ $api->version('v1', function ($api) {
         'uses' => 'App\Http\Controllers\System\ArticleController@show',
     ]);
 
+    $api->get('/article/popular_posts', [
+        'as' => 'api.article.popular_posts',
+        'uses' => 'App\Http\Controllers\System\ArticleController@getPopularPosts',
+    ]);
+
     /*
     |--------------------------------------------------------------------------
     | Picture
