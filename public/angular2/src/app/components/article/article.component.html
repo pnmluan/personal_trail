@@ -107,6 +107,13 @@
 				<!-- /.widget -->
 				<div class="sidebox widget">
 					<h3 class="widget-title section-title">Tags</h3>
+					<ul class="tag-list">
+						<li *ngFor="let tag of tags">
+							<a [routerLink]="['/search']" [queryParams]="{ tag : tag.clean_url }" class="btn">
+								{{ tag.name }}
+							</a>
+						</li>
+					</ul>
 				</div>
 				<!-- /.widget -->
 				<div class="sidebox widget">

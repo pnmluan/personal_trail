@@ -37,22 +37,26 @@ import { routing } from './app.routing';
 // App is our top level component
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header';
+import { FooterComponent } from './components/footer';
 import { HomeComponent } from './components/home';
 import { AboutComponent } from './components/about';
 import { ArticleComponent } from './components/article';
 import { CategoryComponent } from './components/category';
 import { ContactComponent } from './components/contact';
+import { SearchComponent } from './components/search';
 
 
 @NgModule({
 	declarations: [
 		AppComponent,
 		HeaderComponent,
+		FooterComponent,
 		HomeComponent,
 		AboutComponent,
 		ArticleComponent,
 		CategoryComponent,
-		ContactComponent
+		ContactComponent,
+		SearchComponent
 	],
 	imports: [
 		BrowserModule,

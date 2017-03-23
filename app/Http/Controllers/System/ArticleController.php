@@ -136,6 +136,11 @@ class ArticleController extends Controller
             ]);
         }
 
+        foreach ($data as $key => $value) {
+            $pictures = \DB::table('pictures')->where('article_id', $value->id)->get();
+            $data[$key]->pictures = $pictures;
+        }
+
         return new JsonResponse([
             'message' => 'get_popular_posts',
             'data' => $data

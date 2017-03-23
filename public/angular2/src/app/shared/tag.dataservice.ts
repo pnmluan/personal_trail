@@ -4,13 +4,11 @@ import { Observable } from 'rxjs/Rx';
 import { Configuration } from '../shared/app.configuration';
 
 @Injectable()
-export class ArticleDataService {
+export class TagDataService {
 	private actionUrl: string;
-	public imgPath: string;
 
 	constructor(private _Http: Http, private _Configuration: Configuration) {
-		this.actionUrl = _Configuration.apiUrl + 'article/';
-		this.imgPath = _Configuration.imgPath + 'picture/';
+		this.actionUrl = _Configuration.apiUrl + 'tag/';
 	}
 
 	createAuthorizationHeader(headers: Headers) {
@@ -23,18 +21,7 @@ export class ArticleDataService {
 		this.createAuthorizationHeader(headers);
 		return this._Http.get(this.actionUrl + 'index', { 
 			search: params,
-			headers: headers 
-		})
-		.map(res => res.json())
-		.catch(this.handleError);
-	}
-
-	public getPopularPosts(params = null){
-		let headers = new Headers();
-		this.createAuthorizationHeader(headers);
-		return this._Http.get(this.actionUrl + 'popular_posts', { 
-			search: params,
-			headers: headers 
+			headers: headers
 		})
 		.map(res => res.json())
 		.catch(this.handleError);
@@ -43,5 +30,4 @@ export class ArticleDataService {
 	private handleError(error: Response) {
 		return Observable.throw(error.json().error || 'Server error');
 	}
-
 }

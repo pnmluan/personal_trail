@@ -4,21 +4,23 @@ import { URLSearchParams } from '@angular/http';
 import { Subscription } from 'rxjs/Rx';
 
 import { Configuration } from '../../shared/app.configuration';
-import { ArticleDataService, CategoryDataService } from '../../shared';
+import { ArticleDataService, CategoryDataService, TagDataService } from '../../shared';
 
 @Component({
 	selector: 'app-article',
 	templateUrl: './article.component.html',
-	providers: [ ArticleDataService, CategoryDataService ]
+	providers: [ ArticleDataService, CategoryDataService, TagDataService ]
 })
 
 export class ArticleComponent implements OnInit {
 	private subscriptionEvents: Subscription;
 	private subscriptionParam: Subscription;
+	private subscriptionQueryParam: Subscription;
 	curRouting?: string;
 	_params = {};
 	articles: Array<any> = [];
 	pictures: Array<any> = [];
+	tags: Array<any> = [];
 	article = {};
 	prev_article = {};
 	next_article = {};
@@ -27,13 +29,14 @@ export class ArticleComponent implements OnInit {
 	constructor(
 		private _ArticleDataService: ArticleDataService,
 		private _CategoryDataService: CategoryDataService,
+		private _TagDataService: TagDataService, 
 		private _Router: Router,
 		private _ActivatedRoute: ActivatedRoute,
 	){
 		// subscribe to router event
-		this.subscriptionParam = _ActivatedRoute.params.subscribe(
-			(param: any) => {
-				this._params = param;
+		this.subscriptionParam = this._ActivatedRoute.params.subscribe(
+			(params: any) => {
+				this._params = params;
 			}
 		);
 
@@ -47,16 +50,23 @@ export class ArticleComponent implements OnInit {
 
 	}
 
-	ngOnInit(){ }
+	ngOnInit(){
+		let params: URLSearchParams = new URLSearchParams();
+		params.set('status', 'active');
+		this._TagDataService.getAll(params).subscribe(res => {
+			this.tags = res.data;
+		})
+	}
 
 	initData(){
 		//reset previous, next article
 		this.prev_article = {};
-		this.next_article = {}
+		this.next_article = {};
 		//init data
 		let params: URLSearchParams = new URLSearchParams();
 		params.set('clean_url', this._params['clean_url']);
 		params.set('limit','1');
+		params.set('is_count_viewers','true');
 		this._ArticleDataService.getAll(params).subscribe(res => {
 			if(res.data){
 				let articles = res.data;

@@ -1,3 +1,4 @@
 export * from './article.dataservice';
 export * from './category.dataservice';
 export * from './slide.dataservice';
+export * from './tag.dataservice';

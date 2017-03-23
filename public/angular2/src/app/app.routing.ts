@@ -4,6 +4,7 @@ import { AboutComponent } from './components/about';
 import { ArticleComponent } from './components/article';
 import { CategoryComponent } from './components/category';
 import { ContactComponent } from './components/contact';
+import { SearchComponent } from './components/search';
 
 const APP_ROUTES: Routes = [
 	{ path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -12,6 +13,7 @@ const APP_ROUTES: Routes = [
 	{ path: 'article/:clean_url', component: ArticleComponent },
 	{ path: 'category/:clean_url',component: CategoryComponent },
 	{ path: 'contact', component: ContactComponent },
+	{ path: 'search', component: SearchComponent },
 	//{ path: '**', component: PageNotFoundComponent },
 ];
 

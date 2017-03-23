@@ -1,0 +1,97 @@
+<!-- /.content-wrapper -->
+<footer class="inverse-wrapper">
+	<div class="container inner">
+		<div class="row">
+			<div class="col-sm-3">
+				<div class="widget">
+					<h3 class="widget-title section-title">Popular Posts</h3>
+					<ul class="post-list">
+						<li *ngFor="let post of posts">
+							<figure class="overlay small">
+								<a [routerLink]="['/article', post.clean_url]">
+									<img src="{{ imgPath + post?.pictures[0]?.img }}" alt="{{ post.title }}" />
+								</a> 
+							</figure>
+							<div class="post-content">
+								<h4 class="post-title">
+									<a [routerLink]="['/article', post.clean_url]">{{ post.title }}</a>
+								</h4>
+								<div class="meta">
+									<span class="date">{{ post.publish_date | date }}</span>
+									<span class="comments">
+										<a href="#"><i class="ion-chatbubbles"></i> 6</a>
+									</span>
+								</div>
+							</div>
+						</li>
+					</ul>
+				</div>
+				<!-- /.widget -->
+			</div>
+			<!-- /column -->
+			<div class="col-sm-3">
+				<div class="widget">
+					<h3 class="widget-title section-title">Recent Tags</h3>
+					<ul class="tag-list">
+						<li *ngFor="let tag of tags">
+							<a [routerLink]="['/search']" [queryParams]="{ tag : tag.clean_url }" class="btn">
+								{{ tag.name }}
+							</a>
+						</li>
+					</ul>
+				</div>
+				<!-- /.widget -->
+				<div class="widget">
+					<h3 class="widget-title section-title">Top Categories</h3>
+					<ul class="circled">
+						<li  *ngFor="let item of categories">
+							<a [routerLink]="['/category', item.clean_url]">{{ item.name }} ({{ item.number }})</a>
+						</li>
+					</ul>
+				</div>
+				<!-- /.widget -->
+			</div>
+			<!-- /column -->
+			<div class="col-sm-3">
+				<div class="widget">
+					<h3 class="widget-title section-title">Get in Touch</h3>
+					<address>
+						<strong>Lighthouse Blog.</strong><br>
+						60 Nguyen Dinh Chieu <br>
+						District 3, Ho Chi Minh City<br>
+						<abbr title="Phone">P:</abbr> (123) 456-7890 <br>
+						<abbr title="Email">E:</abbr> <a href="mailto:#">first.last@example.com</a>
+					</address>
+				</div>
+				<div class="widget">
+					<h3 class="widget-title section-title">Elsewhere</h3>
+					<ul class="social">
+						<li> <a href="#"><i class="ion-social-rss"></i></a> </li>
+						<li> <a href="#"><i class="ion-social-facebook"></i></a> </li>
+						<li> <a href="#"><i class="ion-social-twitter"></i></a> </li>
+						<li> <a href="#"><i class="ion-social-instagram"></i></a> </li>
+						<li> <a href="#"><i class="ion-social-vimeo"></i></a> </li>
+						<li> <a href="#"><i class="ion-social-whatsapp"></i></a> </li>
+					</ul>
+				</div>
+			</div>
+			<!-- /column -->
+			<div class="col-sm-3">
+				<div class="widget">
+					<h3 class="widget-title section-title">About Me</h3>
+					<figure> <img src="assets/images/art/about.jpg" alt="" /> </figure>
+					<div class="divide10"></div>
+					<p>Duis mollis, est non commodo luctus, nisi erat porttitor ligula lacinia.</p>
+				</div>
+			</div>
+			<!-- /column -->
+		</div>
+	</div>
+	<div class="sub-footer">
+		<div class="container inner">
+			<p class="text-center">© 2016 Lighthouse. All rights reserved.</p>
+		</div>
+		<!-- .container --> 
+		</div>
+		<!-- .sub-footer --> 	
+</footer>

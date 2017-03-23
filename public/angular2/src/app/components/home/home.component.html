@@ -81,11 +81,23 @@
 	                                <a href="#"> <img src="assets/images/art/b1.jpg" alt="" /></a>
 	                            </figure>
 	                            <div class="post-content">
-	                                <div class="text-center"><span class="category"><em class="rose"><a href="#">{{ article.category_name }}</a></em></span></div>
+	                                <div class="text-center">
+	                                	<span class="category">
+	                                		<em class="rose">
+												<a [routerLink]="['/search']" [queryParams]="{ tag : article?.tags[0]?.clean_url }">
+													{{ article?.tags[0]?.name }}
+												</a>
+	                                		</em>
+	                                	</span>
+	                                </div>
 	                                <h3 class="post-title"><a [routerLink]="['/article', article.clean_url]">{{ article.title }}</a></h3>
-	                                <div class="meta text-center"><span class="date">{{ article.publish_date | date }}</span><span class="author">By <a href="#">Juno</a></span><span class="comments"><a href="#"><i class="ion-chatbubbles"></i> 6</a></span></div>
+	                                <div class="meta text-center">
+	                                	<span class="date">{{ article.publish_date | date }}</span><span class="author">By <a href="#">{{ article.author_name }}</a></span><span class="comments"><a href="#"><i class="ion-chatbubbles"></i> 6</a></span>
+	                                </div>
 	                                <p>{{ article.description }}</p>
-	                                <div class="text-center"><a [routerLink]="['/article', article.clean_url]" class="more">Continue Reading</a></div>
+	                                <div class="text-center">
+	                                	<a [routerLink]="['/article', article.clean_url]" class="more">Continue Reading</a>
+	                                </div>
 	                            </div>
 	                            <!-- /.post-content -->
 	                        </div>
@@ -122,56 +134,45 @@
                 <div class="sidebox widget">
                     <h3 class="widget-title section-title">Popular Posts</h3>
                     <ul class="post-list">
-                        <li>
-                            <figure class="overlay small">
-                                <a href="blog-post.html"><img src="style/images/art/a1.jpg" alt="" /> </a>
-                            </figure>
-                            <div class="post-content">
-                                <h4 class="post-title"> <a href="blog-post.html">Magna Mollis Ultricies Mauris</a> </h4>
-                                <div class="meta"><span class="date">12 Nov 2014</span><span class="comments"><a href="#"><i class="ion-chatbubbles"></i> 3</a></span></div>
-                            </div>
-                        </li>
-                        <li>
-                            <figure class="overlay small">
-                                <a href="blog-post.html"><img src="style/images/art/a2.jpg" alt="" /> </a>
-                            </figure>
-                            <div class="post-content">
-                                <h4 class="post-title"> <a href="blog-post.html">Ornare Nullam Risus Cursus</a> </h4>
-                                <div class="meta"><span class="date">12 Nov 2014</span><span class="comments"><a href="#"><i class="ion-chatbubbles"></i> 5</a></span></div>
-                            </div>
-                        </li>
-                        <li>
-                            <figure class="overlay small">
-                                <a href="blog-post.html"><img src="style/images/art/a3.jpg" alt="" /> </a>
-                            </figure>
-                            <div class="post-content">
-                                <h4 class="post-title"> <a href="blog-post.html">Euismod Nullam Fusce Dapibus</a> </h4>
-                                <div class="meta"><span class="date">12 Nov 2014</span><span class="comments"><a href="#"><i class="ion-chatbubbles"></i> 7</a></span></div>
-                            </div>
-                        </li>
+                    	<li *ngFor="let post of posts">
+							<figure class="overlay small">
+								<a [routerLink]="['/article', post.clean_url]">
+									<img src="{{ imgPath + post?.pictures[0]?.img }}" alt="{{ post.title }}" />
+								</a> 
+							</figure>
+							<div class="post-content">
+								<h4 class="post-title">
+									<a [routerLink]="['/article', post.clean_url]">{{ post.title }}</a>
+								</h4>
+								<div class="meta">
+									<span class="date">{{ post.publish_date | date }}</span>
+									<span class="comments">
+										<a href="#"><i class="ion-chatbubbles"></i> 6</a>
+									</span>
+								</div>
+							</div>
+						</li>
                     </ul>
                     <!-- /.post-list -->
                 </div>
 				<!-- /.widget -->
 				<div class="sidebox widget">
 					<h3 class="widget-title section-title">Categories</h3>
-					<ul class="list circled" *ngFor="let item of categories">
-						<li><a [routerLink]="['/category', item.clean_url]">{{ item.name }} ({{ item.number }})</a></li>
+					<ul class="list circled">
+						<li  *ngFor="let item of categories">
+							<a [routerLink]="['/category', item.clean_url]">{{ item.name }} ({{ item.number }})</a>
+						</li>
 					</ul>
 				</div>
                 <!-- /.widget -->
                 <div class="sidebox widget">
 					<h3 class="widget-title section-title">Tags</h3>
 					<ul class="tag-list">
-						<li><a href="#" class="btn">Still Life</a></li>
-						<li><a href="#" class="btn">Urban</a></li>
-						<li><a href="#" class="btn">Journal</a></li>
-						<li><a href="#" class="btn">Nature</a></li>
-						<li><a href="#" class="btn">Landscape</a></li>
-						<li><a href="#" class="btn">Macro</a></li>
-						<li><a href="#" class="btn">Workshop</a></li>
-						<li><a href="#" class="btn">Photography</a></li>
-						<li><a href="#" class="btn">Wedding</a></li>
+						<li *ngFor="let tag of tags">
+							<a [routerLink]="['/search']" [queryParams]="{ tag : tag.clean_url }" class="btn">
+								{{ tag.name }}
+							</a>
+						</li>
 					</ul>
                 </div>
                 <!-- /.widget -->
