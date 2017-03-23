@@ -89,12 +89,14 @@ class ArticleController extends Controller
                 foreach ($data as $key => $value) {
                     $pictures = \DB::table('pictures')->where('article_id', $value->id)->get();
                     $data[$key]->pictures = $pictures;
+
+                    $tags = \DB::table('tags')
+                        ->leftJoin('article_tags', 'article_tags.tag_id', '=', 'tags.id')
+                        ->where('article_tags.article_id', $value->id)->get();
+                    $data[$key]->tags = $tags;
                 }
 
-                $tags = \DB::table('tags')
-                    ->leftJoin('article_tags', 'article_tags.tag_id', '=', 'tags.id')
-                    ->where('article_tags.article_id', $value->id)->get();
-                $data[$key]->tags = $tags;
+                
             }
             
             $total_data = count($data);
