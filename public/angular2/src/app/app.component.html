@@ -1,10 +1,74 @@
 <div class="content-wrapper">
 	<app-header></app-header>
-	<div class="logo text-center">
+	<!-- <div class="logo text-center">
 		<a [routerLink]="['/home']"><img src="#" srcset="assets/images/logo.png 1x, assets/images/logo@2x.png 2x" alt="" /></a><span>everything across the world</span>
-	</div>
+	</div> -->
 
 	<router-outlet></router-outlet>
 </div>
-<app-footer></app-footer>
+<!-- /.content-wrapper -->
+<footer class="inverse-wrapper">
+	<div class="container inner">
+		<div class="row">
+			<div class="col-sm-3">
+				<div class="widget">
+					<h3 class="widget-title section-title">Popular Posts</h3>
+				</div>
+				<!-- /.widget -->
+			</div>
+			<!-- /column -->
+			<div class="col-sm-3">
+				<div class="widget">
+					<h3 class="widget-title section-title">Recent Tags</h3>
+				</div>
+				<!-- /.widget -->
+				<div class="widget">
+					<h3 class="widget-title section-title">Top Categories</h3>
+				</div>
+				<!-- /.widget -->
+			</div>
+			<!-- /column -->
+			<div class="col-sm-3">
+				<div class="widget">
+					<h3 class="widget-title section-title">Get in Touch</h3>
+					<address>
+						<strong>Lighthouse Blog.</strong><br>
+						60 Nguyen Dinh Chieu <br>
+						District 3, Ho<br>
+						<abbr title="Phone">P:</abbr> (123) 456-7890 <br>
+						<abbr title="Email">E:</abbr> <a href="mailto:#">first.last@example.com</a>
+					</address>
+				</div>
+				<div class="widget">
+					<h3 class="widget-title section-title">Elsewhere</h3>
+					<ul class="social">
+						<li> <a href="#"><i class="ion-social-rss"></i></a> </li>
+						<li> <a href="#"><i class="ion-social-facebook"></i></a> </li>
+						<li> <a href="#"><i class="ion-social-twitter"></i></a> </li>
+						<li> <a href="#"><i class="ion-social-instagram"></i></a> </li>
+						<li> <a href="#"><i class="ion-social-vimeo"></i></a> </li>
+						<li> <a href="#"><i class="ion-social-whatsapp"></i></a> </li>
+					</ul>
+				</div>
+			</div>
+			<!-- /column -->
+			<div class="col-sm-3">
+				<div class="widget">
+					<h3 class="widget-title section-title">About Me</h3>
+					<figure> <img src="assets/images/art/about.jpg" alt="" /> </figure>
+					<div class="divide10"></div>
+					<p>Duis mollis, est non commodo luctus, nisi erat porttitor ligula lacinia.</p>
+				</div>
+			</div>
+			<!-- /column -->
+		</div>
+	</div>
+	<div class="sub-footer">
+		<div class="container inner">
+			<p class="text-center">© 2016 Lighthouse. All rights reserved.</p>
+		</div>
+		<!-- .container --> 
+		</div>
+		<!-- .sub-footer --> 	
+</footer>
 

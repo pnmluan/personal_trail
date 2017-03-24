@@ -99,12 +99,6 @@ class Article extends BaseModel
             $data[$key]->tags = $tags;
         }
 
-        // Add tags 
-        foreach ($data as $key => $value) {
-            
-            $data[$key]->pictures = $pictures;
-        }
-
         \DB::setFetchMode(\PDO::FETCH_ASSOC);
         $total = \DB::select('SELECT FOUND_ROWS() as rows');
 
