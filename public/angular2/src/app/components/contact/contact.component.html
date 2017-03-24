@@ -11,12 +11,12 @@
 				<p>Nullam quis risus eget urna mollis ornare vel eu leo. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Integer posuere erat.</p>
 				<div class="divide10"></div>
 				<div class="form-container">
-					<form class="vanilla vanilla-form" novalidate="novalidate">
+					<form #f="ngForm" (ngSubmit)="onSubmit(f)" autocomplete="off" class="vanilla vanilla-form">
 						<div class="row">
 							<div class="col-sm-6 rp10">
 								<div class="form-field">
 									<label>
-										<input type="text" name="name" placeholder="Your name" required="required">
+										<input type="text" name="name" placeholder="Your name" [(ngModel)]="contact.name" required="required">
 									</label>
 								</div>
                   				<!--/.form-field --> 
@@ -25,7 +25,7 @@
 							<div class="col-sm-6 rp10">
 								<div class="form-field">
 									<label>
-										<input type="email" name="email" placeholder="Your e-mail" required="required">
+										<input type="email" name="email" placeholder="Your e-mail" [(ngModel)]="contact.email" required="required">
 									</label>
 								</div>
 								<!--/.form-field --> 
@@ -34,7 +34,7 @@
 							<div class="col-sm-6 rp10">
 								<div class="form-field">
 									<label>
-										<input type="tel" name="tel" placeholder="Phone">
+										<input type="tel" name="tel" [(ngModel)]="contact.tel" placeholder="Phone">
 									</label>
 								</div>
 								<!--/.form-field -->
@@ -43,7 +43,7 @@
 							<div class="col-sm-6 rp10">
 								<div class="form-field">
 									<label class="custom-select">
-										<select name="department" required="required">
+										<select name="department" required="required" [(ngModel)]="contact.department">
 											<option value="">Select Department</option>
 											<option value="Sales">Sales</option>
 											<option value="Marketing">Marketing</option>
@@ -57,7 +57,7 @@
 							</div>
 							<!--/column -->
 							<div class="col-sm-12">
-								<textarea name="message" placeholder="Type your message here..." required="required"></textarea>
+								<textarea name="message" placeholder="Type your message here..." [(ngModel)]="contact.message" required="required"></textarea>
 								<div class="radio-set">
 									<label>Subject:</label>
 									<label>
@@ -74,7 +74,7 @@
 									</label>
 								</div>
 								<!--/.radio-set -->
-								<input type="submit" class="btn" value="Send" data-error="Fix errors" data-processing="Sending..." data-success="Thank you!">
+								<input type="submit" class="btn" value="Send" data-error="Fix errors" data-processing="Sending..." data-success="Thank you!" [disabled]="!f.valid">
 								<footer class="notification-box"></footer>
 							</div>
                 			<!--/column --> 

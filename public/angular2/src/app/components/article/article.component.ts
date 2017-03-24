@@ -19,7 +19,9 @@ export class ArticleComponent implements OnInit {
 	curRouting?: string;
 	_params = {};
 	articles: Array<any> = [];
+	categories: Array<any> = []
 	pictures: Array<any> = [];
+	posts: Array<any> = [];
 	tags: Array<any> = [];
 	article = {};
 	prev_article = {};
@@ -55,7 +57,16 @@ export class ArticleComponent implements OnInit {
 		params.set('status', 'active');
 		this._TagDataService.getAll(params).subscribe(res => {
 			this.tags = res.data;
-		})
+		});
+
+		this._ArticleDataService.getPopularPosts().subscribe(res => {
+			this.posts = res.data;
+		});
+		
+		params.set('is_count_category','true');
+		this._CategoryDataService.getAll(params).subscribe(res => {
+			this.categories = res.data;
+		});
 	}
 
 	initData(){

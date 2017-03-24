@@ -4,6 +4,7 @@ import { URLSearchParams } from '@angular/http';
 
 import { Configuration } from '../../shared/app.configuration';
 import { ArticleDataService, CategoryDataService, SlideDataService, TagDataService } from '../../shared';
+
 declare let $: any;
 
 @Component({
@@ -18,9 +19,8 @@ export class HomeComponent implements OnInit {
 	posts: Array<any> = [];
 	slides: Array<any> = [];
 	tags: Array<any> = [];
-	
-	slidePath: string = this._SlideDataService.imgPath;
 	imgPath: string = this._ArticleDataService.imgPath;
+	slidePath: string = this._SlideDataService.imgPath;
 
 	constructor(
 		private _ArticleDataService: ArticleDataService,
@@ -39,7 +39,7 @@ export class HomeComponent implements OnInit {
 
 		this._ArticleDataService.getPopularPosts().subscribe(res => {
 			this.posts = res.data;
-		})
+		});
 
 		this._SlideDataService.getAll(params).subscribe(res => {
 			this.slides = res.data;
@@ -53,8 +53,11 @@ export class HomeComponent implements OnInit {
 		this._CategoryDataService.getAll(params).subscribe(res => {
 			this.categories = res.data;
 		});
+	}
 
+	ngAfterViewInit(){
 		setTimeout(() => {
+			console.log('loaded');
 			/*-----------------------------------------------------------------------------------*/
 			/*	SWIPER
 			/*-----------------------------------------------------------------------------------*/
@@ -102,11 +105,5 @@ export class HomeComponent implements OnInit {
 				var $swipers = $(this);
 			});
 		}, 1500);
-	}
-
-	onRandomClass(){
-		let color = ['blue','forest','orange','navy','rose'];
-		let index = Math.floor((Math.random()*5)+1);
-		return color[index-1];
 	}
 }
