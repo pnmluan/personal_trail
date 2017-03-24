@@ -1315,7 +1315,7 @@ figure a .text-overlay .info .meta {
     font-weight: normal;
 }
 .meta span:after {
-    content: "Â·";
+    content: "·";
     vertical-align: -1px;
     font-size: 17px;
     padding: 0 10px;

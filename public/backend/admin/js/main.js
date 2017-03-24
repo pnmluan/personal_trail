@@ -279,6 +279,27 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
             }
         })
 
+        // contact
+        .state('contact', {
+            url: "/contact.html",
+            templateUrl: "views/contact/main.html",            
+            data: {pageTitle: 'Admin Contact Template'},
+            controller: "ContactController",
+            resolve: {
+                deps: ['$ocLazyLoad', function($ocLazyLoad) {
+                    return $ocLazyLoad.load({
+                        name: 'MetronicApp',
+                        insertBefore: '#ng_load_plugins_before', // load the above css files before a LINK element with this ID. Dynamic CSS files must be loaded between core and theme css files
+                        files: [
+                            '../assets/global/plugins/dropzone/dropzone.min.js',
+                            'js/controllers/ContactController.js',
+                            'js/services/contact.service.js'
+                        ] 
+                    });
+                }]
+            }
+        })
+
         // tag
         .state('tag', {
             url: "/tag.html",

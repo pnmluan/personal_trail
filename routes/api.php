@@ -270,5 +270,35 @@ $api->version('v1', function ($api) {
         'as' => 'api.user.show',
         'uses' => 'App\Http\Controllers\System\UserController@show',
     ]);
+
+    /*
+    |--------------------------------------------------------------------------
+    | Contact
+    |--------------------------------------------------------------------------
+    */
+    $api->get('/contact/index', [
+        'as' => 'api.contact.index',
+        'uses' => 'App\Http\Controllers\System\ContactController@index',
+    ]);
+
+    $api->get('/contact/show/{id}', [
+        'as' => 'api.contact.show',
+        'uses' => 'App\Http\Controllers\System\ContactController@show',
+    ]);
+
+    $api->post('/contact/save', [
+        'as' => 'api.contact.create',
+        'uses' => 'App\Http\Controllers\System\ContactController@save',
+    ]);
+
+    $api->post('/contact/save/{id}', [
+        'as' => 'api.contact.update',
+        'uses' => 'App\Http\Controllers\System\ContactController@save',
+    ]);
+
+    $api->delete('/contact/delete/{id}', [
+        'as' => 'api.contact.delete',
+        'uses' => 'App\Http\Controllers\System\ContactController@delete',
+    ]);
     
 });
