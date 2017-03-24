@@ -18,7 +18,9 @@ export class HomeComponent implements OnInit {
 	posts: Array<any> = [];
 	slides: Array<any> = [];
 	tags: Array<any> = [];
-	imgPath: string = this._SlideDataService.imgPath;
+	
+	slidePath: string = this._SlideDataService.imgPath;
+	imgPath: string = this._ArticleDataService.imgPath;
 
 	constructor(
 		private _ArticleDataService: ArticleDataService,
@@ -28,7 +30,7 @@ export class HomeComponent implements OnInit {
 	){ }
 
 	ngOnInit(){
-		var params: URLSearchParams = new URLSearchParams();
+		let params: URLSearchParams = new URLSearchParams();
 		params.set('status', 'active');
 
 		this._ArticleDataService.getAll(params).subscribe(res => {
@@ -99,8 +101,12 @@ export class HomeComponent implements OnInit {
 				});
 				var $swipers = $(this);
 			});
-		}, 2000);
+		}, 1500);
 	}
 
-
+	onRandomClass(){
+		let color = ['blue','forest','orange','navy','rose'];
+		let index = Math.floor((Math.random()*5)+1);
+		return color[index-1];
+	}
 }
