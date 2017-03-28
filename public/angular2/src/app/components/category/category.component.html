@@ -17,7 +17,13 @@
 								<div class="divide30 visible-xs visible-sm"></div>
 								<div class="col-md-7">
 									<div class="post-content">
-										<span class="category"><em class="pink"><a href="#" class="line">Wedding</a></em></span>
+										<span class="category">
+											<em class="pink">
+												<a [routerLink]="['/search']" [queryParams]="{ tag : article?.tags[0]?.clean_url || 'other' }">
+													{{ article?.tags[0]?.name || 'other' }}
+												</a>
+											</em>
+										</span>
 										<h3 class="post-title">
 											<a [routerLink]="['/article', article.clean_url]">{{ article.title }}</a>
 										</h3>
@@ -40,10 +46,12 @@
 					<!-- /.blog-posts -->
 				</div>
 				<!-- /.blog-content -->
+				<!--
 				<div class="page-navi meta" *ngIf="articles">
 					<a href="#" class="pull-left"><i class="ion-android-arrow-back rp5"></i> Older Posts</a>
 					<a href="#" class="pull-right">Newer Posts <i class="ion-android-arrow-forward lp5"></i></a>
 				</div>
+				-->
           		<!-- /.page-navi -->
 			</div>
 			<!-- /.blog-content -->

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { Router, ActivatedRoute } from '@angular/router';
 import { URLSearchParams } from '@angular/http';
 import { Subscription } from 'rxjs/Rx';
@@ -24,6 +25,7 @@ export class CategoryComponent implements OnInit {
 		private _CategoryDataService: CategoryDataService,
 		private _Router: Router,
 		private _ActivatedRoute: ActivatedRoute,
+		private _Title: Title
 	){
 		// subscribe to router event
 		this.subscriptionParam = _ActivatedRoute.params.subscribe(
@@ -58,6 +60,7 @@ export class CategoryComponent implements OnInit {
 			if(res.data){
 				let categories = res.data;
 				let category = categories.shift();
+				this._Title.setTitle('Category: ' + category.name);
 				let params: URLSearchParams = new URLSearchParams();
 				params.set('category_id',category.id);
 				params.set('status','active');

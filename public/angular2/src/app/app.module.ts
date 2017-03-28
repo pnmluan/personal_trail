@@ -1,5 +1,5 @@
-import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { BrowserModule, Title } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
@@ -27,8 +27,6 @@ import { AgmCoreModule } from 'angular2-google-maps/core';
 
 import { Configuration } from './shared/app.configuration';
 import { HttpClient } from './shared/http-client';
-
-
 /*
  * Platform and Environment providers/directives/pipes
  */
@@ -83,8 +81,9 @@ import { SearchComponent } from './components/search';
 	providers: [
 		Configuration,
 		HttpClient,
-		HTTP_INTERCEPTOR_PROVIDER,
+		...HTTP_INTERCEPTOR_PROVIDER,
 		LoadingAnimateService,
+		Title
 		// LocalStorageService,
 		// {
 		//   provide: LOCAL_STORAGE_SERVICE_CONFIG, useValue: localStorageServiceConfig

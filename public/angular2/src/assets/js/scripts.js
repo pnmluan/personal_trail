@@ -1,3 +1,33 @@
+ /*-----------------------------------------------------------------------------------*/
+/*  INSTAGRAM
+/*-----------------------------------------------------------------------------------*/
+
+var instagramFeed = new Instafeed({
+    target: 'instafeed-widget',
+    get: 'user',
+    limit: 6,
+    userId: 1215763826,
+    accessToken: '1215763826.f1627ea.dad6ca96bd7642519b573d52c3ef467f',
+    resolution: 'low_resolution',
+    template: '<div class="item col-xs-4 col-sm-6 col-md-4"><figure class="overlay small"><a href="{{link}}" target="_blank"><img src="{{image}}" /></a></figure></div>',
+    after: function() {
+        $('#instafeed-widget figure.overlay a').prepend('<span class="over"><span></span></span>');
+    }
+});
+
+var instagramFeed2 = new Instafeed({
+    target: 'instafeed',
+    get: 'user',
+    limit: 6,
+    userId: 1215763826,
+    accessToken: '1215763826.f1627ea.dad6ca96bd7642519b573d52c3ef467f',
+    resolution: 'low_resolution',
+    template: '<div class="item col-xs-6 col-sm-4 col-md-2"><figure class="overlay instagram"><a href="{{link}}" target="_blank"><img src="{{image}}" /></a></figure></div>',
+    after: function() {
+        $('#instafeed figure.overlay a').prepend('<span class="over"><span></span></span>');
+    }
+});
+
 $(document).ready(function() {
     'use strict';
     /*-----------------------------------------------------------------------------------*/
@@ -111,7 +141,7 @@ $(document).ready(function() {
     /*-----------------------------------------------------------------------------------*/
     /*	LAZY LOAD GOOGLE MAPS
     /*-----------------------------------------------------------------------------------*/
-    ;
+    
     (function($, window, document, undefined) {
         var $window = $(window),
             mapInstances = [],
@@ -170,39 +200,7 @@ $(document).ready(function() {
     /*-----------------------------------------------------------------------------------*/
     var myForm;
     myForm = new VanillaForm($("form.vanilla-form"));
-    /*-----------------------------------------------------------------------------------*/
-    /*	INSTAGRAM
-    /*-----------------------------------------------------------------------------------*/
-    var instagramFeed = new Instafeed({
-        target: 'instafeed-widget',
-        get: 'user',
-        limit: 6,
-        userId: 1215763826,
-        accessToken: '1215763826.f1627ea.dad6ca96bd7642519b573d52c3ef467f',
-        resolution: 'low_resolution',
-        template: '<div class="item col-xs-4 col-sm-6 col-md-4"><figure class="overlay small"><a href="{{link}}" target="_blank"><img src="{{image}}" /></a></figure></div>',
-        after: function() {
-            $('#instafeed-widget figure.overlay a').prepend('<span class="over"><span></span></span>');
-        }
-    });
-    $('#instafeed-widget').each(function() {
-        instagramFeed.run();
-    });
-    var instagramFeed2 = new Instafeed({
-        target: 'instafeed',
-        get: 'user',
-        limit: 6,
-        userId: 1215763826,
-        accessToken: '1215763826.f1627ea.dad6ca96bd7642519b573d52c3ef467f',
-        resolution: 'low_resolution',
-        template: '<div class="item col-xs-6 col-sm-4 col-md-2"><figure class="overlay instagram"><a href="{{link}}" target="_blank"><img src="{{image}}" /></a></figure></div>',
-        after: function() {
-            $('#instafeed figure.overlay a').prepend('<span class="over"><span></span></span>');
-        }
-    });
-    $('#instafeed').each(function() {
-        instagramFeed2.run();
-    });	
+    
     /*-----------------------------------------------------------------------------------*/
     /*	COUNTER UP
     /*-----------------------------------------------------------------------------------*/
