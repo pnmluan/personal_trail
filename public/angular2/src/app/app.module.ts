@@ -72,7 +72,7 @@ import { SearchComponent } from './components/search';
 		DatePickerModule,
 		ToasterModule,
 		AgmCoreModule.forRoot({
-		    apiKey: 'AIzaSyA-KHUk6ARqo3uBome6suVzr-Na9nAooZA'
+			apiKey: 'AIzaSyCcTvrAfpE5Pu1cnOJIzV9ydLYKPVCEqbw'
 		}),
 		LocalStorageModule.withConfig({
 		    prefix: 'my-app',
