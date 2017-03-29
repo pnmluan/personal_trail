@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { URLSearchParams } from '@angular/http';
 
@@ -6,6 +7,8 @@ import { Configuration } from '../../shared/app.configuration';
 import { ArticleDataService, CategoryDataService, SlideDataService, TagDataService } from '../../shared';
 
 declare let $: any;
+declare let instagramFeed: any;
+declare let instagramFeed2: any;
 
 @Component({
 	selector: 'app-home',
@@ -27,9 +30,12 @@ export class HomeComponent implements OnInit {
 		private _CategoryDataService: CategoryDataService,
 		private _SlideDataService: SlideDataService,
 		private _TagDataService: TagDataService,
+		private _Title: Title
 	){ }
 
 	ngOnInit(){
+		this._Title.setTitle('Homepage');
+
 		let params: URLSearchParams = new URLSearchParams();
 		params.set('status', 'active');
 
@@ -57,7 +63,6 @@ export class HomeComponent implements OnInit {
 
 	ngAfterViewInit(){
 		setTimeout(() => {
-			console.log('loaded');
 			/*-----------------------------------------------------------------------------------*/
 			/*	SWIPER
 			/*-----------------------------------------------------------------------------------*/
@@ -104,6 +109,15 @@ export class HomeComponent implements OnInit {
 				});
 				var $swipers = $(this);
 			});
+
+			$('#instafeed-widget').each(function() {
+				instagramFeed.run();
+			});
+
+			$('#instafeed').each(function() {
+				instagramFeed2.run();
+			});
+
 		}, 1500);
 	}
 }

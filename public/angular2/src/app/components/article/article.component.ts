@@ -1,10 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { Router, ActivatedRoute } from '@angular/router';
 import { URLSearchParams } from '@angular/http';
 import { Subscription } from 'rxjs/Rx';
 
 import { Configuration } from '../../shared/app.configuration';
 import { ArticleDataService, CategoryDataService, TagDataService } from '../../shared';
+
+declare let $: any;
+declare let instagramFeed: any;
+declare let instagramFeed2: any;
 
 @Component({
 	selector: 'app-article',
@@ -34,6 +39,7 @@ export class ArticleComponent implements OnInit {
 		private _TagDataService: TagDataService, 
 		private _Router: Router,
 		private _ActivatedRoute: ActivatedRoute,
+		private _title: Title
 	){
 		// subscribe to router event
 		this.subscriptionParam = this._ActivatedRoute.params.subscribe(
@@ -69,6 +75,16 @@ export class ArticleComponent implements OnInit {
 		});
 	}
 
+	ngAfterViewInit(){
+		$('#instafeed-widget').each(function() {
+			instagramFeed.run();
+		});
+
+		$('#instafeed').each(function() {
+			instagramFeed2.run();
+		});
+	}
+
 	initData(){
 		//reset previous, next article
 		this.prev_article = {};
@@ -82,6 +98,7 @@ export class ArticleComponent implements OnInit {
 			if(res.data){
 				let articles = res.data;
 				this.article = articles.shift();
+				this._title.setTitle(this.article['title']);
 				this.pictures = this.article['pictures'];
 				this.loadRelatedPosts(this.article['category_id'], this.article['id']);
 			}else{

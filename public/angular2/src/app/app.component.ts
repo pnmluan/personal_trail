@@ -42,7 +42,7 @@ export class AppComponent {
 		private _HttpInterceptorService: HttpInterceptorService,
 		private _LoadingAnimateService: LoadingAnimateService,
 		private _LocalStorageService: LocalStorageService,
-		private sessionStorage: LocalStorageService
+		private sessionStorage: LocalStorageService,
 	) {
 		this.session_expired = this._Configuration.session_expired;
 

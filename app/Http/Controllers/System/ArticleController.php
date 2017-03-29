@@ -54,6 +54,12 @@ class ArticleController extends Controller
             /*==================================================
              * Filter Data
              *==================================================*/
+            if(isset($params['tag']) && !empty($params['tag'])) {
+                $query->leftJoin('article_tags', 'article_tags.article_id', '=', $alias_dot . 'id')
+                    ->leftJoin('tags', 'tags.id', '=', 'article_tags.tag_id')
+                    ->where('tags.clean_url', '=', $params['tag']);
+
+            }
             foreach ($columns as $field) {
                 if(isset($params[$field]) || !empty($params[$field])){
                     if(is_array($params[$field])){
@@ -95,8 +101,6 @@ class ArticleController extends Controller
                         ->where('article_tags.article_id', $value->id)->get();
                     $data[$key]->tags = $tags;
                 }
-
-                
             }
             
             $total_data = count($data);
