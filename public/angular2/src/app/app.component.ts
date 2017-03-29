@@ -20,7 +20,6 @@ declare var jQuery: any;
 
 export class AppComponent {
 	@ViewChild('warning') warningModal: ModalComponent;
-	@ViewChild('cart') cartModal: ModalComponent;
 	private session_expired?: any;
 	public toasterconfig: ToasterConfig =
 	new ToasterConfig({

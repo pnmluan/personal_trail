@@ -80,69 +80,7 @@
                 <div class="clearfix"></div>
             </div>
             <!-- /.blog-content -->
-            <aside class="col-sm-4 sidebar">
-                <div class="sidebox widget">
-                    <h3 class="widget-title section-title">Popular Posts</h3>
-					<ul class="post-list">
-						<li *ngFor="let post of posts">
-							<figure class="overlay small">
-								<a [routerLink]="['/article', post.clean_url]">
-									<img src="{{ imgPath + post?.pictures[0]?.img }}" alt="{{ post.title }}" />
-								</a> 
-							</figure>
-							<div class="post-content">
-								<h4 class="post-title">
-									<a [routerLink]="['/article', post.clean_url]">{{ post.title }}</a>
-								</h4>
-								<div class="meta">
-									<span class="date">{{ post.publish_date | date }}</span>
-									<span class="comments">
-										<a href="#"><i class="ion-chatbubbles"></i> 6</a>
-									</span>
-								</div>
-							</div>
-						</li>
-					</ul>
-                    <!-- /.post-list -->
-                </div>
-				<!-- /.widget -->
-				<div class="sidebox widget">
-					<h3 class="widget-title section-title">Categories</h3>
-					<ul class="list circled">
-						<li  *ngFor="let item of categories">
-							<a [routerLink]="['/category', item.clean_url]">{{ item.name }} ({{ item.number }})</a>
-						</li>
-					</ul>
-				</div>
-                <!-- /.widget -->
-                <div class="sidebox widget">
-					<h3 class="widget-title section-title">Tags</h3>
-					<ul class="tag-list">
-						<li *ngFor="let tag of tags">
-							<a [routerLink]="['/search']" [queryParams]="{ tag : tag.clean_url }" class="btn">
-								{{ tag.name }}
-							</a>
-						</li>
-					</ul>
-                </div>
-                <!-- /.widget -->
-				<div class="sidebox widget">
-				    <h3 class="widget-title section-title">Instagram</h3>
-				    <div class="tiles instagram">
-				        <div id="instafeed-widget" class="items row row-offset-0"></div>
-				    </div>
-				    <!--/.tiles -->
-				</div>
-                <!-- /.widget -->
-                <div class="sidebox widget">
-                    <h4 class="widget-title">Search</h4>
-                    <form class="searchform" method="get">
-                        <input type="text" id="s1" name="s" value="Search something" onfocus="this.value=''" onblur="this.value='Search something'">
-                    </form>
-                </div>
-                <!-- /.widget -->
-            </aside>
-            <!-- /column .sidebar -->
+            <app-sidebar></app-sidebar>
         </div>
         <!-- /.blog -->
     </div>

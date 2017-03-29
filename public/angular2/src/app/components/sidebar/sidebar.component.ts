@@ -4,12 +4,12 @@ import { ArticleDataService, CategoryDataService, TagDataService } from '../../s
 declare let $: any;
 
 @Component({
-	selector: 'app-footer',
-	templateUrl: './footer.component.html',
+	selector: 'app-sidebar',
+	templateUrl: './sidebar.component.html',
 	providers: [ ArticleDataService, CategoryDataService, TagDataService ]
 })
 
-export class FooterComponent implements OnInit {
+export class SidebarComponent implements OnInit {
 	categories: Array<any> = [];
 	posts: Array<any> = [];
 	tags: Array<any> = [];
@@ -22,17 +22,16 @@ export class FooterComponent implements OnInit {
 	){ }
 
 	ngOnInit(){
-		var params: URLSearchParams = new URLSearchParams();
+		let params: URLSearchParams = new URLSearchParams();
 		params.set('status', 'active');
-
-		this._ArticleDataService.getPopularPosts().subscribe(res => {
-			this.posts = res.data;
-		});
-
 		this._TagDataService.getAll(params).subscribe(res => {
 			this.tags = res.data;
 		});
 
+		this._ArticleDataService.getPopularPosts().subscribe(res => {
+			this.posts = res.data;
+		});
+		
 		params.set('is_count_category','true');
 		this._CategoryDataService.getAll(params).subscribe(res => {
 			this.categories = res.data;

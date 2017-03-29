@@ -3,9 +3,11 @@ import { Title } from '@angular/platform-browser';
 import { Router, ActivatedRoute } from '@angular/router';
 import { URLSearchParams } from '@angular/http';
 import { Subscription } from 'rxjs/Rx';
-
-import { Configuration } from '../../shared/app.configuration';
 import { ArticleDataService, CategoryDataService } from '../../shared';
+
+declare let $: any;
+declare let instagramFeed: any;
+declare let instagramFeed2: any;
 
 @Component({
 	selector: 'app-category',
@@ -31,7 +33,6 @@ export class CategoryComponent implements OnInit {
 		this.subscriptionParam = _ActivatedRoute.params.subscribe(
 			(param: any) => {
 				this._params = param;
-
 			}
 		);
 
@@ -44,11 +45,18 @@ export class CategoryComponent implements OnInit {
 		});
 	}
 
-	ngOnInit(){
-		let params: URLSearchParams = new URLSearchParams();
-		this._CategoryDataService.getAll(params).subscribe(res => {
+	ngOnInit(){ }
 
-		})
+	ngAfterViewInit(){
+		setTimeout(() => {
+			$('#instafeed-widget').each(function() {
+				instagramFeed.run();
+			});
+
+			$('#instafeed').each(function() {
+				instagramFeed2.run();
+			});
+		}, 500)
 	}
 
 	initData(){
@@ -71,7 +79,5 @@ export class CategoryComponent implements OnInit {
 				this._Router.navigate(['/']);
 			}
 		});
-
-		
 	}
 }

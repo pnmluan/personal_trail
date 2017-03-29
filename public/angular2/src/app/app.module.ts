@@ -36,6 +36,7 @@ import { routing } from './app.routing';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header';
 import { FooterComponent } from './components/footer';
+import { SidebarComponent } from './components/sidebar';
 import { HomeComponent } from './components/home';
 import { AboutComponent } from './components/about';
 import { ArticleComponent } from './components/article';
@@ -49,6 +50,7 @@ import { SearchComponent } from './components/search';
 		AppComponent,
 		HeaderComponent,
 		FooterComponent,
+		SidebarComponent,
 		HomeComponent,
 		AboutComponent,
 		ArticleComponent,

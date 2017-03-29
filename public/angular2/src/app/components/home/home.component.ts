@@ -43,21 +43,8 @@ export class HomeComponent implements OnInit {
 			this.articles = res.data;
 		});
 
-		this._ArticleDataService.getPopularPosts().subscribe(res => {
-			this.posts = res.data;
-		});
-
 		this._SlideDataService.getAll(params).subscribe(res => {
 			this.slides = res.data;
-		});
-
-		this._TagDataService.getAll(params).subscribe(res => {
-			this.tags = res.data;
-		});
-
-		params.set('is_count_category','true');
-		this._CategoryDataService.getAll(params).subscribe(res => {
-			this.categories = res.data;
 		});
 	}
 

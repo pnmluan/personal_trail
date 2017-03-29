@@ -1,1 +1,50 @@
-<div></div>
+<div class="light-wrapper">
+	<div class="container inner tp0">
+		<div class="blog row">
+			<div class="col-sm-8 blog-content list-view">
+				<div class="blog-content">
+					<div class="blog-post">
+						<template ngFor let-article [ngForOf]="articles" let-i="index">
+							<div class="post row">
+								<div class="col-md-5">
+									<figure class="overlay"><a href="#"> <img src="assets/images/art/bl1.jpg" alt="" /></a></figure>
+								</div>
+								<!-- /column -->
+								<div class="divide30 visible-xs visible-sm"></div>
+								<div class="col-md-7">
+									<div class="post-content">
+										<span class="category">
+											<em class="pink">
+												<a [routerLink]="['/search']" [queryParams]="{ tag : article?.tags[0]?.clean_url || 'other' }">
+													{{ article?.tags[0]?.name || 'other' }}
+												</a>
+											</em>
+										</span>
+										<h3 class="post-title">
+											<a [routerLink]="['/article', article.clean_url]">{{ article.title }}</a>
+										</h3>
+										<div class="meta">
+											<span class="date">{{ article.publish_date | date }}</span>
+											<span class="author">By <a href="#">Juno</a></span>
+											<span class="comments"><a href="#"><i class="ion-chatbubbles"></i> 9</a></span>
+										</div>
+										<p>Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Nullam quis risus eget urna.</p>
+										<a [routerLink]="['/article', article.clean_url]" class="more">Read More</a>
+									</div>
+									<!-- /.post-content -->
+								</div>
+								<!-- /column -->
+							</div>
+							<!-- /.post -->
+							<hr />	
+						</template>
+					</div>
+					<!-- /.blog-posts -->
+				</div>
+				<!-- /.blog-content -->
+			</div>
+			<app-sidebar></app-sidebar>
+			<!-- /column .sidebar -->
+		</div>
+	</div>
+</div>
