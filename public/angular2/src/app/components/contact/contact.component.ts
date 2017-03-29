@@ -2,12 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { AgmCoreModule } from 'angular2-google-maps/core';
 import { Configuration } from '../../shared/app.configuration';
-import { ContactDataService } from '../../shared';
+import { ContactDataService, MailService  } from '../../shared';
 
 @Component({
 	selector: 'app-contact',
 	templateUrl: './contact.component.html',
-	providers: [ ContactDataService ]
+	providers: [ ContactDataService, MailService ]
 })
 
 export class ContactComponent implements OnInit {
@@ -16,16 +16,16 @@ export class ContactComponent implements OnInit {
 	contact: any = {};
 
 	constructor(
-		private _ContactDataService: ContactDataService
+		private _ContactDataService: ContactDataService,
+		private _MailService: MailService
 	){ }
 
 	ngOnInit(){ }
 
 	onSubmit(form: NgForm){
 		if(form.valid){
-			this._ContactDataService.save(this.contact).subscribe(res => {
-
-			})
+			this._ContactDataService.save(this.contact);
+			this._MailService.sendConfirmInfo(this.contact);
 		}
 	}
 
