@@ -9,7 +9,7 @@
 						<li *ngFor="let post of posts">
 							<figure class="overlay small">
 								<a [routerLink]="['/article', post.clean_url]">
-									<img src="{{ imgPath + post?.pictures[0]?.img }}" alt="{{ post.title }}" />
+									<img [src]="post?.pictures[0]?.filepath ? (imgPath + post?.pictures[0]?.filepath) : 'assets/images/art/b1.jpg'" alt="{{ post.title }}" />
 								</a> 
 							</figure>
 							<div class="post-content">

@@ -19,9 +19,7 @@ export class SearchComponent implements OnInit {
 	private subscriptionParam: Subscription;
 	_params: {};
 	articles: Array<any> = [];
-	categories: Array<any> = [];
-	posts: Array<any> = [];
-	tags: Array<any> = [];
+	imgPath: string = this._ArticleDataService.imgPath;
 
 	constructor(
 		private _ActivatedRoute: ActivatedRoute,
@@ -36,22 +34,10 @@ export class SearchComponent implements OnInit {
 
 	ngOnInit(){
 		let params: URLSearchParams = new URLSearchParams();
-		params.set('status', 'active');
-		this._TagDataService.getAll(params).subscribe(res => {
-			this.tags = res.data;
+		params.set('tag', this._params['tag']);
+		this._ArticleDataService.getAll(params).subscribe(res => {
+			this.articles = res.data;
 		});
-
-		this._ArticleDataService.getPopularPosts().subscribe(res => {
-			this.posts = res.data;
-		});
-		
-		params.set('is_count_category','true');
-		this._CategoryDataService.getAll(params).subscribe(res => {
-			this.categories = res.data;
-		});
-
-		params.set('clean_url', this._params['tag']);
-		this._ArticleDataService.getAll().subscribe();
 	}
 
 	ngAfterViewInit(){

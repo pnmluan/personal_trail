@@ -107,4 +107,13 @@ export class HomeComponent implements OnInit {
 
 		}, 1500);
 	}
+
+	onSetClass(i){
+		setTimeout(() => {
+			let colors = ['blue','forest','orange','navy','rose'];
+			let index = Math.floor(Math.random()*4) + 1;
+			console.log(colors[index]);
+			return colors[index];
+		},200)
+	}
 }

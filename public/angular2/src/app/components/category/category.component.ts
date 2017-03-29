@@ -21,6 +21,7 @@ export class CategoryComponent implements OnInit {
 	curRouting?: string;
 	_params = {};
 	articles: Array<any> = [];
+	imgPath: string = this._ArticleDataService.imgPath;
 
 	constructor(
 		private _ArticleDataService: ArticleDataService,

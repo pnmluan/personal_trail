@@ -1,5 +1,8 @@
 <div class="light-wrapper">
 	<div class="container inner tp0">
+		<div class="swiper-container-wrapper image-blog-wrapper blog-carousel-wrapper blog-carousel-wrap">
+		</div>
+		<div class="divide60"></div>
 		<div class="blog row">
 			<div class="col-sm-8 blog-content list-view">
 				<div class="blog-content">
@@ -7,7 +10,11 @@
 						<template ngFor let-article [ngForOf]="articles" let-i="index">
 							<div class="post row">
 								<div class="col-md-5">
-									<figure class="overlay"><a href="#"> <img src="assets/images/art/bl1.jpg" alt="" /></a></figure>
+									<figure class="overlay">
+										<a [routerLink]="['/article', article.clean_url]">
+											<img [src]="article?.pictures[0]?.filepath ? (imgPath + article?.pictures[0]?.filepath) : 'assets/images/art/b1.jpg'"/>
+										</a>
+									</figure>
 								</div>
 								<!-- /column -->
 								<div class="divide30 visible-xs visible-sm"></div>
