@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Configuration } from '../../shared/app.configuration';
+
+declare let $: any;
+declare let instagramFeed: any;
+declare let instagramFeed2: any;
 
 @Component({
 	selector: 'app-about',
@@ -11,4 +14,15 @@ export class AboutComponent implements OnInit {
 
 	ngOnInit(){ }
 
+	ngAfterViewInit(){
+		setTimeout(() => {
+			$('#instafeed-widget').each(function() {
+				instagramFeed.run();
+			});
+
+			$('#instafeed').each(function() {
+				instagramFeed2.run();
+			});
+		}, 200)
+	}
 }

@@ -114,6 +114,6 @@ export class HomeComponent implements OnInit {
 			let index = Math.floor(Math.random()*4) + 1;
 			console.log(colors[index]);
 			return colors[index];
-		},200)
+		},200);
 	}
 }
