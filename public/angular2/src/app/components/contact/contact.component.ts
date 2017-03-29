@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { URLSearchParams } from '@angular/http';
 import { AgmCoreModule } from 'angular2-google-maps/core';
 import { Configuration } from '../../shared/app.configuration';
 import { ContactDataService, MailService  } from '../../shared';
@@ -25,8 +26,14 @@ export class ContactComponent implements OnInit {
 
 	onSubmit(form: NgForm){
 		if(form.valid){
-			this._ContactDataService.save(this.contact);
-			this._MailService.sendConfirmInfo(this.contact);
+			let params: URLSearchParams = new URLSearchParams();
+			params.set('name', this.contact['name']);
+			params.set('email', this.contact['email']);
+			params.set('phone', this.contact['phone']);
+			params.set('title', this.contact['title']);
+			params.set('content', this.contact['content']);
+			this._ContactDataService.save(params);
+			this._MailService.sendConfirmInfo(params);
 		}
 	}
 
