@@ -9,8 +9,8 @@ import { Configuration } from '../../shared/app.configuration';
 })
 
 export class ContactComponent implements OnInit {
-	lat: number = 10.789288;
-	lng: number = 106.699784;
+	lat: number = 10.787560;
+	lng: number = 106.697295;
 	contact: any = {};
 
 	constructor(){ }

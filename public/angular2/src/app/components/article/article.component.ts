@@ -99,6 +99,7 @@ export class ArticleComponent implements OnInit {
 		let params: URLSearchParams = new URLSearchParams();
 		params.set('category_id', String(category_id));
 		params.set('status', 'active');
+		params.set('limit','6');
 		this._ArticleDataService.getAll(params).subscribe(res => {
 			if(res.data){
 				let posts = res.data;
@@ -124,5 +125,10 @@ export class ArticleComponent implements OnInit {
 				this.articles = posts;
 			}
 		});
+	}
+
+	ngOnDestroy() {
+		this.subscriptionParam.unsubscribe();
+		this.subscriptionEvents.unsubscribe();
 	}
 }

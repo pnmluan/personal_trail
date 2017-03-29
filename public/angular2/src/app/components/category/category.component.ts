@@ -81,4 +81,9 @@ export class CategoryComponent implements OnInit {
 			}
 		});
 	}
+
+	ngOnDestroy() {
+		this.subscriptionParam.unsubscribe();
+		this.subscriptionEvents.unsubscribe();
+	}
 }
