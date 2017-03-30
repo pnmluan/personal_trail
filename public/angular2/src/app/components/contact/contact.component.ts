@@ -24,7 +24,7 @@ export class ContactComponent implements OnInit {
 
 	ngOnInit(){ }
 
-	onSubmit(form: NgForm){
+	onSubmitContact(form: NgForm) {
 		if(form.valid){
 			let params: URLSearchParams = new URLSearchParams();
 			params.set('name', this.contact['name']);
@@ -32,8 +32,10 @@ export class ContactComponent implements OnInit {
 			params.set('phone', this.contact['phone']);
 			params.set('title', this.contact['title']);
 			params.set('content', this.contact['content']);
-			this._ContactDataService.save(params);
-			this._MailService.sendConfirmInfo(params);
+			
+			this._ContactDataService.save(params).subscribe(res => {
+				this._MailService.sendConfirmInfo(params).subscribe(res => { });
+			});
 		}
 	}
 

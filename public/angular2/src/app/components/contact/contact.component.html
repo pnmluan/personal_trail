@@ -11,7 +11,7 @@
 				<p>Nullam quis risus eget urna mollis ornare vel eu leo. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Integer posuere erat.</p>
 				<div class="divide10"></div>
 				<div class="form-container">
-					<form #f="ngForm" (ngSubmit)="onSubmit(f)" autocomplete="off" class="vanilla vanilla-form">
+					<form #f="ngForm" autocomplete="off" >
 						<div class="row">
 							<div class="col-sm-6 rp10">
 								<div class="form-field">
@@ -67,7 +67,7 @@
 									</label>
 								</div>
 								<!--/.radio-set -->
-								<input type="submit" class="btn" value="Send" data-error="Fix errors" data-processing="Sending..." data-success="Thank you!" [disabled]="!f.valid">
+								<input (click)="onSubmitContact(f)" type="button" class="btn" value="Send" data-error="Fix errors" data-processing="Sending..." data-success="Thank you!" [disabled]="!f.valid">
 								<footer class="notification-box"></footer>
 							</div>
                 			<!--/column --> 
