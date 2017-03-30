@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { URLSearchParams } from '@angular/http';
+import { Title } from '@angular/platform-browser';
 import { AgmCoreModule } from 'angular2-google-maps/core';
 import { Configuration } from '../../shared/app.configuration';
 import { ContactDataService, MailService  } from '../../shared';
@@ -18,10 +19,13 @@ export class ContactComponent implements OnInit {
 
 	constructor(
 		private _ContactDataService: ContactDataService,
-		private _MailService: MailService
+		private _MailService: MailService,
+		private _Title: Title
 	){ }
 
-	ngOnInit(){ }
+	ngOnInit(){
+		this._Title.setTitle('Contact | Lighthouse');
+	}
 
 	onSubmit(form: NgForm){
 		if(form.valid){
@@ -31,8 +35,9 @@ export class ContactComponent implements OnInit {
 			params.set('phone', this.contact['phone']);
 			params.set('title', this.contact['title']);
 			params.set('content', this.contact['content']);
-			this._ContactDataService.save(params);
-			this._MailService.sendConfirmInfo(params);
+			params.set('subject', this.contact['subject']);
+			this._ContactDataService.save(params).subscribe(res => {});
+			this._MailService.sendConfirmInfo(params).subscribe(res => {});
 		}
 	}
 
