@@ -7,7 +7,7 @@
 			<div class="col-sm-8 blog-content list-view">
 				<div class="blog-content">
 					<div class="blog-post">
-						<template ngFor let-article [ngForOf]="articles" let-i="index">
+						<ng-template ngFor let-article [ngForOf]="articles" let-i="index">
 							<div class="post row">
 								<div class="col-md-5">
 									<figure class="overlay">
@@ -44,7 +44,7 @@
 							</div>
 							<!-- /.post -->
 							<hr />	
-						</template>
+						</ng-template>
 					</div>
 					<!-- /.blog-posts -->
 				</div>

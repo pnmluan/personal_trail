@@ -28,9 +28,9 @@ class MailController extends Controller
 
             Mail::send('_confirm_info',  ['data'=>$data], function($message) use ($data)
             {
-                // $message->from(env('MAIL_USERNAME') , 'LightHouse');
-                // $message->to($data['email'], $data['name']);
-                // $message->subject($data['title']);
+                $message->from(env('MAIL_USERNAME') , 'LightHouse');
+                $message->to($data['email'], $data['name']);
+                $message->subject($data['title']);
             });
         }
 

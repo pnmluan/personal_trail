@@ -2,9 +2,9 @@ import { Component, ViewChild } from '@angular/core';
 import { URLSearchParams } from '@angular/http';
 import { Router, ActivatedRoute } from '@angular/router';
 
-import { HttpInterceptorService } from 'ng2-http-interceptor';
+// import { HttpInterceptorService } from 'ng2-http-interceptor';
 import { ToasterConfig } from 'angular2-toaster/angular2-toaster';
-import { LoadingAnimateService } from 'ng2-loading-animate';
+// import { LoadingAnimateService } from 'ng2-loading-animate';
 import { ModalComponent } from 'ng2-bs3-modal/ng2-bs3-modal';
 import { LocalStorageService } from 'angular-2-local-storage';
 import { Configuration } from './shared/app.configuration';
@@ -38,8 +38,8 @@ export class AppComponent {
 		private _Http: Http,
 		private _Router: Router,
 		private _Configuration: Configuration,
-		private _HttpInterceptorService: HttpInterceptorService,
-		private _LoadingAnimateService: LoadingAnimateService,
+		// private _HttpInterceptorService: HttpInterceptorService,
+		// private _LoadingAnimateService: LoadingAnimateService,
 		private _LocalStorageService: LocalStorageService,
 		private sessionStorage: LocalStorageService,
 	) {
@@ -49,7 +49,6 @@ export class AppComponent {
 		let current_domain = window.location.origin;
 		current_href = current_href.replace(current_domain, '');
 		this._Router.events.subscribe((val) => {
-			console.log('this._Router.events.subscribe')
 			if (current_href.match(/^\/search-result.*/i)) {
 				let now = new Date().getTime();
 				this._LocalStorageService.set('user_session_start', now);
@@ -57,15 +56,15 @@ export class AppComponent {
 
 		});
 
-		_HttpInterceptorService.request().addInterceptor((data, method) => {
-			this._LoadingAnimateService.setValue(true);
-			return data;
-		});
+		// _HttpInterceptorService.request().addInterceptor((data, method) => {
+		// 	this._LoadingAnimateService.setValue(true);
+		// 	return data;
+		// });
 
-		_HttpInterceptorService.response().addInterceptor((res, method) => {
-			this._LoadingAnimateService.setValue(false);
-			return res;
-		});
+		// _HttpInterceptorService.response().addInterceptor((res, method) => {
+		// 	this._LoadingAnimateService.setValue(false);
+		// 	return res;
+		// });
 
 		this.onSetGlobalScript();
 
@@ -78,7 +77,6 @@ export class AppComponent {
 		let routing = this._Router.url;
 		if (this.curRouting != routing) {
 			this.curRouting = routing;
-			console.log('ngAfterContentChecked')
 			let now = new Date().getTime();
 			this._LocalStorageService.set('user_session_start', now);
 			this.onSetGlobalScript();

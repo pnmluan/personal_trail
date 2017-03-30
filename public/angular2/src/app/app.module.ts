@@ -12,8 +12,8 @@ import { SelectModule } from 'angular2-select';
 // import { LocalStorageService, LOCAL_STORAGE_SERVICE_CONFIG } from 'angular-2-local-storage';
 import { LocalStorageModule } from 'angular-2-local-storage';
 import { MomentModule } from 'angular2-moment';
-import { HTTP_INTERCEPTOR_PROVIDER } from 'ng2-http-interceptor';
-import { LoadingAnimateModule, LoadingAnimateService } from 'ng2-loading-animate';
+// import { HTTP_INTERCEPTOR_PROVIDER } from 'ng2-http-interceptor';
+// import { LoadingAnimateModule, LoadingAnimateService } from 'ng2-loading-animate';
 import { Ng2Bs3ModalModule } from 'ng2-bs3-modal/ng2-bs3-modal';
 import { DatePickerModule } from 'ng2-datepicker';
 import { AgmCoreModule } from 'angular2-google-maps/core';
@@ -66,7 +66,7 @@ import { SearchComponent } from './components/search';
 		ReactiveFormsModule,
 		SelectModule,
 		MomentModule,
-		LoadingAnimateModule.forRoot(),
+		// LoadingAnimateModule.forRoot(),
 		Ng2Bs3ModalModule,
 		TabsModule,
 		DatePickerModule,
@@ -83,8 +83,8 @@ import { SearchComponent } from './components/search';
 	providers: [
 		Configuration,
 		HttpClient,
-		...HTTP_INTERCEPTOR_PROVIDER,
-		LoadingAnimateService,
+		// HTTP_INTERCEPTOR_PROVIDER,
+		// LoadingAnimateService,
 		Title
 		// LocalStorageService,
 		// {

@@ -21,15 +21,15 @@
 								<div [innerHTML]="article.content"></div>
 								<div class="footer-meta meta">
 									<div class="tags pull-left">
-										<template [ngIf]="article.tags?.length">
-											<template ngFor let-tag [ngForOf]="article.tags" let-i="index">
+										<ng-template [ngIf]="article.tags?.length">
+											<ng-template ngFor let-tag [ngForOf]="article.tags" let-i="index">
 												<a [routerLink]="['/search']" [queryParams]="{ tag : tag.clean_url }">{{ tag.name }}</a>
-												<template [ngIf]="(article.tags.length - 1) > i">,&nbsp;</template>
-											</template>	
-										</template>
-										<template [ngIf]="!article.tags?.length">
+												<ng-template [ngIf]="(article.tags.length - 1) > i">,&nbsp;</ng-template>
+											</ng-template>	
+										</ng-template>
+										<ng-template [ngIf]="!article.tags?.length">
 											<a [routerLink]="['/search']" [queryParams]="{ tag : other }">other</a>
-										</template>
+										</ng-template>
 									</div>
 									<div class="pull-right">
 										<div class="btn-group share-button">
