@@ -8,6 +8,7 @@ import { ContactDataService, MailService  } from '../../shared';
 
 @Component({
 	selector: 'app-contact',
+	styles: ['.sebm-google-map-container {height: 450px;}'],
 	templateUrl: './contact.component.html',
 	providers: [ ContactDataService, MailService ]
 })
@@ -27,15 +28,16 @@ export class ContactComponent implements OnInit {
 		this._Title.setTitle('Contact | Lighthouse');
 	}
 
-	onSubmit(form: NgForm){
+	onSubmit(form: NgForm) {
 		if(form.valid){
 			let params: URLSearchParams = new URLSearchParams();
-			params.set('name', this.contact['name']);
+			params.set('firstname', this.contact['firstname']);
+			params.set('lastname', this.contact['lastname']);
 			params.set('email', this.contact['email']);
 			params.set('phone', this.contact['phone']);
 			params.set('title', this.contact['title']);
 			params.set('content', this.contact['content']);
-			params.set('subject', this.contact['subject']);
+			//save contact info and send mail
 			this._ContactDataService.save(params).subscribe(res => {});
 			this._MailService.sendConfirmInfo(params).subscribe(res => {});
 		}

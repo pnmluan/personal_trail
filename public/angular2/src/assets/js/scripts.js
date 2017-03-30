@@ -142,59 +142,59 @@ $(document).ready(function() {
     /*	LAZY LOAD GOOGLE MAPS
     /*-----------------------------------------------------------------------------------*/
     
-    (function($, window, document, undefined) {
-        var $window = $(window),
-            mapInstances = [],
-            $pluginInstance = $('.google-map').lazyLoadGoogleMaps({
-                callback: function(container, map) {
-                    var $container = $(container),
-                        center = new google.maps.LatLng($container.attr('data-lat'), $container.attr('data-lng'));
+    // (function($, window, document, undefined) {
+    //     var $window = $(window),
+    //         mapInstances = [],
+    //         $pluginInstance = $('.google-map').lazyLoadGoogleMaps({
+    //             callback: function(container, map) {
+    //                 var $container = $(container),
+    //                     center = new google.maps.LatLng($container.attr('data-lat'), $container.attr('data-lng'));
 
-                    map.setOptions({
-                        center: center,
-                        zoom: 15,
-                        zoomControl: true,
-                        zoomControlOptions: {
-                            style: google.maps.ZoomControlStyle.DEFAULT,
-                        },
-                        disableDoubleClickZoom: false,
-                        mapTypeControl: true,
-                        mapTypeControlOptions: {
-                            style: google.maps.MapTypeControlStyle.DROPDOWN_MENU,
-                        },
-                        scaleControl: true,
-                        scrollwheel: false,
-                        streetViewControl: true,
-                        draggable: true,
-                        overviewMapControl: false,
-                        mapTypeId: google.maps.MapTypeId.ROADMAP
-                    });
-                    new google.maps.Marker({
-                        position: center,
-                        map: map
-                    });
+    //                 map.setOptions({
+    //                     center: center,
+    //                     zoom: 15,
+    //                     zoomControl: true,
+    //                     zoomControlOptions: {
+    //                         style: google.maps.ZoomControlStyle.DEFAULT,
+    //                     },
+    //                     disableDoubleClickZoom: false,
+    //                     mapTypeControl: true,
+    //                     mapTypeControlOptions: {
+    //                         style: google.maps.MapTypeControlStyle.DROPDOWN_MENU,
+    //                     },
+    //                     scaleControl: true,
+    //                     scrollwheel: false,
+    //                     streetViewControl: true,
+    //                     draggable: true,
+    //                     overviewMapControl: false,
+    //                     mapTypeId: google.maps.MapTypeId.ROADMAP
+    //                 });
+    //                 new google.maps.Marker({
+    //                     position: center,
+    //                     map: map
+    //                 });
 
-                    $.data(map, 'center', center);
-                    mapInstances.push(map);
+    //                 $.data(map, 'center', center);
+    //                 mapInstances.push(map);
 
-                    var updateCenter = function() {
-                        $.data(map, 'center', map.getCenter());
-                    };
-                    google.maps.event.addListener(map, 'dragend', updateCenter);
-                    google.maps.event.addListener(map, 'zoom_changed', updateCenter);
-                    google.maps.event.addListenerOnce(map, 'idle', function() {
-                        $container.addClass('is-loaded');
-                    });
-                }
-            });
+    //                 var updateCenter = function() {
+    //                     $.data(map, 'center', map.getCenter());
+    //                 };
+    //                 google.maps.event.addListener(map, 'dragend', updateCenter);
+    //                 google.maps.event.addListener(map, 'zoom_changed', updateCenter);
+    //                 google.maps.event.addListenerOnce(map, 'idle', function() {
+    //                     $container.addClass('is-loaded');
+    //                 });
+    //             }
+    //         });
 
-        $window.on('resize', $pluginInstance.debounce(1000, function() {
-            $.each(mapInstances, function() {
-                this.setCenter($.data(this, 'center'));
-            });
-        }));
+    //     $window.on('resize', $pluginInstance.debounce(1000, function() {
+    //         $.each(mapInstances, function() {
+    //             this.setCenter($.data(this, 'center'));
+    //         });
+    //     }));
 
-    })(jQuery, window, document);
+    // })(jQuery, window, document);
     /*-----------------------------------------------------------------------------------*/
     /*	VANILLA
     /*-----------------------------------------------------------------------------------*/

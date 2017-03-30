@@ -16,10 +16,19 @@
 							<div class="col-sm-6 rp10">
 								<div class="form-field">
 									<label>
-										<input type="text" name="name" placeholder="Your name" [(ngModel)]="contact.name" required="required">
+										<input type="text" name="firstname" placeholder="Your first name" [(ngModel)]="contact.firstname" required="required">
 									</label>
 								</div>
-                  				<!--/.form-field --> 
+                  				<!--/.form-field -->
+							</div>
+							<!--/column -->
+							<div class="col-sm-6 rp10">
+								<div class="form-field">
+									<label>
+										<input type="text" name="lastname" placeholder="Your last name" [(ngModel)]="contact.lastname" required="required">
+									</label>
+								</div>
+                  				<!--/.form-field -->
 							</div>
 							<!--/column -->
 							<div class="col-sm-6 rp10">
@@ -34,40 +43,24 @@
 							<div class="col-sm-6 rp10">
 								<div class="form-field">
 									<label>
-										<input type="tel" name="phone" [(ngModel)]="contact.phone" placeholder="Phone">
+										<input type="tel" name="phone" [(ngModel)]="contact.phone" onkeypress="return event.charCode >= 48 && event.charCode <= 57" placeholder="Phone">
 									</label>
 								</div>
 								<!--/.form-field -->
 							</div>
 							<!--/column -->
-							<div class="col-sm-6 rp10">
-								<div class="form-field">
+							<div class="col-sm-12 rp10">
+									<div class="form-field">
 									<label>
-										<input type="text" name="title" [(ngModel)]="contact.title" placeholder="Title">
+										<input type="text" name="title" [(ngModel)]="contact.title" placeholder="Title" required="required">
 									</label>
 								</div>
 								<!--/.form-field --> 
 							</div>
 							<!--/column -->
-							<div class="col-sm-12">
+							<div class="col-sm-12 rp10">
 								<textarea name="content" placeholder="Type your message here..." [(ngModel)]="contact.content" required="required"></textarea>
-								<div class="radio-set">
-									<label>Subject:</label>
-									<label>
-										<input type="radio" name="subject" value="General" [(ngModel)]="contact.subject">
-										<span><!-- fake radio --></span> General
-									</label>
-									<label>
-										<input type="radio" name="subject" value="Hi" [(ngModel)]="contact.subject">
-										<span><!-- fake radio --></span> Say Hi
-									</label>
-									<label>
-										<input type="radio" name="subject" value="Other" [(ngModel)]="contact.subject">
-										<span><!-- fake radio --></span> Other
-									</label>
-								</div>
-								<!--/.radio-set -->
-								<input type="submit" class="btn" value="Send" data-error="Fix errors" data-processing="Sending..." data-success="Thank you!" [disabled]="!f.valid">
+								<input type="submit" class="btn" value="Send" data-error="Fix errors" data-processing="Sending..." data-success="Thank you!">
 								<footer class="notification-box"></footer>
 							</div>
                 			<!--/column --> 

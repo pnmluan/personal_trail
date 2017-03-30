@@ -300,5 +300,15 @@ $api->version('v1', function ($api) {
         'as' => 'api.contact.delete',
         'uses' => 'App\Http\Controllers\System\ContactController@delete',
     ]);
+
+    /*
+    |--------------------------------------------------------------------------
+    | Mail
+    |--------------------------------------------------------------------------
+    */
+    $api->post('mail/sendConfirmInfo', [
+        'as' => 'api.mail.sendConfirmInfo',
+        'uses' => 'App\Http\Controllers\System\MailController@sendConfirmInfo',
+    ]);
     
 });
