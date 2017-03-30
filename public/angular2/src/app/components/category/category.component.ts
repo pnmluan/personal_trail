@@ -21,6 +21,7 @@ export class CategoryComponent implements OnInit {
 	curRouting?: string;
 	_params = {};
 	articles: Array<any> = [];
+	colors = ['blue','brown','forest','orange','pink','purple','lime','navy','rose'];
 	imgPath: string = this._ArticleDataService.imgPath;
 
 	constructor(
@@ -74,12 +75,20 @@ export class CategoryComponent implements OnInit {
 				params.set('category_id',category.id);
 				params.set('status','active');
 				this._ArticleDataService.getAll(params).subscribe(res => {
+					for(let i in res.data){
+						res.data[i].em_tag = this.onSetClassEmTag();
+					}
 					this.articles = res.data;
 				});
 			}else{
 				this._Router.navigate(['/']);
 			}
 		});
+	}
+
+	onSetClassEmTag(){
+		let index = Math.floor(Math.random()*9);
+		return this.colors[index];
 	}
 
 	ngOnDestroy() {

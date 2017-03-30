@@ -20,6 +20,7 @@ export class SearchComponent implements OnInit {
 	curRouting?: string;
 	_params: {};
 	articles: Array<any> = [];
+	colors = ['blue','brown','forest','orange','pink','purple','lime','navy','rose'];
 	imgPath: string = this._ArticleDataService.imgPath;
 
 	constructor(

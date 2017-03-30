@@ -31,8 +31,8 @@ export class ContactComponent implements OnInit {
 	onSubmit(form: NgForm) {
 		if(form.valid){
 			let params: URLSearchParams = new URLSearchParams();
-			params.set('firstname', this.contact['firstname']);
-			params.set('lastname', this.contact['lastname']);
+			params.set('first_name', this.contact['first_name']);
+			params.set('last_name', this.contact['last_name']);
 			params.set('email', this.contact['email']);
 			params.set('phone', this.contact['phone']);
 			params.set('title', this.contact['title']);

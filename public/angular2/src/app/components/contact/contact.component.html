@@ -1,5 +1,5 @@
 <div class="google-map h450">
-	<sebm-google-map [latitude]="lat" [longitude]="lng">
+	<sebm-google-map [latitude]="lat" [longitude]="lng" [zoom]="14">
 		<sebm-google-map-marker [latitude]="lat" [longitude]="lng"></sebm-google-map-marker>
 	</sebm-google-map>
 </div>
@@ -16,7 +16,7 @@
 							<div class="col-sm-6 rp10">
 								<div class="form-field">
 									<label>
-										<input type="text" name="firstname" placeholder="Your first name" [(ngModel)]="contact.firstname" required="required">
+										<input type="text" name="first_name" placeholder="Your first name" [(ngModel)]="contact.first_name" required="required">
 									</label>
 								</div>
                   				<!--/.form-field -->
@@ -25,7 +25,7 @@
 							<div class="col-sm-6 rp10">
 								<div class="form-field">
 									<label>
-										<input type="text" name="lastname" placeholder="Your last name" [(ngModel)]="contact.lastname" required="required">
+										<input type="text" name="last_name" placeholder="Your last name" [(ngModel)]="contact.last_name" required="required">
 									</label>
 								</div>
                   				<!--/.form-field -->

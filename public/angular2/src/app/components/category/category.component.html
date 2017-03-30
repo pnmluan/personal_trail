@@ -21,7 +21,7 @@
 								<div class="col-md-7">
 									<div class="post-content">
 										<span class="category">
-											<em class="pink">
+											<em [ngClass]="article.em_tag">
 												<a [routerLink]="['/search']" [queryParams]="{ tag : article?.tags[0]?.clean_url || 'other' }">
 													{{ article?.tags[0]?.name || 'other' }}
 												</a>
