@@ -33,15 +33,15 @@
 		<div class="nav-wrapper">
 			<div class="navbar-collapse collapse">
 				<ul class="nav navbar-nav">
-					<li class="current"><a href="#">Blog <span class="caret"></span></a>
+					<li [routerLinkActive]="['current']"><a href="#">Blog <span class="caret"></span></a>
 						<ul class="dropdown-menu">
 							<li *ngFor="let item of categories">
 								<a [routerLink]="['/category', item.clean_url]">{{ item.name }}</a>
 							</li>
 						</ul>
 					</li>
-					<li><a [routerLink]="['/about']">About</a></li>
-					<li><a [routerLink]="['/contact']">Contact</a></li>
+					<li [routerLinkActive]="['current']"><a [routerLink]="['/about']">About</a></li>
+					<li [routerLinkActive]="['current']"><a [routerLink]="['/contact']">Contact</a></li>
 				</ul>
 			</div>
 		</div>

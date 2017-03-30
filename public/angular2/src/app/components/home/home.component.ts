@@ -13,7 +13,7 @@ declare let instagramFeed2: any;
 @Component({
 	selector: 'app-home',
 	templateUrl: './home.component.html',
-	providers: [ ArticleDataService, CategoryDataService, SlideDataService, TagDataService ]
+	providers: [ ArticleDataService, CategoryDataService, SlideDataService, TagDataService ],
 })
 
 export class HomeComponent implements OnInit {
@@ -22,6 +22,7 @@ export class HomeComponent implements OnInit {
 	posts: Array<any> = [];
 	slides: Array<any> = [];
 	tags: Array<any> = [];
+	colors = ['blue','brown','forest','orange','pink','purple','lime','navy','rose'];
 	imgPath: string = this._ArticleDataService.imgPath;
 	slidePath: string = this._SlideDataService.imgPath;
 
@@ -30,7 +31,7 @@ export class HomeComponent implements OnInit {
 		private _CategoryDataService: CategoryDataService,
 		private _SlideDataService: SlideDataService,
 		private _TagDataService: TagDataService,
-		private _Title: Title
+		private _Title: Title,
 	){ }
 
 	ngOnInit(){
@@ -44,6 +45,9 @@ export class HomeComponent implements OnInit {
 		});
 
 		this._SlideDataService.getAll(params).subscribe(res => {
+			for(let i in res.data){
+				res.data[i].em_tag = this.onRenderTag();
+			}
 			this.slides = res.data;
 		});
 	}
@@ -108,12 +112,8 @@ export class HomeComponent implements OnInit {
 		}, 1500);
 	}
 
-	onSetClass(i){
-		setTimeout(() => {
-			let colors = ['blue','forest','orange','navy','rose'];
-			let index = Math.floor(Math.random()*4) + 1;
-			console.log(colors[index]);
-			return colors[index];
-		},200);
+	onRenderTag(){
+		let index = Math.floor(Math.random()*9);
+		return '<em class="'+ this.colors[index]  +'"><a href="#">Conceptual</a></em>';
 	}
 }

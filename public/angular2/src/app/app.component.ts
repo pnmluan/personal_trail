@@ -68,9 +68,9 @@ export class AppComponent {
 
 		this.onSetGlobalScript();
 
-		setInterval(() => {
-			this.checkUserSession();
-		}, 3000);
+		// setInterval(() => {
+		// 	this.checkUserSession();
+		// }, 3000);
 	}
 
 	ngAfterContentChecked() {

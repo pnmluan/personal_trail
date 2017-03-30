@@ -19,7 +19,7 @@ export class ContactDataService {
 	public save(params, id?:number) {
 		let headers = new Headers();
 		this.createAuthorizationHeader(headers);
-		return this._Http.post(this.actionUrl + 'save/' + id, params, {
+		return this._Http.post(this.actionUrl + 'save', params, {
 			headers: headers
 		})
 		.map(res => res.json())

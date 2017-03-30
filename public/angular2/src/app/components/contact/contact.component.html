@@ -11,15 +11,24 @@
 				<p>Nullam quis risus eget urna mollis ornare vel eu leo. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Integer posuere erat.</p>
 				<div class="divide10"></div>
 				<div class="form-container">
-					<form #f="ngForm" autocomplete="off" >
+					<form #f="ngForm" (ngSubmit)="onSubmit(f)" autocomplete="off" class="vanilla vanilla-form">
 						<div class="row">
 							<div class="col-sm-6 rp10">
 								<div class="form-field">
 									<label>
-										<input type="text" name="name" placeholder="Your name" [(ngModel)]="contact.name" required="required">
+										<input type="text" name="first_name" placeholder="Your first name" [(ngModel)]="contact.first_name" required="required">
 									</label>
 								</div>
-                  				<!--/.form-field --> 
+                  				<!--/.form-field -->
+							</div>
+							<!--/column -->
+							<div class="col-sm-6 rp10">
+								<div class="form-field">
+									<label>
+										<input type="text" name="last_name" placeholder="Your last name" [(ngModel)]="contact.last_name" required="required">
+									</label>
+								</div>
+                  				<!--/.form-field -->
 							</div>
 							<!--/column -->
 							<div class="col-sm-6 rp10">
@@ -34,40 +43,24 @@
 							<div class="col-sm-6 rp10">
 								<div class="form-field">
 									<label>
-										<input type="tel" name="phone" [(ngModel)]="contact.phone" placeholder="Phone">
+										<input type="tel" name="phone" [(ngModel)]="contact.phone" onkeypress="return event.charCode >= 48 && event.charCode <= 57" placeholder="Phone">
 									</label>
 								</div>
 								<!--/.form-field -->
 							</div>
 							<!--/column -->
-							<div class="col-sm-6 rp10">
-								<div class="form-field">
+							<div class="col-sm-12 rp10">
+									<div class="form-field">
 									<label>
-										<input type="text" name="title" [(ngModel)]="contact.title" placeholder="Title">
+										<input type="text" name="title" [(ngModel)]="contact.title" placeholder="Title" required="required">
 									</label>
 								</div>
 								<!--/.form-field --> 
 							</div>
 							<!--/column -->
-							<div class="col-sm-12">
+							<div class="col-sm-12 rp10">
 								<textarea name="content" placeholder="Type your message here..." [(ngModel)]="contact.content" required="required"></textarea>
-								<div class="radio-set">
-									<label>Subject:</label>
-									<label>
-										<input type="radio" name="subject" value="General" [(ngModel)]="contact.subject">
-										<span><!-- fake radio --></span> General
-									</label>
-									<label>
-										<input type="radio" name="subject" value="Hi" [(ngModel)]="contact.subject">
-										<span><!-- fake radio --></span> Say Hi
-									</label>
-									<label>
-										<input type="radio" name="subject" value="Other" [(ngModel)]="contact.subject">
-										<span><!-- fake radio --></span> Other
-									</label>
-								</div>
-								<!--/.radio-set -->
-								<input (click)="onSubmitContact(f)" type="button" class="btn" value="Send" data-error="Fix errors" data-processing="Sending..." data-success="Thank you!" [disabled]="!f.valid">
+								<input type="submit" class="btn" value="Send" data-error="Fix errors" data-processing="Sending..." data-success="Thank you!">
 								<footer class="notification-box"></footer>
 							</div>
                 			<!--/column --> 
@@ -82,9 +75,9 @@
 					<h2 class="section-title widget-title">Address</h2>
 					<p>Fusce dapibus, tellus commodo, tortor mauris condimentum utellus fermentum, porta sem malesuada magna. Sed posuere consectetur est at lobortis. Morbi leo risus, porta ac consectetur.</p>
 					<address>
-						<strong>Lighthouse Blog.</strong><br>
-						60 Nguyen Dinh Chieu <br>
-						District 3, Ho Chi Minh City<br>
+						<strong>Juno, Inc.</strong><br>
+						Moon Street Light Avenue, 14/05 <br>
+						Jupiter, JP 80630<br>
 						<abbr title="Phone">P:</abbr> 00 (123) 456 78 90 <br>
 						<abbr title="Email">E:</abbr> <a href="mailto:#">first.last@email.com</a>
 					</address>
