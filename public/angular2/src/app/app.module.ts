@@ -15,10 +15,10 @@ import { MomentModule } from 'angular2-moment';
 // import { HTTP_INTERCEPTOR_PROVIDER } from 'ng2-http-interceptor';
 // import { LoadingAnimateModule, LoadingAnimateService } from 'ng2-loading-animate';
 import { Ng2Bs3ModalModule } from 'ng2-bs3-modal/ng2-bs3-modal';
-import { DatePickerModule } from 'ng2-datepicker';
-import { AgmCoreModule } from 'angular2-google-maps/core';
+import { NgDatepickerModule } from 'ng2-datepicker';
+import { AgmCoreModule } from '@agm/core';
 // import { SidebarModule } from 'ng-sidebar';
- 
+
 // Create config options (see ILocalStorageServiceConfigOptions) for deets:
 // let localStorageServiceConfig = {
 //     prefix: 'my-app',
@@ -69,7 +69,7 @@ import { SearchComponent } from './components/search';
 		// LoadingAnimateModule.forRoot(),
 		Ng2Bs3ModalModule,
 		TabsModule,
-		DatePickerModule,
+		NgDatepickerModule,
 		ToasterModule,
 		AgmCoreModule.forRoot({
 			apiKey: 'AIzaSyCcTvrAfpE5Pu1cnOJIzV9ydLYKPVCEqbw'

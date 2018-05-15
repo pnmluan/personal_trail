@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { URLSearchParams } from '@angular/http';
 import { Title } from '@angular/platform-browser';
-import { AgmCoreModule } from 'angular2-google-maps/core';
+import { AgmCoreModule } from '@agm/core';
 import { Configuration } from '../../shared/app.configuration';
 import { ContactDataService, MailService  } from '../../shared';
 

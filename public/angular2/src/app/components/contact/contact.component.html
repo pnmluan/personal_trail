@@ -1,7 +1,7 @@
 <div class="google-map h450">
-	<sebm-google-map [latitude]="lat" [longitude]="lng" [zoom]="14">
-		<sebm-google-map-marker [latitude]="lat" [longitude]="lng"></sebm-google-map-marker>
-	</sebm-google-map>
+	<agm-map [latitude]="lat" [longitude]="lng" [zoom]="14">
+		<agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
+	</agm-map>
 </div>
 <div class="light-wrapper">
 	<div class="container inner">
@@ -37,7 +37,7 @@
 										<input type="email" name="email" placeholder="Your e-mail" [(ngModel)]="contact.email" required="required">
 									</label>
 								</div>
-								<!--/.form-field --> 
+								<!--/.form-field -->
 							</div>
 							<!--/column -->
 							<div class="col-sm-6 rp10">
@@ -55,7 +55,7 @@
 										<input type="text" name="title" [(ngModel)]="contact.title" placeholder="Title" required="required">
 									</label>
 								</div>
-								<!--/.form-field --> 
+								<!--/.form-field -->
 							</div>
 							<!--/column -->
 							<div class="col-sm-12 rp10">
@@ -63,11 +63,11 @@
 								<input type="submit" class="btn" value="Send" data-error="Fix errors" data-processing="Sending..." data-success="Thank you!">
 								<footer class="notification-box"></footer>
 							</div>
-                			<!--/column --> 
+                			<!--/column -->
 						</div>
 					</form>
 				</div>
-				<!--/.form-container --> 
+				<!--/.form-container -->
 			</div>
 			<!--/column -->
 			<aside class="col-sm-4 sidebar">
@@ -83,9 +83,9 @@
 					</address>
 				</div>
 			</aside>
-			<!--/column --> 
+			<!--/column -->
 		</div>
-		<!--/.row --> 
+		<!--/.row -->
 	</div>
 	<!-- /.container -->
 </div>

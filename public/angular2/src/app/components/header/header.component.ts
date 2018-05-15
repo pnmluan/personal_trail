@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { URLSearchParams } from '@angular/http';
 import { Configuration } from '../../shared/app.configuration';
 import { CategoryDataService } from '../../shared';
@@ -6,7 +6,8 @@ import { CategoryDataService } from '../../shared';
 @Component({
 	selector: 'app-header',
 	templateUrl: './header.component.html',
-	providers: [ CategoryDataService ]
+	providers: [ CategoryDataService ],
+	host: { '(document:keyup)' : 'onEnterForm($event)' }
 })
 
 export class HeaderComponent implements OnInit {
@@ -22,5 +23,9 @@ export class HeaderComponent implements OnInit {
 		this._CategoryDataService.getAll(params).subscribe(res => {
 			this.categories = res.data;
 		});
+	}
+
+	onEnterForm($event){
+		
 	}
 }
