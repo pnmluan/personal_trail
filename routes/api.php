@@ -310,5 +310,4 @@ $api->version('v1', function ($api) {
         'as' => 'api.mail.sendConfirmInfo',
         'uses' => 'App\Http\Controllers\System\MailController@sendConfirmInfo',
     ]);
-    
 });

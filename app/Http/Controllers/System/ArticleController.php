@@ -80,9 +80,8 @@ class ArticleController extends Controller
             /*==================================================
              * Limit & Offset
              *==================================================*/
-            $limit = (isset($params['limit']) || !empty($params['limit']))?$params['limit']:$limit;
-            $offset = (isset($params['offset']) || !empty($params['offset']))?$params['offset']:$offset;
-
+            (isset($params['limit']) || !empty($params['limit'])) && $limit = $params['limit'];
+            (isset($params['offset']) || !empty($params['offset'])) && $offset = $params['offset'];
 
             /*==================================================
              * Process Query
@@ -91,7 +90,7 @@ class ArticleController extends Controller
             $data = $query->get()->toArray();
 
             // Add pictures & tags
-            if(!empty($data)) {
+            if($data) {
                 foreach ($data as $key => $value) {
                     $pictures = \DB::table('pictures')->where('article_id', $value->id)->get();
                     $data[$key]->pictures = $pictures;
@@ -102,13 +101,13 @@ class ArticleController extends Controller
                     $data[$key]->tags = $tags;
                 }
             }
-            
+
             $total_data = count($data);
 
             /*==================================================
              * Update number of viewers
              *==================================================*/
-            if(isset($params['is_count_viewers']) && !empty($params['is_count_viewers']) && 
+            if(isset($params['is_count_viewers']) && !empty($params['is_count_viewers']) &&
                 isset($params['clean_url']) && !empty($params['clean_url'])) {
                 Article::where('clean_url', '=', $params['clean_url'])->increment('views');
             }
@@ -180,50 +179,50 @@ class ArticleController extends Controller
      * @return JsonResponse
      */
     public function save(Request $request, $id = null){
-        $data = $request->all();
+        $params = $request->all();
         $author = JWTAuth::parseToken()->authenticate();
         if(!empty($id)) {
             $model = Article::find($id);
-            $data['updated_user_id'] = $author->id;
-            
-            if(isset($data['article_tags']) && !empty($data['article_tags'])) {
+            if (!$model) {
+                return new JsonResponse([
+                    'message' => 'no_data',
+                ], Response::HTTP_ACCEPTED);
+            }
+
+            $params['updated_user_id'] = $author->id;
+
+            if(isset($params['article_tags']) && !empty($params['article_tags'])) {
                 // Remove all tags with article_id
                 ArticleTag::where('article_id', '=', $id)->delete();
 
                 // Add new article_tags
-                foreach ($data['article_tags'] as $tag) {
+                foreach ($params['article_tags'] as $tag) {
                     if(!empty($tag)) {
                         ArticleTag::create(['article_id' => $id, 'tag_id' => $tag]);
                     }
                 }
             }
-
-            if (!$model) {
-                return new JsonResponse([
-                    'message' => 'no_data',
-                ]);
-            }
         } else {
             $model = new Article();
-            $data['publish_date'] = date('Y-m-d');
-            $data['author_id'] = $author->id;
+            $params['publish_date'] = date('Y-m-d');
+            $params['author_id'] = $author->id;
         }
-        
-        $data['clean_url'] = $this->toAscii($data['title']);
-        
-        $model->fill($data);
+
+        $params['clean_url'] = $this->toAscii($params['title']);
+
+        $model->fill($params);
 
         if (!$model->isValid()) {
             return new JsonResponse([
                 'message' => 'invalid',
                 'error' => $model->getValidationErrors()
-            ]);
+            ], Response::HTTP_BAD_REQUEST);
         }
         try {
             $model->save();
             if(empty($id)) {
                 // Add new article_tags
-                foreach ($data['article_tags'] as $tag) {
+                foreach ($params['article_tags'] as $tag) {
                     if(!empty($tag)) {
                         ArticleTag::create(['article_id' => $model->id, 'tag_id' => $tag]);
                     }
